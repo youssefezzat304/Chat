@@ -1,6 +1,6 @@
 "use client";
 import { LuUpload } from "react-icons/lu";
-import UploadProfilePic from "../SVGs/UploadProfilePic";
+import UploadProfilePic from "../components/SVGs/UploadProfilePic";
 import { CurrentUser } from "../utils/types/user.interfaces";
 import {
   MdDelete,

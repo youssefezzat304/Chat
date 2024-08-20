@@ -1,7 +1,7 @@
 "use client";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import SideBarButtons from "../components/buttons/SideBarButtons";
-import Loading from "../scenes/loading";
+import Loading from "../components/scenes/loading";
 import ProfileLeftSection from "./ProfileLeftSection";
 import ProfileFormSection from "./ProfileFormSection";
 import { useForm } from "react-hook-form";
@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import ProfileLoading from "./ProfileLoading";
 import { deleteProfilePic, sendProfilePic, updateInfo } from "../api/axios";
-import { Alert, Snackbar, SnackbarCloseReason } from "@mui/material";
+import { Alert, Snackbar } from "@mui/material";
 import Notifications from "../components/windows/Notifications";
 import { useOpenTabsStore } from "../utils/stores/handleTabs.store";
 import FriendRequests from "../components/windows/FriendRequests";
@@ -61,14 +61,8 @@ const ProfileSettings = () => {
   }
 
   const notificationsTab = useOpenTabsStore((state) => state.notificationsTab);
-  const handelNotificationsTab = useOpenTabsStore(
-    (state) => state.handleNotificationsTab
-  );
   const friendRequestsTab = useOpenTabsStore(
     (state) => state.friendRequestsTab
-  );
-  const handelFriendRequestsTab = useOpenTabsStore(
-    (state) => state.handleFriendRequestsTab
   );
 
   const handleClose = () => {
@@ -82,10 +76,7 @@ const ProfileSettings = () => {
   return (
     <main className="main">
       <div className="main-screen">
-        <SideBarButtons
-          handelNotificationsTab={handelNotificationsTab}
-          handelFriendRequestsTab={handelFriendRequestsTab}
-        />
+        <SideBarButtons />
         <PanelGroup direction="horizontal" autoSaveId="main">
           <Panel defaultSize={75} minSize={75}>
             <div className="main-profile-sec">

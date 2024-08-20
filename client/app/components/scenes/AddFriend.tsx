@@ -9,9 +9,9 @@ import {
 } from "react";
 import AddFriendRequest from "../SVGs/AddFriendRequest";
 import { LinearProgress } from "@mui/material";
-import TextBoxAlert from "../components/alerts/FriendRequest.alert";
-import { FriendRequestSchema } from "../utils/validation/friendSystem.validation";
-import { FriendRequestState } from "../utils/types/friendSystem.interfaces";
+import TextBoxAlert from "../alerts/FriendRequest.alert";
+import { FriendRequestSchema } from "@/app/utils/validation/friendSystem.validation";
+import { FriendRequestState } from "@/app/utils/types/friendSystem.interfaces";
 
 type AddFriendProps = {
   control: Control<FriendRequestSchema>;

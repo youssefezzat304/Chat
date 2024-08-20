@@ -1,37 +1,43 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
-import { useChatStore } from "../utils/stores/chat.store";
-import { createChat, getChat, getOrCreateChat } from "../api/chat.api";
-import { useUserStore } from "../utils/stores/user.store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DisplayImage from "../components/others/DisplayImage";
-import { CurrentUser } from "../utils/types/user.interfaces";
+import { useGetMessages } from "../utils/queries/chat.query";
+import { MessageInterface } from "../utils/types/chat.interfaces";
 
 export const MessagesSystem = () => {
-  const selectedChatId = useChatStore((state) => state.selectedChatId);
-  const user = useUserStore((state) => state.user);
-  const [messages, setMessages] = useState([]);
-  const { data: chatMessages, isLoading } = useQuery({
-    queryFn: () =>
-      getOrCreateChat({ userId: user?._id, chatterId: selectedChatId }),
-    queryKey: ["chatMessages", selectedChatId],
-    enabled: !!selectedChatId,
-  });
+  const [messages, setMessages] = useState<JSX.Element[]>([]);
+  const { chatMessages, isLoading } = useGetMessages();
+
+  useEffect(() => {
+    if (Array.isArray(chatMessages?.data)) {
+      const newMessages = chatMessages.data.map((message) => (
+        <Message key={message._id} message={message} />
+      ));
+      setMessages(newMessages);
+    }
+  }, [chatMessages?.data]);
 
   return (
     <div className="messages-continer">
-      <Message />
+      {isLoading ? <div>Loading...</div> : messages}
     </div>
   );
 };
 
-export const Message = (subject: CurrentUser) => {
+type MessageProps = {
+  message: MessageInterface;
+};
+export const Message = ({ message }: MessageProps) => {
   return (
     <div className={`message-container`}>
-      <DisplayImage base64String={subject.profilePic} variant="rounded" className="message-pp"/>
+      <DisplayImage
+        base64String={message.senderId.profilePic}
+        variant="rounded"
+        className="message-pp"
+      />
       <div className="message-bubble">
-        <strong>Name</strong>
-        <p>content</p>
+        <strong>{message.senderId.displayName}</strong>
+        <p>{message.content}</p>
       </div>
     </div>
   );

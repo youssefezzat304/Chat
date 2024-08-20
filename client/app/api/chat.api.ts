@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from "axios";
+import { ChatInfo } from "../utils/types/chat.interfaces";
 
 const orginURL = "http://localhost:3000/api";
 
-export const api = axios.create({
+const api = axios.create({
   baseURL: orginURL,
 });
 
@@ -12,7 +13,7 @@ export const getChat = async ({
 }: {
   userId: string | undefined;
   chatterId: string | undefined;
-}) => {
+}): Promise<AxiosResponse<ChatInfo> | undefined> => {
   try {
     const chat = await api.get(`/chat/find-chat/${userId}/${chatterId}`, {
       withCredentials: true,
@@ -21,6 +22,7 @@ export const getChat = async ({
     return chat;
   } catch (error) {
     console.error(error);
+    return undefined;
   }
 };
 export const getAllChats = async (userId: string) => {
@@ -28,6 +30,7 @@ export const getAllChats = async (userId: string) => {
     const chats = await api.get(`/chat/get-chats/${userId}`, {
       withCredentials: true,
     });
+    console.log(chats);
     return chats;
   } catch (error) {
     console.log(error);
@@ -39,7 +42,7 @@ export const createChat = async ({
 }: {
   userId: string | undefined;
   chatterId: string;
-}) => {
+}): Promise<AxiosResponse<ChatInfo> | undefined> => {
   const data = {
     userId: userId,
     chatterId: chatterId,
@@ -52,30 +55,31 @@ export const createChat = async ({
     return createdChat;
   } catch (error) {
     console.log(error);
-    return null
+    return undefined;
   }
 };
-export const getOrCreateChat = async ({
-  userId,
-  chatterId,
-}: {
-  userId: string | undefined;
-  chatterId: string;
-}): Promise<AxiosResponse | null> => {
+type SendMessageProps = {
+  chatId: string;
+  senderId: string | undefined;
+  content: string;
+};
+export const sendMessage = async ({
+  chatId,
+  senderId,
+  content,
+}: SendMessageProps) => {
+  const data = {
+    chatId,
+    senderId,
+    content,
+  };
   try {
-    const chat = await getChat({ userId, chatterId });
-
-    if (chat?.data) {
-      return chat;
-    }
+    const message = api.post("/message/create", data, {
+      withCredentials: true,
+    });
+    return message;
   } catch (error) {
-    console.log("Chat not found, creating a new one...");
-  }
-  try {
-    const createdChat = await createChat({ userId, chatterId });
-    return createdChat;
-  } catch (error) {
-    console.log("Failed to create chat:", error);
+    console.log(error);
     return null;
   }
 };

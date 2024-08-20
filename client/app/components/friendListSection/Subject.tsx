@@ -8,6 +8,7 @@ type SubjectProps = ComponentProps<"div"> & {
 };
 const Subject = ({ subject, ...props }: SubjectProps) => {
   const setSelectedChatId = useChatStore((state) => state.setSelectedChatId);
+  
   const handleSelectChatId = () => {
     setSelectedChatId(subject._id as string);
   };

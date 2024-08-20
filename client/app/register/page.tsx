@@ -4,15 +4,15 @@ import { useEffect, useState } from "react";
 //----------- Contexts ----------------------------------------------------------------//
 import { useThemeContext } from "../contexts/ThemeContext";
 //----------- SVGs ----------------------------------------------------------------//
-import BlackBg from "../SVGs/BlackBg";
-import { LightBg } from "../SVGs/LightBg";
-import LoginIcon from "../SVGs/LoginIcon";
-import SignUpIcon from "../SVGs/SignUpIcon";
+import BlackBg from "../components/SVGs/BlackBg";
+import { LightBg } from "../components/SVGs/LightBg";
+import LoginIcon from "../components/SVGs/LoginIcon";
+import SignUpIcon from "../components/SVGs/SignUpIcon";
 //----------- Components ----------------------------------------------------------//
 import Login from "./Login";
 import SignUp from "./SignUp";
 import DarkModeBtn from "../components/buttons/DarkModeBtn";
-import Loading from "../scenes/loading";
+import Loading from "../components/scenes/loading";
 import { useUserStore } from "../utils/stores/user.store";
 import useAuthenticateUser from "../hooks/useAuthenticateUser";
 import { useRouter } from "next/navigation";

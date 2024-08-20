@@ -1,17 +1,16 @@
 import { NextFunction, Request, Response, Router } from "express";
 import Controller from "../../utils/interfaces/controller.interface";
-import {
-  CreateFriendRequestInput,
-} from "./friendRequest.schema";
+import { CreateFriendRequestInput } from "./friendRequest.schema";
 import { DocumentType } from "@typegoose/typegoose";
 import { Types } from "mongoose";
-import { acceptAndUpdate, rejectAndUpdate } from "./fiendRequest.service";
 import { FriendRequestModel, UserModel } from "../models";
 import { User } from "../user/user.model";
+import { FriendRequestServices } from "./fiendRequest.service";
 
 class FriendRequestController implements Controller {
   public path = "/friend-request";
   public router = Router();
+  private services = new FriendRequestServices();
 
   constructor() {
     this.initialseRoutes();
@@ -118,7 +117,10 @@ class FriendRequestController implements Controller {
           .json({ message: "Friend request already processed" });
       }
 
-      const updatedUser = await acceptAndUpdate({ requesterId, recipientId });
+      const updatedUser = await this.services.acceptAndUpdate({
+        requesterId,
+        recipientId,
+      });
 
       return res.status(200).send(updatedUser);
     } catch (error) {
@@ -157,7 +159,10 @@ class FriendRequestController implements Controller {
           .json({ message: "Friend request already processed" });
       }
 
-      const updatedUser = await rejectAndUpdate({ requesterId, recipientId });
+      const updatedUser = await this.services.rejectAndUpdate({
+        requesterId,
+        recipientId,
+      });
 
       return res.status(200).send(updatedUser);
     } catch (error) {

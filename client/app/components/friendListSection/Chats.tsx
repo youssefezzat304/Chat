@@ -3,7 +3,7 @@ import SearchBar from "./SearchBar";
 import Subject from "./Subject";
 import { useEffect, useState } from "react";
 import { CurrentUser } from "@/app/utils/types/user.interfaces";
-import EmptyChats from "@/app/SVGs/emptyChats";
+import EmptyChats from "../SVGs/emptyChats";
 
 const Chats = () => {
   const user = useUserStore((state) => state.user);

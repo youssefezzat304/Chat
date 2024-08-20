@@ -2,10 +2,10 @@
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 //----- Components --------------
 import ChatInfo from "../components/windows/ChatInfo";
-import Main from "../scenes/main";
+import Main from "../components/scenes/main";
 import Members from "../components/windows/Members";
 import SideBarButtons from "../components/buttons/SideBarButtons";
-import Loading from "../scenes/loading";
+import Loading from "../components/scenes/loading";
 import { DashboardLoading } from "./dashboardLoading";
 import Notifications from "../components/windows/Notifications";
 import FriendRequests from "../components/windows/FriendRequests";
@@ -40,7 +40,6 @@ export default function Home() {
             </section>
           </Panel>
           <PanelResizeHandle />
-
           {notificationsTab || friendRequestsTab ? (
             <Panel defaultSize={30} minSize={22} maxSize={30}>
               {notificationsTab ? (

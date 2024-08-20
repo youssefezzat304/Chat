@@ -3,15 +3,13 @@ import DialogContent from "@mui/material/DialogContent";
 import { Fragment, useState } from "react";
 import { FaUserPlus } from "react-icons/fa";
 import AddFriend from "../scenes/AddFriend";
-import {
-  FriendRequestSchema,
-  friendRequestValidation,
-} from "../utils/validation/friendSystem.validation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { api } from "../api/axios";
-import { useUserStore } from "../utils/stores/user.store";
-import { FriendRequestState } from "../utils/types/friendSystem.interfaces";
+import { useUserStore } from "@/app/utils/stores/user.store";
+import { FriendRequestState } from "@/app/utils/types/friendSystem.interfaces";
+import { FriendRequestSchema, friendRequestValidation } from "@/app/utils/validation/friendSystem.validation";
+import { api } from "@/app/api/axios";
+
 
 export default function AddFriendDialog() {
   const user = useUserStore((state) => state.user);

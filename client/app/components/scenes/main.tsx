@@ -1,10 +1,10 @@
 "use client";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 //----- Components --------------
-import Chat from "../components/windows/Chat";
-import Chats from "../components/friendListSection/Chats";
-import { useOpenTabsStore } from "../utils/stores/handleTabs.store";
-import Friends from "../components/friendListSection/Friends";
+import Chat from "../windows/Chat";
+import Chats from "../friendListSection/Chats";
+import { useOpenTabsStore } from "@/app/utils/stores/handleTabs.store";
+import Friends from "../friendListSection/Friends";
 
 const Main = () => {
   const friendsTab = useOpenTabsStore((state) => state.friendsTab);

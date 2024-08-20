@@ -1,56 +1,60 @@
 import { FriendRequestModel, UserModel } from "../models";
 
-export const acceptAndUpdate = async ({
-  requesterId,
-  recipientId,
-}: {
-  requesterId: string;
-  recipientId: string;
-}) => {
-  await UserModel.findByIdAndUpdate(requesterId, {
-    $push: { friends: recipientId },
-  });
-  await UserModel.findByIdAndUpdate(recipientId, {
-    $push: { friends: requesterId },
-  });
-  await UserModel.findByIdAndUpdate(recipientId, {
-    $pull: { friendRequestsReceived: requesterId },
-  });
-  await UserModel.findByIdAndUpdate(requesterId, {
-    $pull: { friendRequestsSent: recipientId },
-  });
-  await FriendRequestModel.findOneAndDelete({
-    recipient: recipientId,
-    requester: requesterId,
-  });
+export class FriendRequestServices {
+  private friendRequest = FriendRequestModel;
 
-  const updatedUser = await UserModel.findById(recipientId)
-    .populate({ path: "friends" })
-    .exec();
+  public acceptAndUpdate = async ({
+    requesterId,
+    recipientId,
+  }: {
+    requesterId: string;
+    recipientId: string;
+  }) => {
+    await UserModel.findByIdAndUpdate(requesterId, {
+      $push: { friends: recipientId },
+    });
+    await UserModel.findByIdAndUpdate(recipientId, {
+      $push: { friends: requesterId },
+    });
+    await UserModel.findByIdAndUpdate(recipientId, {
+      $pull: { friendRequestsReceived: requesterId },
+    });
+    await UserModel.findByIdAndUpdate(requesterId, {
+      $pull: { friendRequestsSent: recipientId },
+    });
+    await this.friendRequest.findOneAndDelete({
+      recipient: recipientId,
+      requester: requesterId,
+    });
 
-  return updatedUser;
-};
-export const rejectAndUpdate = async ({
-  requesterId,
-  recipientId,
-}: {
-  requesterId: string;
-  recipientId: string;
-}) => {
-  await UserModel.findByIdAndUpdate(recipientId, {
-    $pull: { friendRequestsReceived: requesterId },
-  });
-  await UserModel.findByIdAndUpdate(requesterId, {
-    $pull: { friendRequestsSent: recipientId },
-  });
-  await FriendRequestModel.findOneAndDelete({
-    recipient: recipientId,
-    requester: requesterId,
-  });
+    const updatedUser = await UserModel.findById(recipientId)
+      .populate({ path: "friends" })
+      .exec();
 
-  const updatedUser = await UserModel.findById(recipientId)
-    .populate({ path: "friends" })
-    .exec();
+    return updatedUser;
+  };
+  public rejectAndUpdate = async ({
+    requesterId,
+    recipientId,
+  }: {
+    requesterId: string;
+    recipientId: string;
+  }) => {
+    await UserModel.findByIdAndUpdate(recipientId, {
+      $pull: { friendRequestsReceived: requesterId },
+    });
+    await UserModel.findByIdAndUpdate(requesterId, {
+      $pull: { friendRequestsSent: recipientId },
+    });
+    await this.friendRequest.findOneAndDelete({
+      recipient: recipientId,
+      requester: requesterId,
+    });
 
-  return updatedUser;
-};
+    const updatedUser = await UserModel.findById(recipientId)
+      .populate({ path: "friends" })
+      .exec();
+
+    return updatedUser;
+  };
+}

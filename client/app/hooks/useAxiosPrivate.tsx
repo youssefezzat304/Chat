@@ -25,7 +25,6 @@ const useAxiosPrivate = () => {
         }
       }
     }
-    // return cleanupInterceptors({ requestIntercept, responseIntercept });
   }, [accessToken]);
 
   return axiosPrivate;

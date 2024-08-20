@@ -4,8 +4,8 @@ import { FaUserFriends } from "react-icons/fa";
 import { IoNotifications, IoSettingsSharp } from "react-icons/io5";
 import { PiChatsFill } from "react-icons/pi";
 import { RiContactsBook3Fill, RiLogoutCircleLine } from "react-icons/ri";
-import UploadProfilePic from "@/app/SVGs/UploadProfilePic";
-import AddFriendDialog from "@/app/dialogs/AddFriendDialog";
+import UploadProfilePic from "../SVGs/UploadProfilePic";
+import AddFriendDialog from "../dialogs/AddFriendDialog";
 import { useThemeContext } from "@/app/contexts/ThemeContext";
 import { useUserStore } from "@/app/utils/stores/user.store";
 import useAxiosPrivate from "@/app/hooks/useAxiosPrivate";
@@ -14,10 +14,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import DisplayImage from "../others/DisplayImage";
 import { useOpenTabsStore } from "@/app/utils/stores/handleTabs.store";
 
-type SideBarButtonsProps = {
-  handelNotificationsTab?: () => void;
-  handelFriendRequestsTab?: () => void;
-};
 const SideBarButtons = () => {
   const axiosPrivate = useAxiosPrivate();
   const router = useRouter();
