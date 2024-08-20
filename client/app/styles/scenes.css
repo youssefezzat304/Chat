@@ -1,0 +1,125 @@
+.add-friend-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  z-index: 20;
+}
+.add-friend-container {
+  display: flex;
+  position: relative;
+  background-color: var(--primary-soft);
+  padding: 20px 50px;
+  width: 64%;
+  height: 70%;
+  border-radius: 16px;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 12px;
+}
+.add-friend-container label {
+  font-weight: 700;
+  font-size: x-large;
+}
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.add-friend-container input {
+  display: flex;
+  width: 100%;
+  padding: 16px;
+  border-radius: 10px;
+  border: none;
+  font-size: large;
+}
+.add-friend-container input:focus {
+  outline: none;
+}
+.input-container button {
+  position: absolute;
+  font-size: large;
+  right: 6px;
+  background-color: var(--primary-hard);
+  color: white;
+  border: none;
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  transition: 0.15s;
+}
+.input-container button:hover {
+  background-color: rgba(60, 0, 128, 0.8);
+}
+.input-container button:active {
+  transform: scale(0.96);
+}
+.add-friend-container .cancel-Btn {
+  position: absolute;
+  cursor: pointer;
+  bottom: 20px;
+  left: 80px;
+  background-color: var(--log-out);
+  width: 100px;
+  font-size: large;
+  color: white;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  transition: 0.15s;
+}
+.add-friend-container .cancel-Btn:active {
+  transform: scale(0.96);
+}
+.friendrequest-response {
+  background-color: var(--done-soft);
+  color: var(--done-heavy);
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 1.5rem 2rem;
+}
+.addfriend-svg {
+  position: absolute;
+  right: 4rem;
+  bottom: 10px;
+  height: 17rem;
+  width: 17rem;
+}
+.addfriend-alert {
+  display: flex;
+  flex-direction: end;
+  border-radius: 1rem;
+  width: 60%;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+}
+/* --------------- Create New Contact ------------*/
+.create-contact-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
+  width: 70%;
+  background-color: var(--white);
+  border-radius: 20px;
+}
+/* --------------- Profile ------------*/
+.profile-settings-sec {
+  background-color: var(--secondary-soft);
+  margin-left: 6px;
+  border-radius: 22px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

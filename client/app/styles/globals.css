@@ -1,0 +1,121 @@
+:root {
+  --primary-soft: #9f97e4;
+  --primary-hard: #7678ed;
+  --primary-xhard: #3c18bd;
+  --primary-dark: #202022;
+
+  --secondary-soft: #c7c3fc;
+
+  --input-color: #d2cdffcc;
+  --Dark-theme-Btn: #2e334a;
+
+  --log-out: #f25c54;
+
+  --error-soft: #ef7674;
+  --error-strong: #e95252;
+  --error-hard: #902923;
+
+  --warning-soft: #efdc74;
+  --warning-hard: #8a6709;
+
+  --remove-Btn: #f02d3a;
+
+  --done-soft: rgb(70, 218, 102);
+  --done-md: rgb(32, 182, 64);
+  --done-heavy: rgb(12, 73, 26);
+
+  --remove-Btn: #d44141;
+
+  --text-gray: #6c757d;
+
+  --white: #f9fafc;
+}
+body {
+  overflow-y: hidden;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.bg {
+  position: absolute;
+  z-index: -10;
+  min-height: 100vh;
+}
+/* --------------------------- ScrollBar --------------------------------------- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5); 
+  border-radius: 6px !important;
+}
+
+body {
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+/* --------------------------- ERRORS --------------------------------------- */
+.error-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--error-soft);
+  position: absolute;
+  z-index: 10;
+  bottom: -5px;
+  left: 50px;
+  min-width: 25rem;
+  max-width: 32rem;
+  border-radius: 20px;
+  padding: 1.5rem 1.5rem;
+  margin-bottom: 2rem;
+}
+.error-icon {
+  font-size: 3rem;
+  min-width: 3rem;
+  color: var(--error-hard);
+}
+.error-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 1.5rem;
+  min-width: 1.5rem;
+  color: var(--error-hard);
+  cursor: pointer;
+}
+.error-container strong {
+  color: var(--error-hard);
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.flex {
+  display: flex;
+}
+.justify-center {
+  justify-content: center;
+}
+.align-center {
+  align-items: center;
+}
+.justify-start {
+  justify-content: flex-start !important;
+}
+.regular-avatar {
+  cursor: pointer;
+  margin-right: 8px;
+  width: 3rem !important;
+  height: 3rem !important;
+}

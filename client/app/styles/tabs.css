@@ -1,0 +1,46 @@
+.empty-chats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+.empty-chats span {
+  color: rgba(0, 0, 0, 0.48);
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+  padding: 1rem 3rem 0rem 3rem;
+  text-wrap: pretty;
+}
+.message-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 8px;
+  width: 100%;
+}
+.message-container.sent {
+  justify-content: flex-end;
+}
+.message-bubble {
+  background-color: var(--primary-soft);
+  border-radius: 16px;
+  padding: 10px 15px;
+  max-width: 70%; 
+  word-wrap: break-word;
+  display: inline-block;
+  font-size: 14px;
+}
+.message-container.sent .message-bubble {
+  background-color: var(--primary-soft);
+  color: white;
+}
+.message-container.received .message-bubble {
+  background-color: #f1f0f0;
+  color: black;
+}
+.message-pp {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 0.6rem;
+}
