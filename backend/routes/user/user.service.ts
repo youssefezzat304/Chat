@@ -1,3 +1,4 @@
+import { Chat } from "../chat/chat.model";
 import { UserModel } from "../models";
 import { User } from "./user.model";
 import { UserSchemaInput } from "./user.schema";
@@ -26,7 +27,7 @@ class UserService {
       return new Error("error:");
     }
   }
-  
+
   public createUser(input: Partial<User>) {
     return UserModel.create(input);
   }
@@ -47,6 +48,22 @@ class UserService {
       }
     );
   }
+
+  public addChatId = async ({
+    userId,
+    chat,
+  }: {
+    userId: string;
+    chat: Chat;
+  }) => {
+    await UserModel.findByIdAndUpdate(
+      userId,
+      {
+        $addToSet: { chats: chat._id },
+      },
+      { new: true }
+    );
+  };
 }
 
 export default UserService;

@@ -1,8 +1,8 @@
-import { CurrentUser } from "./user.interfaces";
+import { User } from "./user.interfaces";
 
 export interface ChatInfo {
   _id: string;
-  participants: CurrentUser[];
+  participants: User[];
   lastMessage: MessageInterface;
   type: "private" | "group";
   createdAt: string;
@@ -11,7 +11,8 @@ export interface ChatInfo {
 export interface MessageInterface {
   _id: string;
   chatId: string;
-  senderId: CurrentUser;
+  initiatedBy: User;
+  receivedBy: User;
   content: string;
   createdAt: string;
   updatedAt: string;

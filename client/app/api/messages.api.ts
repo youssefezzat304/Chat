@@ -19,3 +19,32 @@ export const getMessages = async (
     console.log(error);
   }
 };
+
+type SendMessageProps = {
+  chatId?: string;
+  initiatedBy: string;
+  receivedBy: string;
+  content: string;
+};
+export const sendMessage = async ({
+  chatId,
+  initiatedBy,
+  receivedBy,
+  content,
+}: SendMessageProps) => {
+  const data = {
+    chatId,
+    initiatedBy,
+    receivedBy,
+    content,
+  };
+  try {
+    const message = api.post("/message/create", data, {
+      withCredentials: true,
+    });
+    return message;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

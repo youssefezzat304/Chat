@@ -5,7 +5,7 @@ import Loading from "../components/scenes/loading";
 import ProfileLeftSection from "./ProfileLeftSection";
 import ProfileFormSection from "./ProfileFormSection";
 import { useForm } from "react-hook-form";
-import { CurrentUser } from "../utils/types/user.interfaces";
+import { User } from "../utils/types/user.interfaces";
 import { userValidation } from "../utils/validation/user.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -32,12 +32,12 @@ const ProfileSettings = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<CurrentUser>({
+  } = useForm<User>({
     defaultValues: user ? user : undefined,
     resolver: zodResolver(userValidation),
   });
 
-  const saveChanges = async (data: CurrentUser) => {
+  const saveChanges = async (data: User) => {
     setOpen(false);
     try {
       const response = await updateInfo(data);

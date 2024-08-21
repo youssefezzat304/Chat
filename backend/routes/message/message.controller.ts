@@ -1,10 +1,15 @@
 import { Request, Response, Router } from "express";
 import Controller from "../../utils/interfaces/controller.interface";
 import { ChatModel, MessageModel, UserModel } from "../models";
+import { MessageService } from "./message.service";
+import { ChatService } from "../chat/chat.service";
+import UserService from "../user/user.service";
 
 export class MessageController implements Controller {
   public path = "/message";
   public router = Router();
+  private chatService = new ChatService();
+  private userService = new UserService();
 
   constructor() {
     this.initialiseRoutes();
@@ -15,48 +20,60 @@ export class MessageController implements Controller {
   }
 
   private createMesssage = async (req: Request, res: Response) => {
-    const { chatId, senderId, content } = req.body;
+    console.log(req.body);
+    const { initiatedBy, receivedBy, content } = req.body;
 
-    if (!chatId || !senderId || !content) return res.status(400).send(req.body);
+    if (!initiatedBy || !receivedBy) return res.status(400).send("wrong data");
 
-    const message = new MessageModel({
-      chatId,
-      senderId,
-      content,
+    let chat = await ChatModel.findOne({
+      participants: [initiatedBy, receivedBy],
     });
+    let message;
+
     try {
-      const user = await UserModel.findById(senderId);
+      if (!chat) {
+        chat = await this.chatService.createNewChat({
+          initiatedBy: initiatedBy,
+          receivedBy: receivedBy,
+        });
+        message = new MessageModel({
+          chatId: chat._id,
+          initiatedBy,
+          receivedBy,
+          content,
+        });
+      } else {
+        message = new MessageModel({
+          chatId: chat._id,
+          initiatedBy,
+          receivedBy,
+          content,
+        });
+      }
+
+      await this.userService.addChatId({ userId: initiatedBy, chat: chat });
+      await this.userService.addChatId({ userId: receivedBy, chat: chat });
+      await chat.save();
       await message.save();
-      await ChatModel.findByIdAndUpdate(chatId, {
+      chat.updateOne({
         $set: {
           lastMessage: message._id,
         },
       });
 
-      if (!user?.chats.includes(chatId)) {
-        await UserModel.findByIdAndUpdate(
-          senderId,
-          {
-            $addToSet: {
-              chats: chatId,
-            },
-          },
-          { new: true }
-        );
-      }
-
-      return res.status(200).send("message has been sent.");
+      return res.status(200).send(chat);
     } catch (error) {
       return res.status(500).send(error);
     }
   };
+
   private getMessages = async (req: Request, res: Response) => {
     const { chatId } = req.params;
 
     try {
       const messages = await MessageModel.find({ chatId })
         .populate({
-          path: "senderId",
+          path: "initiatedBy",
           select: "profilePic displayName",
         })
         .exec();

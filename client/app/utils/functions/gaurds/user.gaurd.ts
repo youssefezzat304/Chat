@@ -1,6 +1,6 @@
-import { CurrentUser } from "../../types/user.interfaces";
+import { User } from "../../types/user.interfaces";
 
-export const isCurrentUser = (obj: any): obj is CurrentUser => {
+export const isUser = (obj: any): obj is User => {
   return (
     obj &&
     typeof obj === "object" &&
@@ -15,7 +15,7 @@ export const isCurrentUser = (obj: any): obj is CurrentUser => {
     typeof obj.phoneNumber === "string" &&
     typeof obj.status === "string" &&
     Array.isArray(obj.friends) &&
-    obj.friends.every((friend: any) => isCurrentUser(friend)) &&
+    obj.friends.every((friend: any) => isUser(friend)) &&
     Array.isArray(obj.friendRequestsSent) &&
     obj.friendRequestsSent.every((req: any) => isFriendRequest(req)) &&
     Array.isArray(obj.friendRequestsReceived) &&

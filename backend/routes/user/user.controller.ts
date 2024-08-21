@@ -133,7 +133,8 @@ class UserController implements Controller {
           path: "friendRequestsReceived",
           select: ["displayName", "profilePic"],
         })
-        .populate({ path: "friends" })
+        .populate("friends")
+        .populate("chats")
         .exec();
 
       if (!user) {

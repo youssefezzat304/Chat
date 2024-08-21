@@ -1,7 +1,7 @@
 "use client";
 import { LuUpload } from "react-icons/lu";
 import UploadProfilePic from "../components/SVGs/UploadProfilePic";
-import { CurrentUser } from "../utils/types/user.interfaces";
+import { User } from "../utils/types/user.interfaces";
 import {
   MdDelete,
   MdModeEditOutline,
@@ -18,10 +18,10 @@ import DisplayImage from "../components/others/DisplayImage";
 
 type ProfileLeftSectionProps = {
   control: Control<any>;
-  activeUser: CurrentUser;
-  saveChanges: SubmitHandler<CurrentUser>;
+  activeUser: User;
+  saveChanges: SubmitHandler<User>;
   resetSettings: () => void;
-  errors: FieldErrors<CurrentUser>;
+  errors: FieldErrors<User>;
 };
 
 const ProfileLeftSection = ({

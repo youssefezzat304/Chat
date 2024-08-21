@@ -3,10 +3,10 @@ import NoMessages from "./NoMessages";
 import PrivateChat from "./PrivateChat";
 
 const Chat = () => {
-  const selectedChatId = useChatStore((state) => state.selectedChatId);
+  const chatWith = useChatStore((state) => state.chatWith);
   return (
     <main className="chat-main">
-      {selectedChatId === "" ? <NoMessages /> : <PrivateChat />}
+      {!chatWith ? <NoMessages /> : <PrivateChat />}
     </main>
   );
 };

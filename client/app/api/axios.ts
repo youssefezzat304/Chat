@@ -1,5 +1,5 @@
-import axios from "axios";
-import { CurrentUser } from "../utils/types/user.interfaces";
+import axios, { AxiosResponse } from "axios";
+import { User } from "../utils/types/user.interfaces";
 
 const orginURL = "http://localhost:3000/api";
 
@@ -13,7 +13,7 @@ export const axiosPrivate = axios.create({
   withCredentials: true,
 });
 
-export const checkUser = async (): Promise<CurrentUser | null> => {
+export const checkUser = async (): Promise<User | null> => {
   let requestIntercept: number | null = null;
   let responseIntercept: number | null = null;
 
@@ -45,14 +45,16 @@ export const checkUser = async (): Promise<CurrentUser | null> => {
   }
 };
 
-export const updateInfo = async (data: any) => {
+export const updateInfo = async (
+  data: any
+): Promise<AxiosResponse<User> | null> => {
   try {
     const response = api.patch("/users/update-info", data, {
       withCredentials: true,
     });
     return response;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return null;
   }
 };
@@ -90,7 +92,7 @@ export const refreshToken = async () => {
     });
     return res.data.accessToken;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return null;
   }
 };

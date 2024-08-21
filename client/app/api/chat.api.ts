@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { ChatInfo } from "../utils/types/chat.interfaces";
 
+
 const orginURL = "http://localhost:3000/api";
 
 const api = axios.create({
@@ -15,71 +16,25 @@ export const getChat = async ({
   chatterId: string | undefined;
 }): Promise<AxiosResponse<ChatInfo> | undefined> => {
   try {
-    const chat = await api.get(`/chat/find-chat/${userId}/${chatterId}`, {
+    const chat = await api.get(`/chats/find-chat/${userId}/${chatterId}`, {
       withCredentials: true,
     });
-    console.log(chat);
     return chat;
   } catch (error) {
     console.error(error);
     return undefined;
   }
 };
-export const getAllChats = async (userId: string) => {
+export const getAllChats = async (
+  userId?: string
+): Promise<AxiosResponse<ChatInfo[], any> | undefined> => {
   try {
-    const chats = await api.get(`/chat/get-chats/${userId}`, {
+    const chats = await api.get(`/chats/get-recent/${userId}`,{
       withCredentials: true,
     });
-    console.log(chats);
     return chats;
   } catch (error) {
     console.log(error);
   }
 };
-export const createChat = async ({
-  userId,
-  chatterId,
-}: {
-  userId: string | undefined;
-  chatterId: string;
-}): Promise<AxiosResponse<ChatInfo> | undefined> => {
-  const data = {
-    userId: userId,
-    chatterId: chatterId,
-  };
-  try {
-    const createdChat = await api.post("chat/create", data, {
-      withCredentials: true,
-    });
-    console.log(createdChat);
-    return createdChat;
-  } catch (error) {
-    console.log(error);
-    return undefined;
-  }
-};
-type SendMessageProps = {
-  chatId: string;
-  senderId: string | undefined;
-  content: string;
-};
-export const sendMessage = async ({
-  chatId,
-  senderId,
-  content,
-}: SendMessageProps) => {
-  const data = {
-    chatId,
-    senderId,
-    content,
-  };
-  try {
-    const message = api.post("/message/create", data, {
-      withCredentials: true,
-    });
-    return message;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
+

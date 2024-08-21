@@ -119,6 +119,7 @@
   text-wrap: nowrap;
 }
 .lastseen {
+  font-size: 0.7rem;
   color: var(--text-gray);
 }
 /*---------------- Chat window --------------- */

@@ -11,7 +11,10 @@ export class Message {
   public chatId: Ref<Chat>;
 
   @prop({ ref: () => User, required: true })
-  public senderId: Ref<User>;
+  public initiatedBy: Ref<User>;
+
+  @prop({ ref: () => User, required: true })
+  public receivedBy: Ref<User>;
 
   @prop({ required: true })
   public content: string;

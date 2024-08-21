@@ -1,24 +1,48 @@
-import { useUserStore } from "@/app/utils/stores/user.store";
+"use client";
 import SearchBar from "./SearchBar";
 import Subject from "./Subject";
-import { useEffect, useState } from "react";
-import { CurrentUser } from "@/app/utils/types/user.interfaces";
 import EmptyChats from "../SVGs/emptyChats";
+import { useGetChats } from "@/app/utils/queries/chat.query";
+import { useChatStore } from "@/app/utils/stores/chat.store";
+import { ChatInfo } from "@/app/utils/types/chat.interfaces";
+import { useUserStore } from "@/app/utils/stores/user.store";
+import { useEffect } from "react";
 
 const Chats = () => {
-  const user = useUserStore((state) => state.user);
-  const [chats, setChats] = useState<CurrentUser[] | undefined>([]);
+  const recentChats = useChatStore((state) => state.recentChats);
+  const setRecentChats = useChatStore((state) => state.setRecentChats);
+  const currentUser = useUserStore((state) => state.user);
+  const { allChats, isLoading } = useGetChats();
+
   useEffect(() => {
-    setChats(user?.chats);
-  }, [user]);
+    if (!isLoading && allChats) {
+      setRecentChats(allChats.data);
+    }
+  }, [isLoading, allChats, setRecentChats]);
   return (
     <main className="friendList-main">
       <SearchBar />
-      {chats?.length === 0 ? (
+      {recentChats?.length === 0 ? (
         <EmptyChats />
       ) : (
-        chats?.map((friend: CurrentUser, index: any) => {
-          return <Subject key={index} subject={friend} />;
+        recentChats?.map((chat: ChatInfo, index: any) => {
+          if (chat.participants[0]._id !== currentUser?._id) {
+            return (
+              <Subject
+                key={index}
+                subject={chat.participants[0]}
+                lastMessage={chat.lastMessage}
+              />
+            );
+          } else {
+            return (
+              <Subject
+                key={index}
+                subject={chat.participants[1]}
+                lastMessage={chat.lastMessage}
+              />
+            );
+          }
         })
       )}
     </main>

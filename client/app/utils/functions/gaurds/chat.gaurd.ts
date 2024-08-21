@@ -1,5 +1,6 @@
+import { AxiosResponse } from "axios";
 import { ChatInfo, MessageInterface } from "../../types/chat.interfaces";
-import { isCurrentUser } from "./user.gaurd";
+import { isUser } from "./user.gaurd";
 
 export const isChatInfo = (obj: any): obj is ChatInfo => {
   return (
@@ -7,7 +8,7 @@ export const isChatInfo = (obj: any): obj is ChatInfo => {
     typeof obj === "object" &&
     typeof obj._id === "string" &&
     Array.isArray(obj.participants) &&
-    obj.participants.every((participant: any) => isCurrentUser(participant)) &&
+    obj.participants.every((participant: any) => isUser(participant)) &&
     isMessage(obj.lastMessage) &&
     (obj.type === "private" || obj.type === "group") &&
     typeof obj.createdAt === "string" &&
@@ -26,3 +27,12 @@ export const isMessage = (obj: any): obj is MessageInterface => {
     typeof obj.updatedAt === "string"
   );
 };
+
+export function isChatArray(
+  response: AxiosResponse<any>
+): response is AxiosResponse<ChatInfo[]> {
+  return (
+    Array.isArray(response.data) &&
+    response.data.every((item) => isChatInfo(item))
+  );
+}

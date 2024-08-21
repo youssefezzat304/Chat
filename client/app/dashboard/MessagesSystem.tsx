@@ -14,8 +14,9 @@ export const MessagesSystem = () => {
         <Message key={message._id} message={message} />
       ));
       setMessages(newMessages);
+      console.log("ccc", chatMessages);
     }
-  }, [chatMessages?.data]);
+  }, [chatMessages]);
 
   return (
     <div className="messages-continer">
@@ -31,12 +32,12 @@ export const Message = ({ message }: MessageProps) => {
   return (
     <div className={`message-container`}>
       <DisplayImage
-        base64String={message.senderId.profilePic}
+        base64String={message.initiatedBy.profilePic}
         variant="rounded"
         className="message-pp"
       />
       <div className="message-bubble">
-        <strong>{message.senderId.displayName}</strong>
+        <strong>{message.initiatedBy.displayName}</strong>
         <p>{message.content}</p>
       </div>
     </div>

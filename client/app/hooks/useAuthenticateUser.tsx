@@ -40,6 +40,7 @@ const useAuthenticateUser = () => {
     if (!user && !isLoading) {
       router.replace("/register");
     }
+    // console.log(user);
   }, [currentUser, router, setCurrentUser, user, isLoading, setProfilePic]);
 
   return { isLoading };

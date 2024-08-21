@@ -1,6 +1,6 @@
 "use client";
 import { Control, FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormSetValue } from "react-hook-form";
-import { CurrentUser } from "../utils/types/user.interfaces";
+import { User } from "../utils/types/user.interfaces";
 import {
   BirthDateInput,
   CountrySelect,
@@ -9,12 +9,12 @@ import {
 import { TextField } from "@mui/material";
 
 type ProfileFormSectionProps = {
-  control: Control<CurrentUser>;
-  activeUser: CurrentUser;
-  handleSubmit: UseFormHandleSubmit<CurrentUser, undefined>;
-  saveChanges: SubmitHandler<CurrentUser>;
-  errors: FieldErrors<CurrentUser>;
-  setValue: UseFormSetValue<CurrentUser>;
+  control: Control<User>;
+  activeUser: User;
+  handleSubmit: UseFormHandleSubmit<User, undefined>;
+  saveChanges: SubmitHandler<User>;
+  errors: FieldErrors<User>;
+  setValue: UseFormSetValue<User>;
 };
 
 const ProfileFormSection = ({

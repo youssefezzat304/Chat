@@ -53,7 +53,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 6px !important;
 }
 
@@ -118,4 +118,10 @@ body::-webkit-scrollbar {
   margin-right: 8px;
   width: 3rem !important;
   height: 3rem !important;
+}
+.center-loading {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }

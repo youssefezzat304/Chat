@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { CurrentUser } from "../types/user.interfaces";
+import { User } from "../types/user.interfaces";
 
 type UserStore = {
-  user: CurrentUser | null;
-  setUser: (userState: CurrentUser | null | undefined) => void;
+  user: User | null;
+  setUser: (userState: User | null | undefined) => void;
   profilePic: any;
   setProfilePic: (profilePicState: any) => void;
   ppFile: any;

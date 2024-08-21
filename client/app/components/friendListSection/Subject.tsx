@@ -1,16 +1,20 @@
-import { CurrentUser } from "@/app/utils/types/user.interfaces";
+import { User } from "@/app/utils/types/user.interfaces";
 import DisplayImage from "../others/DisplayImage";
 import { ComponentProps } from "react";
 import { useChatStore } from "@/app/utils/stores/chat.store";
+import { MessageInterface } from "@/app/utils/types/chat.interfaces";
+import dayjs from "dayjs";
 
 type SubjectProps = ComponentProps<"div"> & {
-  subject: CurrentUser;
+  subject: User;
+  lastMessage?: MessageInterface;
 };
-const Subject = ({ subject, ...props }: SubjectProps) => {
+const Subject = ({ subject, lastMessage }: SubjectProps) => {
   const setSelectedChatId = useChatStore((state) => state.setSelectedChatId);
-  
+  const { setChatWith, chatWith, selectedChatId } = useChatStore();
+
   const handleSelectChatId = () => {
-    setSelectedChatId(subject._id as string);
+    setChatWith(subject);
   };
   return (
     <main className="subject-main" onClick={handleSelectChatId}>
@@ -24,11 +28,13 @@ const Subject = ({ subject, ...props }: SubjectProps) => {
         <div className="mssg-info">
           <section className="top">
             <label htmlFor="">{subject.displayName}</label>
-            <p className="lastseen">4m</p>
+            <p className="lastseen">
+              {dayjs(lastMessage?.updatedAt).format("MM/DD/YY 	h:mm A")}
+            </p>
           </section>
           <section className="bottom">
-            <p className="last-messege">gamed el kalam</p>
-            <p className="notification-icon">1</p>
+            <p className="last-messege">{lastMessage?.content}</p>
+            {/* <p className="notification-icon"></p> */}
           </section>
         </div>
       </div>

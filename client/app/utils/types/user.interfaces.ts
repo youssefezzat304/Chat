@@ -1,16 +1,17 @@
-export interface CurrentUser {
-  _id?: string;
-  displayName?: string | undefined;
-  email?: string;
-  country?: string | undefined;
-  profilePic?: any;
-  city?: string | undefined;
-  postalCode?: string | undefined;
-  birthDate?: string | undefined;
-  phoneNumber?: string | undefined;
-  status?: string | undefined;
-  friends?: [CurrentUser];
-  friendRequestsSent?: [{ displayName: string; _id: string }] | undefined;
-  friendRequestsReceived?: [{ displayName: string; _id: string }] | undefined;
-  chats?: any;
+import { ChatInfo } from "./chat.interfaces";
+export interface User {
+  _id: string;
+  displayName: string;
+  email: string;
+  country: string;
+  profilePic: string;
+  city: string;
+  postalCode: string;
+  birthDate: string;
+  phoneNumber: string;
+  status: string;
+  friends: [User];
+  friendRequestsSent: [{ displayName: string; _id: string }];
+  friendRequestsReceived: [{ displayName: string; _id: string }];
+  chats: ChatInfo[];
 }

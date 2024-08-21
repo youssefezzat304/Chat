@@ -10,7 +10,7 @@ import {
   UseFormRegisterReturn,
   UseFormSetValue,
 } from "react-hook-form";
-import { CurrentUser } from "@/app/utils/types/user.interfaces";
+import { User } from "@/app/utils/types/user.interfaces";
 import { countries } from "@/app/profile/countries";
 
 type ProfileInputProps = ComponentProps<"input"> & {
@@ -113,7 +113,7 @@ export const CountrySelect = ({
 export const BirthDateInput = ({
   setValue,
 }: {
-  setValue: UseFormSetValue<CurrentUser>;
+  setValue: UseFormSetValue<User>;
 }) => {
   const [date, setDate] = useState<Dayjs | null>(null);
   const [cleared, setCleared] = useState<boolean>(false);
@@ -132,7 +132,10 @@ export const BirthDateInput = ({
             value={date}
             onChange={(value) => {
               const formatedDate = value?.format("MM/DD/YYYY");
-              setValue("birthDate", formatedDate);
+              setValue(
+                "birthDate",
+                !formatedDate ? "MM/DD/YYYY" : formatedDate
+              );
             }}
             slotProps={{
               textField: {
