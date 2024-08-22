@@ -1,14 +1,7 @@
 "use client";
-//----------- React/Next ----------------------------------------------------------------//
 import { useEffect, useState } from "react";
-//----------- Contexts ----------------------------------------------------------------//
 import { useThemeContext } from "../contexts/ThemeContext";
-//----------- SVGs ----------------------------------------------------------------//
-import BlackBg from "../components/SVGs/BlackBg";
-import { LightBg } from "../components/SVGs/LightBg";
-import LoginIcon from "../components/SVGs/LoginIcon";
-import SignUpIcon from "../components/SVGs/SignUpIcon";
-//----------- Components ----------------------------------------------------------//
+import { BlackBg, LightBg, LoginIcon, SignUpIcon } from "../components/SVGs";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import DarkModeBtn from "../components/buttons/DarkModeBtn";

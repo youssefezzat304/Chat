@@ -9,7 +9,6 @@ type AlertType = ComponentProps<"div"> & {
   clearErrors: any;
   watch: boolean;
 };
-
 const TextBoxAlert = ({
   message,
   title,

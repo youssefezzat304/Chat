@@ -13,29 +13,28 @@ import { useAuthStore } from "@/app/utils/stores/auth.store";
 import { useQueryClient } from "@tanstack/react-query";
 import DisplayImage from "../others/DisplayImage";
 import { useOpenTabsStore } from "@/app/utils/stores/handleTabs.store";
+import SideButton from "./SideButton";
 
 const SideBarButtons = () => {
-  const axiosPrivate = useAxiosPrivate();
   const router = useRouter();
+  const axiosPrivate = useAxiosPrivate();
   const queryClient = useQueryClient();
-  const setCurrentUser = useUserStore((state) => state.setUser);
+  const { setUser, profilePic } = useUserStore();
+  const { openFriendsTab, openChatsTab } = useOpenTabsStore();
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
-  const profilePic = useUserStore((state) => state.profilePic);
-  const handleFriendsTab = useOpenTabsStore((state) => state.openFriendsTab);
-  const handleChatsTab = useOpenTabsStore((state) => state.openChatsTab);
 
   const handelNotificationsTab = useOpenTabsStore(
-    (state) => state.handleNotificationsTab
+    (state) => state.handleNotificationsTab,
   );
   const handelFriendRequestsTab = useOpenTabsStore(
-    (state) => state.handleFriendRequestsTab
+    (state) => state.handleFriendRequestsTab,
   );
 
   const handleLogOut = async () => {
     localStorage.removeItem("currentUser");
     queryClient.removeQueries({ queryKey: ["currentUser"], exact: true });
     setAccessToken(null);
-    setCurrentUser(null);
+    setUser(null);
     try {
       await axiosPrivate.get("/users/logout", {
         withCredentials: true,
@@ -49,7 +48,7 @@ const SideBarButtons = () => {
   const { setSystemLoading } = useThemeContext();
 
   const gotoChats = () => {
-      handleChatsTab();
+      openChatsTab();
       router.replace("/dashboard");
     },
     gotoProfileSettings = () => {
@@ -71,51 +70,34 @@ const SideBarButtons = () => {
           <DisplayImage className="pp-container" base64String={profilePic} />
         )}
       </div>
-
       <section className="icons-section">
-        <button
-          className="side-Btn"
-          type="button"
-          title="Chats"
+        <SideButton
+          icon={<IoNotifications className="side-icon" />}
+          title="Notifications"
           onClick={handelNotificationsTab}
-        >
-          <IoNotifications className="side-icon" />
-          Notifications
-        </button>
-        <button
-          className="side-Btn"
-          type="button"
+        />
+        <SideButton
+          icon={<PiChatsFill className="side-icon" />}
           title="Chats"
           onClick={gotoChats}
-        >
-          <PiChatsFill className="side-icon" />
-          Chats
-        </button>
-        <button
-          className="side-Btn"
-          type="button"
+        />
+        <SideButton
+          icon={<RiContactsBook3Fill className="side-icon" />}
           title="Contacts"
-          onClick={handleFriendsTab}
-        >
-          <RiContactsBook3Fill className="side-icon" />
-          Contacts
-        </button>
-        <button
-          className="side-Btn"
-          type="button"
+          onClick={openFriendsTab}
+        />
+        <SideButton
+          icon={<FaUserFriends className="side-icon" />}
           title="Friend requests"
           onClick={handelFriendRequestsTab}
-        >
-          <FaUserFriends className="side-icon" />
-          Friend requests
-        </button>
+        />
         <AddFriendDialog />
       </section>
       <section className="icons-section">
-        <button className="side-Btn" type="button" title="Settings">
-          <IoSettingsSharp className="side-icon" />
-          Settings
-        </button>
+        <SideButton
+          icon={<IoSettingsSharp className="side-icon" />}
+          title="Settings"
+        />
         <button
           className="logout-Btn side-Btn"
           type="button"

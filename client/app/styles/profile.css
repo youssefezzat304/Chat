@@ -45,7 +45,8 @@
   background-color: #b0a3b311;
   height: 100%;
   border-radius: 22px;
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+  box-shadow:
+    rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
     rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
 .profile-left-sec section {
@@ -76,7 +77,8 @@
   width: 100%;
   padding: 0 0.6rem;
   border-radius: 22px;
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+  box-shadow:
+    rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
     rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
 .edit-name-icon {
@@ -87,8 +89,10 @@
   height: 30px;
   padding: 5px;
   border-radius: 50%;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
   transition: 0.15s;
 }
 .edit-name-icon:hover {
@@ -110,8 +114,10 @@
   font-size: large;
   font-weight: 700;
   border-radius: 60px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
   transition: 0.1s;
 }
 .profile-left-sec .upload-pp-Btn:hover {
@@ -160,8 +166,10 @@
   font-size: large;
   font-weight: 700;
   border-radius: 60px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
   transition: 0.1s;
 }
 .profile-left-sec .remove-pp-Btn:hover {
@@ -189,8 +197,10 @@
   font-size: large;
   font-weight: 700;
   border-radius: 60px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
   transition: 0.1s;
 }
 .profile-left-sec .save-Btn:hover {
@@ -212,8 +222,10 @@
   font-size: large;
   font-weight: 700;
   border-radius: 60px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
   transition: 0.1s;
 }
 .profile-left-sec .reset-Btn:hover {
@@ -233,7 +245,8 @@
   border-radius: 12px;
   margin-top: 0.6rem;
   padding-right: 4rem;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+  box-shadow:
+    rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
     rgb(209, 213, 219) 0px 0px 0px 1px inset;
 }
 .bio p {
@@ -254,7 +267,8 @@
   height: 33%;
   margin-top: 0.6rem;
   border-radius: 12px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+  box-shadow:
+    rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
     rgb(209, 213, 219) 0px 0px 0px 1px inset;
 }
 .personal-info-sec section {

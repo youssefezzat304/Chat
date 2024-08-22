@@ -22,7 +22,7 @@ type ProfileInputProps = ComponentProps<"input"> & {
   holder: string;
   type?: "text" | "number" | "email" | null;
 };
-export const ProfileInput = ({
+const ProfileInput = ({
   control,
   defaultValue,
   errorCondition,
@@ -48,9 +48,10 @@ export const ProfileInput = ({
     </div>
   );
 };
+export default ProfileInput;
 
 interface CountrySelectProps {
-  control: UseFormRegisterReturn<"country">;
+  control: UseFormRegisterReturn<"address.country">;
   selectedCountry: string | undefined;
 }
 export const CountrySelect = ({
@@ -134,7 +135,7 @@ export const BirthDateInput = ({
               const formatedDate = value?.format("MM/DD/YYYY");
               setValue(
                 "birthDate",
-                !formatedDate ? "MM/DD/YYYY" : formatedDate
+                !formatedDate ? "MM/DD/YYYY" : formatedDate,
               );
             }}
             slotProps={{

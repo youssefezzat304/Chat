@@ -62,7 +62,7 @@ const ProfileSettings = () => {
 
   const notificationsTab = useOpenTabsStore((state) => state.notificationsTab);
   const friendRequestsTab = useOpenTabsStore(
-    (state) => state.friendRequestsTab
+    (state) => state.friendRequestsTab,
   );
 
   const handleClose = () => {
@@ -82,14 +82,14 @@ const ProfileSettings = () => {
             <div className="main-profile-sec">
               <ProfileLeftSection
                 control={control}
-                activeUser={user ? user : {}}
+                activeUser={user}
                 saveChanges={saveChanges}
                 resetSettings={resetSettings}
                 errors={errors}
               />
               <ProfileFormSection
                 control={control}
-                activeUser={user ? user : {}}
+                activeUser={user}
                 handleSubmit={handleSubmit}
                 saveChanges={saveChanges}
                 errors={errors}

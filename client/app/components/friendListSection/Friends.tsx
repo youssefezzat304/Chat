@@ -13,8 +13,8 @@ const Friends = () => {
   return (
     <main className="friendList-main">
       <SearchBar />
-      {friendList?.map((friend: User, index: any) => {
-        return <Subject key={index} subject={friend} />;
+      {friendList?.map((friend: User) => {
+        return <Subject key={friend._id} subject={friend} />;
       })}
     </main>
   );

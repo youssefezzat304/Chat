@@ -1,10 +1,9 @@
 import { CiSearch } from "react-icons/ci";
 
 const SearchBar = () => {
-  
   return (
     <main className="search-main">
-      <CiSearch className="search-icon"/>
+      <CiSearch className="search-icon" />
       <input
         className="search-bar"
         type="search"
@@ -13,6 +12,6 @@ const SearchBar = () => {
       />
     </main>
   );
-}
+};
 
-export default SearchBar
+export default SearchBar;

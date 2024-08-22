@@ -1,20 +1,18 @@
 "use client";
-import { LuUpload } from "react-icons/lu";
+import { useState } from "react";
 import UploadProfilePic from "../components/SVGs/UploadProfilePic";
+import DisplayImage from "../components/others/DisplayImage";
+import UploadFileBtn from "../components/buttons/UploadFileBtn";
 import { User } from "../utils/types/user.interfaces";
+import { useUserStore } from "../utils/stores/user.store";
+import { Control, FieldErrors, SubmitHandler } from "react-hook-form";
 import {
   MdDelete,
   MdModeEditOutline,
   MdOutlineDataSaverOn,
 } from "react-icons/md";
-import { Control, FieldErrors, SubmitHandler } from "react-hook-form";
 import { FaUndo } from "react-icons/fa";
-import UploadFileBtn from "../components/buttons/UploadFileBtn";
-import { useState } from "react";
-import { Avatar } from "@mui/material";
-import { useUserStore } from "../utils/stores/user.store";
-import DisplayImage from "../components/others/DisplayImage";
-// import DisplayImage from "../components/others/DisplayImage";
+import { LuUpload } from "react-icons/lu";
 
 type ProfileLeftSectionProps = {
   control: Control<any>;
@@ -59,11 +57,11 @@ const ProfileLeftSection = ({
       className="profile-left-sec"
       onSubmit={control.handleSubmit((data) => saveChanges(data))}
     >
-        {profilePic ? (
-          <DisplayImage className="pp-container" base64String={profilePic} />
-        ) : (
-          <UploadProfilePic />
-        )}
+      {profilePic ? (
+        <DisplayImage className="pp-container" base64String={profilePic} />
+      ) : (
+        <UploadProfilePic />
+      )}
       <section>
         <input
           type="text"

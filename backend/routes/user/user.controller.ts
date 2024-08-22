@@ -9,6 +9,9 @@ import { CreateSessionInput } from "../auth/auth.schema";
 import AuthService from "../auth/auth.service";
 import { verifyJwt } from "../../utils/jwt";
 import { SessionModel, UserModel } from "../models";
+import { DocumentType } from "@typegoose/typegoose";
+import { User } from "./user.model";
+import { Session } from "../auth/session.model";
 
 class UserController implements Controller {
   public path = "/users";
@@ -47,7 +50,7 @@ class UserController implements Controller {
     const body = req.body;
 
     try {
-      const user = await this.userService.signUp(body);
+      const user = (await this.userService.signUp(body)) as DocumentType<User>;
 
       const accessToken = this.auth.signAccessToken(user);
 
@@ -83,7 +86,9 @@ class UserController implements Controller {
     const isValid = await user.validatePassword(password);
     if (!isValid) return res.send(message);
 
-    const findSession = await SessionModel.findOne({ user: user._id });
+    const findSession = (await SessionModel.findOne({
+      user: user._id,
+    })) as DocumentType<Session> | null;
 
     if (findSession) {
       const refreshToken = await this.auth.updateRefreshToken({
@@ -128,14 +133,14 @@ class UserController implements Controller {
     try {
       const userId = res.locals.user._id;
 
-      const user = await UserModel.findById(userId)
+      const user = (await UserModel.findById(userId)
         .populate({
           path: "friendRequestsReceived",
           select: ["displayName", "profilePic"],
         })
         .populate("friends")
         .populate("chats")
-        .exec();
+        .exec()) as DocumentType<User> | null;
 
       if (!user) {
         return res.status(404).send({ message: "User not found" });

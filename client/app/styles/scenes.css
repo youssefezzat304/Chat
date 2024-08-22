@@ -51,8 +51,10 @@
   padding: 10px 12px;
   cursor: pointer;
   border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
   transition: 0.15s;
 }
 .input-container button:hover {
@@ -73,8 +75,10 @@
   padding: 10px 12px;
   border: none;
   border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
   transition: 0.15s;
 }
 .add-friend-container .cancel-Btn:active {
@@ -99,8 +103,10 @@
   flex-direction: end;
   border-radius: 1rem;
   width: 60%;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
 }
 /* --------------- Create New Contact ------------*/
 .create-contact-card {

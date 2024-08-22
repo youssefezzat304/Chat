@@ -6,6 +6,7 @@ import { Types } from "mongoose";
 import { FriendRequestModel, UserModel } from "../models";
 import { User } from "../user/user.model";
 import { FriendRequestServices } from "./fiendRequest.service";
+import { FriendRequest } from "./friendRequest.model";
 
 class FriendRequestController implements Controller {
   public path = "/friend-request";
@@ -50,10 +51,10 @@ class FriendRequestController implements Controller {
         return res.status(400).json({ message: "You are already friends" });
       }
 
-      const existingRequest = await FriendRequestModel.findOne({
+      const existingRequest = (await FriendRequestModel.findOne({
         requester: requester._id,
         recipient: recipient._id,
-      });
+      })) as DocumentType<FriendRequest> | null;
 
       if (existingRequest) {
         return res.status(400).json({ message: "Friend request already sent" });
@@ -71,7 +72,7 @@ class FriendRequestController implements Controller {
         requester: requester._id,
         recipient: recipient._id,
         status: "pending",
-      });
+      }) as DocumentType<FriendRequest>;
 
       await Promise.all([
         friendRequest.save(),
@@ -102,10 +103,10 @@ class FriendRequestController implements Controller {
         return res.status(400).json({ message: "Invalid recipient ID" });
       }
 
-      const friendRequest = await FriendRequestModel.findOne({
+      const friendRequest = (await FriendRequestModel.findOne({
         recipient: recipientId,
         requester: requesterId,
-      });
+      })) as DocumentType<FriendRequest> | null;
 
       if (!friendRequest) {
         return res.status(404).json({ message: "Friend request not found" });
@@ -117,10 +118,10 @@ class FriendRequestController implements Controller {
           .json({ message: "Friend request already processed" });
       }
 
-      const updatedUser = await this.services.acceptAndUpdate({
+      const updatedUser = (await this.services.acceptAndUpdate({
         requesterId,
         recipientId,
-      });
+      })) as DocumentType<FriendRequest> | null;
 
       return res.status(200).send(updatedUser);
     } catch (error) {
@@ -144,10 +145,10 @@ class FriendRequestController implements Controller {
         return res.status(400).json({ message: "Invalid recipient ID" });
       }
 
-      const friendRequest = await FriendRequestModel.findOne({
+      const friendRequest = (await FriendRequestModel.findOne({
         recipient: recipientId,
         requester: requesterId,
-      });
+      })) as DocumentType<FriendRequest> | null;;
 
       if (!friendRequest) {
         return res.status(404).json({ message: "Friend request not found" });
@@ -159,10 +160,10 @@ class FriendRequestController implements Controller {
           .json({ message: "Friend request already processed" });
       }
 
-      const updatedUser = await this.services.rejectAndUpdate({
+      const updatedUser = (await this.services.rejectAndUpdate({
         requesterId,
         recipientId,
-      });
+      })) as DocumentType<User> | null;
 
       return res.status(200).send(updatedUser);
     } catch (error) {

@@ -60,7 +60,7 @@ const AddFriend = ({
           open={open}
           clear={clear}
           errors={errors}
-          isFriendReqSuccessful={isFriendReqSuccessful}        
+          isFriendReqSuccessful={isFriendReqSuccessful}
         />
         <div className="addfriend-svg">
           <AddFriendRequest />

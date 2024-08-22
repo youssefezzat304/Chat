@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
 import config from "config";
+import { DocumentType } from "@typegoose/typegoose";
+import { User } from "../routes/user/user.model";
+import { Session } from "../routes/auth/session.model";
 
 type privateKeyNames = "accessTokenPrivateKey" | "refreshTokenPrivateKey";
 type publicKeyNames = "accessTokenPublicKey" | "refreshTokenPublicKey";
@@ -20,13 +23,16 @@ export function signJwt(
   });
 }
 
-export function verifyJwt<T>(token: string, keyName: publicKeyNames): T | null {
+export function verifyJwt<T>(
+  token: string,
+  keyName: publicKeyNames
+): DocumentType<T> | null {
   const publicKey = Buffer.from(config.get<string>(keyName), "base64").toString(
     "ascii"
   );
 
   try {
-    const decoded = jwt.verify(token, publicKey) as T;
+    const decoded = jwt.verify(token, publicKey) as DocumentType<T>;
     return decoded;
   } catch (error) {
     return null;

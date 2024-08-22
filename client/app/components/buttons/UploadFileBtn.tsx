@@ -33,10 +33,10 @@ export default function UploadFileBtn({
       tabIndex={-1}
       startIcon={icon}
       sx={{
-        transition: "none", 
+        transition: "none",
         textTransform: "none",
         "&:active": {
-          backgroundColor: "transparent", 
+          backgroundColor: "transparent",
           boxShadow: "none",
         },
         "&:focus": {
@@ -45,10 +45,7 @@ export default function UploadFileBtn({
       }}
     >
       <span>{text}</span>
-      <VisuallyHiddenInput
-        type="file"
-        onChange={onChangeEvent}
-      />
+      <VisuallyHiddenInput type="file" onChange={onChangeEvent} />
     </Button>
   );
 }

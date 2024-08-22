@@ -1,7 +1,5 @@
 const ChatInfo = () => {
-  return (
-    <div>ChatInfo</div>
-  )
-}
+  return <div>ChatInfo</div>;
+};
 
-export default ChatInfo
+export default ChatInfo;

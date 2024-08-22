@@ -2,7 +2,7 @@ import React from "react";
 import { SVGFC } from "./types";
 
 const BlackBg: SVGFC = (props) => {
- return (
+  return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       x="0"
@@ -185,7 +185,6 @@ const BlackBg: SVGFC = (props) => {
       </g>
     </svg>
   );
-
 };
 
 export default BlackBg;

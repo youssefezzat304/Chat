@@ -46,7 +46,7 @@ export const checkUser = async (): Promise<User | null> => {
 };
 
 export const updateInfo = async (
-  data: any
+  data: any,
 ): Promise<AxiosResponse<User> | null> => {
   try {
     const response = api.patch("/users/update-info", data, {
@@ -105,7 +105,7 @@ export const setupInterceptors = (accessToken: string) => {
       }
       return config;
     },
-    (error) => Promise.reject(error)
+    (error) => Promise.reject(error),
   );
 
   const responseIntercept = axiosPrivate.interceptors.response.use(
@@ -118,7 +118,7 @@ export const setupInterceptors = (accessToken: string) => {
         return axiosPrivate(prevRequest);
       }
       return Promise.reject(error);
-    }
+    },
   );
 
   return { requestIntercept, responseIntercept };

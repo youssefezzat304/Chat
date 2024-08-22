@@ -8,10 +8,10 @@ const api = axios.create({
 });
 
 export const getMessages = async (
-  chatId: string | undefined
+  chatId: string | undefined,
 ): Promise<AxiosResponse<MessageInterface[] | null> | undefined> => {
   try {
-    const messages = await api.get(`/message/messages/${chatId}`, {
+    const messages = await api.get(`/messages/get-messages/${chatId}`, {
       withCredentials: true,
     });
     return messages;
@@ -39,7 +39,7 @@ export const sendMessage = async ({
     content,
   };
   try {
-    const message = api.post("/message/create", data, {
+    const message = api.post("/messages/send", data, {
       withCredentials: true,
     });
     return message;

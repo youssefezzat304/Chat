@@ -1,9 +1,4 @@
-import {
-  DocumentType,
-  pre,
-  prop,
-  Ref,
-} from "@typegoose/typegoose";
+import { DocumentType, pre, prop, Ref } from "@typegoose/typegoose";
 import bcrypt from "bcrypt";
 import { Types } from "mongoose";
 import { Chat } from "../chat/chat.model";
@@ -20,6 +15,9 @@ export const privateFeilds = ["password", "__v"];
 export class User {
   @prop({ type: () => Types.ObjectId, default: () => new Types.ObjectId() })
   public _id!: Types.ObjectId;
+
+  @prop({ required: true })
+  public displayName: string;
 
   @prop({ lowercase: true, required: true, unique: true })
   public email: string;
@@ -39,9 +37,6 @@ export class User {
   @prop({ ref: () => Chat, default: [] })
   public chats: Ref<Chat>[];
 
-  @prop({ required: true })
-  public displayName: string;
-
   @prop({ default: "" })
   birthDate: string;
 
@@ -54,21 +49,12 @@ export class User {
   @prop({ default: "Hey there I am using chat app..." })
   public status: string;
 
-  @prop({ default: "" })
-  public country: string;
-
-  @prop({ default: "" })
-  public city: string;
-
-  @prop({ default: "" })
-  public postalCode: string;
-
-  // @prop()
-  // public addresse: {
-  //   country: string;
-  //   city: string;
-  //   postalCode: string;
-  // };
+  @prop({ default: { country: "", city: "", postalCode: "" } })
+  public addresse: {
+    country: string;
+    city: string;
+    postalCode: string;
+  };
   async validatePassword(this: DocumentType<User>, candidatePassword: string) {
     try {
       return await bcrypt.compare(candidatePassword, this.password);

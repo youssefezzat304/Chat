@@ -1,20 +1,19 @@
 "use client";
+import {
+  ChatInfo,
+  Members,
+  Notifications,
+  FriendRequests,
+} from "../components/windows";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-//----- Components --------------
-import ChatInfo from "../components/windows/ChatInfo";
-import Main from "../components/scenes/main";
-import Members from "../components/windows/Members";
 import SideBarButtons from "../components/buttons/SideBarButtons";
-import Loading from "../components/scenes/loading";
+import { Loading, Home } from "../components/scenes";
 import { DashboardLoading } from "./dashboardLoading";
-import Notifications from "../components/windows/Notifications";
-import FriendRequests from "../components/windows/FriendRequests";
 import { useOpenTabsStore } from "../utils/stores/handleTabs.store";
 import { useUserStore } from "../utils/stores/user.store";
 import useAuthenticateUser from "../hooks/useAuthenticateUser";
-//----- SVGs --------------------
 
-export default function Home() {
+export default function Dashboard() {
   const user = useUserStore((state) => state.user);
   const { isLoading } = useAuthenticateUser();
   const friendRequestsTab = useOpenTabsStore(
@@ -36,7 +35,7 @@ export default function Home() {
         <PanelGroup direction="horizontal" autoSaveId="main">
           <Panel defaultSize={75}>
             <section className="main-sec">
-              <Main />
+              <Home />
             </section>
           </Panel>
           <PanelResizeHandle />

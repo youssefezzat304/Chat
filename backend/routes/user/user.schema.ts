@@ -1,4 +1,4 @@
-import { object, string, TypeOf, number, literal, array } from "zod";
+import { object, string, TypeOf, literal, array } from "zod";
 import { ErrorMessage } from "../../utils/exceptions/baseError.exception";
 
 export const createUserSchema = object({
@@ -44,9 +44,11 @@ export const UserSchema = object({
       .optional()
       .default("Hey there I am using chat app...")
       .or(literal("")),
-    country: string().min(2).optional().or(literal("")),
-    city: string().min(2).optional().or(literal("")),
-    postalCode: string().min(1).optional().or(literal("")),
+    address: object({
+      country: string().min(2).optional().or(literal("")),
+      city: string().min(2).optional().or(literal("")),
+      postalCode: string().min(1).optional().or(literal("")),
+    }),
     birthDate: string().optional().or(literal("")),
     friendRequestsSent: array(object({ displayName: string() }).optional()),
     friendRequestsReceived: array(object({ displayName: string() }).optional()),

@@ -1,4 +1,4 @@
-import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
+import { prop, Ref } from "@typegoose/typegoose";
 import { User } from "../user/user.model";
 import { Types } from "mongoose";
 
@@ -13,25 +13,25 @@ export class UploadFile {
   public recipient?: Ref<User>;
 
   @prop()
-  fieldname: string;
+  public fieldname: string;
 
   @prop()
-  originalname: string;
+  public originalname: string;
 
   @prop()
-  encoding: string;
+  public encoding: string;
 
   @prop()
-  destination: string;
+  public destination: string;
 
   @prop()
-  filename: string;
+  public filename: string;
 
   @prop()
-  path: string;
+  public path: string;
 
   @prop()
-  size: number;
+  public size: number;
 
   @prop()
   public mimetype: string;

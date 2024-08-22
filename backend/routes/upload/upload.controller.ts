@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { NextFunction, Request, Response, Router } from "express";
+import { Request, Response, Router } from "express";
 import Controller from "../../utils/interfaces/controller.interface";
 import { uploadProfilePictureMiddleware } from "../../middlewares/upload.middleware";
 import { UserModel } from "../models";
@@ -62,7 +62,6 @@ export class UploadController implements Controller {
   private profilePictureDelete = async (
     req: Request,
     res: Response,
-    next: NextFunction
   ) => {
     try {
       const { userId } = req.body;

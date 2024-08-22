@@ -6,7 +6,7 @@ import Chats from "../friendListSection/Chats";
 import { useOpenTabsStore } from "@/app/utils/stores/handleTabs.store";
 import Friends from "../friendListSection/Friends";
 
-const Main = () => {
+const Home = () => {
   const friendsTab = useOpenTabsStore((state) => state.friendsTab);
   return (
     <PanelGroup
@@ -30,4 +30,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Home;

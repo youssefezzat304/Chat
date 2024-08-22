@@ -1,10 +1,15 @@
 "use client";
-import { Control, FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormSetValue } from "react-hook-form";
-import { User } from "../utils/types/user.interfaces";
 import {
+  Control,
+  FieldErrors,
+  SubmitHandler,
+  UseFormHandleSubmit,
+  UseFormSetValue,
+} from "react-hook-form";
+import { User } from "../utils/types/user.interfaces";
+import ProfileInput, {
   BirthDateInput,
   CountrySelect,
-  ProfileInput,
 } from "../components/inputs/ProfileInput";
 import { TextField } from "@mui/material";
 
@@ -43,9 +48,7 @@ const ProfileFormSection = ({
             holder="example@info.com"
           />
 
-          <BirthDateInput
-            setValue={setValue}
-          />
+          <BirthDateInput setValue={setValue} />
 
           <ProfileInput
             label="Phone number"
@@ -65,23 +68,23 @@ const ProfileFormSection = ({
         </label>
         <section>
           <CountrySelect
-            control={control.register("country")}
-            selectedCountry={activeUser.country}
+            control={control.register("address.country")}
+            selectedCountry={activeUser.address.country}
           />
           <ProfileInput
             label="City/State"
-            control={control.register("city")}
-            defaultValue={activeUser.city}
-            errorCondition={errors.city}
-            errorMessage={errors.city?.message}
+            control={control.register("address.city")}
+            defaultValue={activeUser.address.city}
+            errorCondition={errors.address?.city}
+            errorMessage={errors.address?.city?.message}
             holder="California"
           />
           <ProfileInput
             label="Postal code"
-            control={control.register("postalCode")}
-            defaultValue={activeUser.postalCode}
-            errorCondition={errors.postalCode}
-            errorMessage={errors.postalCode?.message}
+            control={control.register("address.postalCode")}
+            defaultValue={activeUser.address.postalCode}
+            errorCondition={errors.address?.postalCode}
+            errorMessage={errors.address?.postalCode?.message}
             holder="AB1234"
           />
         </section>

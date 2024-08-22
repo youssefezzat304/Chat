@@ -54,8 +54,10 @@ export const userValidation = z.object({
     .optional()
     .default("Hey there I am using chat app...")
     .or(z.literal("")),
-  country: z.string().min(2).optional().or(z.literal("")),
-  city: z.string().min(2).optional().or(z.literal("")),
-  postalCode: z.string().min(1).optional().or(z.literal("")),
+  address: z.object({
+    country: z.string().min(2).optional().or(z.literal("")),
+    city: z.string().min(2).optional().or(z.literal("")),
+    postalCode: z.string().min(1).optional().or(z.literal("")),
+  }),
   birthDate: z.string().optional().or(z.literal("")),
 });

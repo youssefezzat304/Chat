@@ -15,7 +15,7 @@ export type NotificationProps = {
   requesterId?: string;
   request?: any;
 };
-export const Notification = ({
+const Notification = ({
   primaryLabel,
   message,
   displayName,
@@ -46,3 +46,5 @@ export const Notification = ({
     </ListItem>
   );
 };
+
+export default Notification;

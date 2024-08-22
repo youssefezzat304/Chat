@@ -7,9 +7,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUserStore } from "@/app/utils/stores/user.store";
 import { FriendRequestState } from "@/app/utils/types/friendSystem.interfaces";
-import { FriendRequestSchema, friendRequestValidation } from "@/app/utils/validation/friendSystem.validation";
+import {
+  FriendRequestSchema,
+  friendRequestValidation,
+} from "@/app/utils/validation/friendSystem.validation";
 import { api } from "@/app/api/axios";
-
 
 export default function AddFriendDialog() {
   const user = useUserStore((state) => state.user);
@@ -27,7 +29,7 @@ export default function AddFriendDialog() {
   });
 
   const handleFriendRequest: SubmitHandler<FriendRequestSchema> = async (
-    data
+    data,
   ) => {
     if (data.recipientEmail === user?.email) {
       setIsFriendReqSuccessful(null);
@@ -50,7 +52,7 @@ export default function AddFriendDialog() {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       clearErrors();

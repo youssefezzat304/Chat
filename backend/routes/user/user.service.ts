@@ -1,3 +1,4 @@
+import { DocumentType } from "@typegoose/typegoose";
 import { Chat } from "../chat/chat.model";
 import { UserModel } from "../models";
 import { User } from "./user.model";
@@ -6,56 +7,43 @@ import { UserSchemaInput } from "./user.schema";
 class UserService {
   private user = UserModel;
 
-  public async signUp(input: Partial<User>): Promise<Error | any> {
-    return UserModel.create(input)
-      .then((user) => user)
-      .catch((error) => {
-        console.error("Error creating user:", error);
-        return new Error("Failed to create user.");
-      });
-  }
-
-  public async login(email: string) {
-    const user = await this.user.findOne({ email });
-    if (user === null) {
-      return new Error("user === null");
-    }
-
+  public async signUp(input: Partial<User>) {
     try {
-      return "login successfully";
+      const user = (await UserModel.create(input)) as DocumentType<User>;
+      return user;
+    } catch (error) {
+      return new Error("Failed to create user.");
+    }
+  }
+  public async login(email: string) {
+    try {
+      const user = (await this.user.findOne({ email })) as DocumentType<User>;
+      if (user === null) {
+        return new Error("user === null");
+      }
+      return user;
     } catch (error) {
       return new Error("error:");
     }
   }
-
-  public createUser(input: Partial<User>) {
-    return UserModel.create(input);
+  public async createUser(input: Partial<User>) {
+    return (await UserModel.create(input)) as DocumentType<User> | null;
   }
-
-  public findUserById(id: string) {
-    return UserModel.findById(id);
+  public async findUserById(id: string) {
+    return (await UserModel.findById(id)) as DocumentType<User> | null;
   }
-
-  public findUserByEmail(email: string) {
-    return UserModel.findOne({ email });
+  public async findUserByEmail(email: string) {
+    return (await UserModel.findOne({ email })) as DocumentType<User> | null;
   }
-
-  public updateUserByEmail(email: string, data: UserSchemaInput) {
-    return UserModel.updateOne(
+  public async updateUserByEmail(email: string, data: UserSchemaInput) {
+    return await UserModel.updateOne(
       { email: email },
       {
         $set: data,
       }
     );
   }
-
-  public addChatId = async ({
-    userId,
-    chat,
-  }: {
-    userId: string;
-    chat: Chat;
-  }) => {
+  public async addChatId({ userId, chat }: { userId: string; chat: Chat }) {
     await UserModel.findByIdAndUpdate(
       userId,
       {
@@ -63,7 +51,7 @@ class UserService {
       },
       { new: true }
     );
-  };
+  }
 }
 
 export default UserService;

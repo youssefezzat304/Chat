@@ -7,6 +7,7 @@ import { useChatStore } from "@/app/utils/stores/chat.store";
 import { ChatInfo } from "@/app/utils/types/chat.interfaces";
 import { useUserStore } from "@/app/utils/stores/user.store";
 import { useEffect } from "react";
+import { CircularProgress } from "@mui/material";
 
 const Chats = () => {
   const recentChats = useChatStore((state) => state.recentChats);
@@ -22,28 +23,34 @@ const Chats = () => {
   return (
     <main className="friendList-main">
       <SearchBar />
-      {recentChats?.length === 0 ? (
+      {isLoading ? (
+        <div className="center-loading">
+          <CircularProgress color="secondary" />
+        </div>
+      ) : recentChats?.length === 0 ? (
         <EmptyChats />
       ) : (
-        recentChats?.map((chat: ChatInfo, index: any) => {
-          if (chat.participants[0]._id !== currentUser?._id) {
-            return (
-              <Subject
-                key={index}
-                subject={chat.participants[0]}
-                lastMessage={chat.lastMessage}
-              />
-            );
-          } else {
-            return (
-              <Subject
-                key={index}
-                subject={chat.participants[1]}
-                lastMessage={chat.lastMessage}
-              />
-            );
-          }
-        })
+        <div className="friend-list">
+          {recentChats?.map((chat: ChatInfo, index: any) => {
+            if (chat.participants[0]._id !== currentUser?._id) {
+              return (
+                <Subject
+                  key={index}
+                  subject={chat.participants[0]}
+                  lastMessage={chat.lastMessage}
+                />
+              );
+            } else {
+              return (
+                <Subject
+                  key={index}
+                  subject={chat.participants[1]}
+                  lastMessage={chat.lastMessage}
+                />
+              );
+            }
+          })}
+        </div>
       )}
     </main>
   );

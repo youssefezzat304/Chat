@@ -25,7 +25,7 @@ export const handleFriendRequest = async ({
       reqData,
       {
         headers: { withCredentials: true },
-      }
+      },
     );
     console.log(response);
     return response.data;

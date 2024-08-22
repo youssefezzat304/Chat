@@ -1,6 +1,6 @@
-import { SVGFC } from "./types";
+import { ComponentProps } from "react";
 
-const LightBg: SVGFC = (props) => {
+const LightBg = ({ ...props }: ComponentProps<"svg">) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -464,4 +464,4 @@ const LightBg: SVGFC = (props) => {
   );
 };
 
-export { LightBg };
+export default LightBg;

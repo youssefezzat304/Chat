@@ -1,6 +1,9 @@
 import { Request, Response, Router } from "express";
 import Controller from "../../utils/interfaces/controller.interface";
 import { ChatModel, UserModel } from "../models";
+import { DocumentType } from "@typegoose/typegoose";
+import { User } from "../user/user.model";
+import { Chat } from "./chat.model";
 
 export class ChatController implements Controller {
   public path = "/chats";
@@ -10,48 +13,26 @@ export class ChatController implements Controller {
     this.initialiseRoutes();
   }
   private initialiseRoutes(): void {
-    this.router.get(`${this.path}/get-recent/:userId`, this.getAllChats);
+    this.router.get(`${this.path}/get-recent/:userId`, this.getRecentChats);
     this.router.get(`${this.path}/find-chat/:userId/:chatterId`, this.findChat);
   }
-
-  // private createChat = async (req: Request, res: Response) => {
-  //   const { userId, chatterId } = req.body;
-  //   try {
-  //     if (!userId || !chatterId)
-  //       return res.status(400).send("No info has been sent.");
-
-  //     const chat = await ChatModel.findOne({
-  //       participants: { $all: [userId, chatterId] },
-  //     });
-
-  //     if (chat) return res.status(200).send("Chat already existed.");
-
-  //     const newChat = new ChatModel({ participants: [userId, chatterId] });
-  //     await newChat.save();
-
-  //     const currentChat = await ChatModel.findById(newChat._id)
-  //       .populate("participants")
-  //       .exec();
-  //     return res.status(200).send(currentChat);
-  //   } catch (error) {
-  //     console.log("500 error", error);
-  //     return res.status(500).send(error);
-  //   }
-  // };
-
-  private getAllChats = async (req: Request, res: Response) => {
+  private getRecentChats = async (req: Request, res: Response) => {
     const userId = req.params.userId;
     try {
       if (!userId) return res.status(400).send("No info has been sent.");
 
-      const user = await UserModel.findById(userId)
+      const user = (await UserModel.findById(userId)
         .populate({
           path: "chats",
           populate: [
             { path: "participants", select: ["displayName", "profilePic"] },
+            {
+              path: "lastMessage",
+              select: ["content", "createdAt", "initiatedBy"],
+            },
           ],
         })
-        .exec();
+        .exec()) as DocumentType<User> | null;
       const chats = user?.chats;
 
       return res.status(200).send(chats);
@@ -67,12 +48,12 @@ export class ChatController implements Controller {
       if (!userId || !chatterId)
         return res.status(400).send("No info has been sent.");
 
-      let chat = await ChatModel.findOne({
+      let chat = (await ChatModel.findOne({
         participants: { $all: [userId, chatterId] },
       })
         .populate("lastMessage")
         .populate("participants")
-        .exec();
+        .exec()) as DocumentType<Chat>;
 
       if (!chat) {
         chat = new ChatModel({ participants: [userId, chatterId] });

@@ -1,4 +1,6 @@
+import { DocumentType } from "@typegoose/typegoose";
 import { FriendRequestModel, UserModel } from "../models";
+import { User } from "../user/user.model";
 
 export class FriendRequestServices {
   private friendRequest = FriendRequestModel;
@@ -27,9 +29,9 @@ export class FriendRequestServices {
       requester: requesterId,
     });
 
-    const updatedUser = await UserModel.findById(recipientId)
+    const updatedUser = (await UserModel.findById(recipientId)
       .populate({ path: "friends" })
-      .exec();
+      .exec()) as DocumentType<User> | null;
 
     return updatedUser;
   };
@@ -51,9 +53,9 @@ export class FriendRequestServices {
       requester: requesterId,
     });
 
-    const updatedUser = await UserModel.findById(recipientId)
+    const updatedUser = (await UserModel.findById(recipientId)
       .populate({ path: "friends" })
-      .exec();
+      .exec()) as DocumentType<User> | null;
 
     return updatedUser;
   };

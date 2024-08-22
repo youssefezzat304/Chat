@@ -3,6 +3,8 @@ import { privateFeilds, User } from "../user/user.model";
 import { signJwt } from "../../utils/jwt";
 import { omit } from "lodash";
 import { SessionModel } from "../models";
+import { Types } from "mongoose";
+import { Session } from "./session.model";
 
 class AuthService {
   public signAccessToken(user: DocumentType<User>) {
@@ -15,11 +17,13 @@ class AuthService {
   }
 
   public async createSession({ userID }: { userID: string }) {
-    return SessionModel.create({ user: userID });
+    return (await SessionModel.create({
+      user: userID,
+    })) as DocumentType<Session>;
   }
 
-  public async findSessionById(id: string) {
-    return SessionModel.findById(id);
+  public async findSessionById(id: Types.ObjectId | string) {
+    return (await SessionModel.findById(id)) as DocumentType<Session> | null;
   }
 
   public async signRefreshToken({ userID }: { userID: string }) {

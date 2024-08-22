@@ -4,17 +4,20 @@ import { ComponentProps } from "react";
 import { useChatStore } from "@/app/utils/stores/chat.store";
 import { MessageInterface } from "@/app/utils/types/chat.interfaces";
 import dayjs from "dayjs";
+import { useUserStore } from "@/app/utils/stores/user.store";
 
 type SubjectProps = ComponentProps<"div"> & {
   subject: User;
   lastMessage?: MessageInterface;
 };
 const Subject = ({ subject, lastMessage }: SubjectProps) => {
-  const setSelectedChatId = useChatStore((state) => state.setSelectedChatId);
-  const { setChatWith, chatWith, selectedChatId } = useChatStore();
+  const { setChatWith } = useChatStore();
+  const currentUser = useUserStore((state) => state.user);
+  const isSentByCurrentUser = lastMessage?.initiatedBy === currentUser?._id;
 
   const handleSelectChatId = () => {
     setChatWith(subject);
+    console.log(lastMessage);
   };
   return (
     <main className="subject-main" onClick={handleSelectChatId}>
@@ -29,11 +32,14 @@ const Subject = ({ subject, lastMessage }: SubjectProps) => {
           <section className="top">
             <label htmlFor="">{subject.displayName}</label>
             <p className="lastseen">
-              {dayjs(lastMessage?.updatedAt).format("MM/DD/YY 	h:mm A")}
+              {dayjs(lastMessage?.createdAt).format("MM/DD/YY	h:mm A")}
             </p>
           </section>
           <section className="bottom">
-            <p className="last-messege">{lastMessage?.content}</p>
+            <p className="last-messege">
+              {isSentByCurrentUser ? <span>You: </span> : null}
+              {lastMessage?.content}
+            </p>
             {/* <p className="notification-icon"></p> */}
           </section>
         </div>

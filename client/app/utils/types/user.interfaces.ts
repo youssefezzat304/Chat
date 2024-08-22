@@ -3,10 +3,12 @@ export interface User {
   _id: string;
   displayName: string;
   email: string;
-  country: string;
+  address: {
+    country: string;
+    city: string;
+    postalCode: string;
+  };
   profilePic: string;
-  city: string;
-  postalCode: string;
   birthDate: string;
   phoneNumber: string;
   status: string;

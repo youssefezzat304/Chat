@@ -9,10 +9,10 @@ import { TbAlertSquareRoundedFilled } from "react-icons/tb";
 
 const NotificationsHeader = () => {
   const openNotificationsTab = useOpenTabsStore(
-    (state) => state.openNotificationsTab
+    (state) => state.openNotificationsTab,
   );
   const openFriendRequestsTab = useOpenTabsStore(
-    (state) => state.openFriendRequestsTab
+    (state) => state.openFriendRequestsTab,
   );
   return (
     <main className="notifications-sec">

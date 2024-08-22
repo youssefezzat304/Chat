@@ -1,9 +1,6 @@
 type Buttonprops = React.ComponentPropsWithRef<"button">;
 
-function UploadProfilePic({
-  className,
-  ...rest
-}: Buttonprops) {
+function UploadProfilePic({ className, ...rest }: Buttonprops) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

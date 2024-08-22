@@ -1,7 +1,5 @@
 const Members = () => {
-  return (
-    <div>Members</div>
-  )
-}
+  return <div>Members</div>;
+};
 
-export default Members
+export default Members;
