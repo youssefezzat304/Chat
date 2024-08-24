@@ -16,28 +16,29 @@ export { default as UploadFileBtn } from "./buttons/UploadFileBtn";
 // --------------- dialogs -----------------//
 export { default as AddFriendDialog } from "./dialogs/AddFriendDialog";
 // --------------- friendListSection -----------------//
-export { default as Chats } from "./friendListSection/Chats";
-export { default as Friends } from "./friendListSection/Friends";
-export { default as SearchBar } from "./friendListSection/SearchBar";
-export { default as Subject } from "./friendListSection/Subject";
+export { default as Chats } from "./tabs/Chats";
+export { default as Friends } from "./tabs/Friends";
+export { default as SearchBar } from "./others/SearchBar";
 // --------------- inputs -----------------//
 export { default as MessageInput } from "./inputs/MessageInput";
 export { default as ProfileInput } from "./inputs/ProfileInput";
 // --------------- others -----------------//
 export { default as DisplayImage } from "./others/DisplayImage";
-// --------------- rightSection -----------------//
-export { default as FriendRequestNotification } from "./rightSection/FriendRequestNotification";
-export { default as Notification } from "./rightSection/Notification";
-export { default as NotificationsHeader } from "./rightSection/NotificationsHeader";
+export { default as NoMessages } from "./others/NoMessages";
+// --------------- entities -----------------//
+export { default as Subject } from "./entities/Subject";
+export { default as FriendRequestNotification } from "./entities/FriendRequestNotification";
+export { default as Notification } from "./entities/Notification";
 // --------------- scenes -----------------//
 export { default as AddFriend } from "./scenes/AddFriend";
 export { default as Loading } from "./scenes/loading";
 export { default as Home } from "./scenes/Home";
-// --------------- windows -----------------//
-export { default as Chat } from "./windows/Chat";
-export { default as ChatInfo } from "./windows/ChatInfo";
-export { default as FriendRequests } from "./windows/FriendRequests";
-export { default as Members } from "./windows/Members";
-export { default as NoMessages } from "./windows/NoMessages";
-export { default as Notifications } from "./windows/Notifications";
-export { default as PrivateChat } from "./windows/PrivateChat";
+// --------------- tabs -----------------//
+export { default as Chat } from "./tabs/Chat";
+export { default as ChatInfo } from "./tabs/ChatInfo";
+export { default as FriendRequests } from "./tabs/FriendRequests";
+export { default as Members } from "./tabs/Members";
+export { default as Notifications } from "./tabs/Notifications";
+export { default as PrivateChat } from "./tabs/PrivateChat";
+// --------------- headers -----------------//
+export { default as NotificationsHeader } from "./headers/NotificationsHeader";

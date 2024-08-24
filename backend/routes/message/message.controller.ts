@@ -13,32 +13,14 @@ export class MessageController implements Controller {
     this.initialiseRoutes();
   }
   private initialiseRoutes(): void {
-    this.router.get(
-      `${this.path}/get-messages/:userId/:chatterId`,
-      this.getMessages
-    );
+    this.router.get(`${this.path}/get-messages/:chatId`, this.getMessages);
   }
 
   private getMessages = async (req: Request, res: Response) => {
-    const { userId, chatterId } = req.params;
+    const { chatId } = req.params;
 
     try {
-      if (!userId || !chatterId)
-        return res.status(400).send("No info has been sent.");
-
-      let chat = (await ChatModel.findOne({
-        participants: { $all: [userId, chatterId] },
-      })
-        .populate("lastMessage")
-        .populate("participants")
-        .exec()) as DocumentType<Chat>;
-
-      if (!chat) {
-        chat = new ChatModel({ participants: [userId, chatterId] });
-        chat.save();
-      }
-
-      const messages = (await MessageModel.find({ chatId: chat._id })
+      const messages = (await MessageModel.find({ chatId })
         .populate({
           path: "initiatedBy",
           select: "profilePic displayName",

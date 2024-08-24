@@ -1,7 +1,7 @@
 import { Panel, PanelGroup } from "react-resizable-panels";
-import NotificationsHeader from "../rightSection/NotificationsHeader";
+import NotificationsHeader from "../headers/NotificationsHeader";
 import { List } from "@mui/material";
-import { FriendRequestNotification } from "../";
+import { FriendRequestNotification } from "..";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/app/utils/stores";
 

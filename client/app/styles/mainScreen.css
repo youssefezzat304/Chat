@@ -14,9 +14,12 @@
   height: 100%;
   display: flex;
   z-index: 2;
+  justify-content: center;
+  align-items: center;
   padding-top: 6px;
-  padding-bottom: 6px;
   padding-right: 6px;
+  padding-bottom: 6px;
+  overflow: hidden;
 }
 .main-screen::before {
   content: "";
@@ -248,7 +251,6 @@
   cursor: pointer;
   background-color: transparent;
 }
-
 .listOfNotifications::-webkit-scrollbar-thumb {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.5);
@@ -262,4 +264,7 @@
   cursor: pointer;
   width: thin;
   color: rgba(82, 28, 135, 0.5) transparent;
+}
+.pp-placeholder{
+  margin-top: 0.3rem;
 }

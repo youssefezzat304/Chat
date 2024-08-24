@@ -1,6 +1,6 @@
 "use client";
-import SearchBar from "./SearchBar";
-import Subject from "./Subject";
+import SearchBar from "../others/SearchBar";
+import Subject from "../entities/Subject";
 import EmptyChats from "../SVGs/emptyChats";
 import { useGetChats } from "@/app/utils/queries/chat.query";
 import { useChatStore, useUserStore } from "@/app/utils/stores";
@@ -30,11 +30,11 @@ const Chats = () => {
         <EmptyChats />
       ) : (
         <div className="friend-list">
-          {recentChats?.map((chat: ChatInfo, index: any) => {
+          {recentChats?.map((chat: ChatInfo) => {
             if (chat.participants[0]._id !== currentUser?._id) {
               return (
                 <Subject
-                  key={index}
+                  key={chat.participants[0]._id}
                   subject={chat.participants[0]}
                   lastMessage={chat.lastMessage}
                 />
@@ -42,7 +42,7 @@ const Chats = () => {
             } else {
               return (
                 <Subject
-                  key={index}
+                  key={chat.participants[1]._id}
                   subject={chat.participants[1]}
                   lastMessage={chat.lastMessage}
                 />

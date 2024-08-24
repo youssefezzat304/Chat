@@ -4,14 +4,16 @@ import { ComponentProps } from "react";
 import { useChatStore, useUserStore } from "@/app/utils/stores";
 import { MessageInterface } from "@/app/utils/types/chat.interfaces";
 import dayjs from "dayjs";
+import { useFindChat } from "@/app/utils/queries/chat.query";
 
 type SubjectProps = ComponentProps<"div"> & {
   subject: User;
   lastMessage?: MessageInterface;
 };
 const Subject = ({ subject, lastMessage }: SubjectProps) => {
-  const  setChatWith  = useChatStore(state => state.setChatWith);
+  const setChatWith = useChatStore((state) => state.setChatWith);
   const currentUser = useUserStore((state) => state.user);
+  const { isLoading } = useFindChat();
   const isSentByCurrentUser = lastMessage?.initiatedBy === currentUser?._id;
 
   const handleSelectChatId = () => {

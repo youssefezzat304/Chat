@@ -1,8 +1,7 @@
 import { MessagesSystem } from "@/app/dashboard/MessagesSystem";
 import { useChatStore } from "@/app/utils/stores";
-import { BsSearch, BsTelephone } from "react-icons/bs";
-import { HiOutlineDotsVertical } from "react-icons/hi";
 import MessageInput from "../inputs/MessageInput";
+import ChatHeader from "../headers/ChatHeader";
 
 const PrivateChat = () => {
   const chatWith = useChatStore((state) => state.chatWith);
@@ -14,11 +13,7 @@ const PrivateChat = () => {
           <label htmlFor="name">{chatWith?.displayName}</label>
           <p>Online</p>
         </div>
-        <div className="header-icons">
-          <BsSearch />
-          <BsTelephone />
-          <HiOutlineDotsVertical />
-        </div>
+        <ChatHeader />
       </header>
       <section className="chat-console">
         <MessagesSystem />

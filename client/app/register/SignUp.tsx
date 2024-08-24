@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { api } from "../api/axios";
 import { BiMessageSquareError } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
-import { Icon } from "../components/rightSection/NotificationsHeader";
+import { Icon } from "../components/headers/NotificationsHeader";
 
 const SignUp = ({ logIn }: any) => {
   const router = useRouter();

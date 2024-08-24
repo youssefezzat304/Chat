@@ -1,9 +1,9 @@
 "use client";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import Chat from "../windows/Chat";
-import Chats from "../friendListSection/Chats";
+import Chat from "../tabs/Chat";
+import Chats from "../tabs/Chats";
 import { useTabsStore } from "@/app/utils/stores";
-import Friends from "../friendListSection/Friends";
+import Friends from "../tabs/Friends";
 
 const Home = () => {
   const friendsTab = useTabsStore((state) => state.friendsTab);
@@ -22,7 +22,7 @@ const Home = () => {
         {friendsTab ? <Friends /> : <Chats />}
       </Panel>
       <PanelResizeHandle />
-      <Panel className="chat-sec" title="Chat" defaultSize={65} minSize={40}>
+      <Panel className="chat-sec" defaultSize={65} minSize={40}>
         <Chat />
       </Panel>
     </PanelGroup>

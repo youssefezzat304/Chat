@@ -1,5 +1,5 @@
 import { useChatStore } from "@/app/utils/stores";
-import NoMessages from "./NoMessages";
+import NoMessages from "../others/NoMessages";
 import PrivateChat from "./PrivateChat";
 
 const Chat = () => {

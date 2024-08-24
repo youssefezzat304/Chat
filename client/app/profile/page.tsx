@@ -11,9 +11,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { deleteProfilePic, sendProfilePic, updateInfo } from "../api/axios";
 import { Alert, Snackbar } from "@mui/material";
-import Notifications from "../components/windows/Notifications";
+import Notifications from "../components/tabs/Notifications";
 import { useTabsStore, useUserStore } from "../utils/stores";
-import FriendRequests from "../components/windows/FriendRequests";
+import FriendRequests from "../components/tabs/FriendRequests";
 import useAuthenticateUser from "../hooks/useAuthenticateUser";
 
 const ProfileSettings = () => {

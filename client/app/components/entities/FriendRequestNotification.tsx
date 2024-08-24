@@ -1,5 +1,5 @@
 import Avatar from "@mui/material/Avatar";
-import { Icon } from "./NotificationsHeader";
+import { Icon } from "../headers/NotificationsHeader";
 import { IoCheckmark, IoClose } from "react-icons/io5";
 import { NotificationProps } from "./Notification";
 import dayjs from "dayjs";

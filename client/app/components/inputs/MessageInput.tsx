@@ -1,40 +1,50 @@
 import { sendMessage } from "@/app/api/messages.api";
 import { socket } from "@/app/socket";
 import { useChatStore, useUserStore } from "@/app/utils/stores";
-import { MessageInterface } from "@/app/utils/types/chat.interfaces";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { BsMic } from "react-icons/bs";
 import { GoPaperclip } from "react-icons/go";
 import { IoSendSharp } from "react-icons/io5";
+import { Icon } from "../headers/NotificationsHeader";
 
 const MessageInput = () => {
   const { register, handleSubmit, reset } = useForm();
-
-  const { chatWith, addMessage } = useChatStore();
+  const chatId = useChatStore((state) => state.selectedChatId);
+  const chatWith = useChatStore((state) => state.chatWith);
   const user = useUserStore((state) => state.user);
 
   const handleSendMessage = useCallback(
     async (data: any) => {
       reset();
       try {
-        const response = (await sendMessage(socket, {
+        await sendMessage(socket, {
+          chatId: chatId,
           initiatedBy: user!._id,
           receivedBy: chatWith!._id,
           content: data.message,
-        })) as MessageInterface;
-        addMessage(response);
+        });
       } catch (error) {
         console.error("Failed to send message:", error);
       }
     },
-    [chatWith, user, addMessage, reset]
+    [chatId, chatWith, reset, user]
   );
   return (
-    <form className="input-box" onSubmit={handleSubmit(handleSendMessage)}>
+    <form
+      autoComplete="off"
+      className="input-box"
+      onSubmit={handleSubmit(handleSendMessage)}
+    >
       <GoPaperclip className="clip-icon" title="upload file" />
       <BsMic className="mic-icon" title="voice note" />
-      <IoSendSharp className="send-icon" title="send" type="submit" />
+      <Icon
+        className={`send-icon`}
+        title="Send"
+        onClick={handleSubmit(handleSendMessage)}
+        icon={<IoSendSharp title="send" type="submit" />}
+      ></Icon>
+
       <input
         {...register("message")}
         type="text"

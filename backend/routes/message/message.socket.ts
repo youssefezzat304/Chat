@@ -15,6 +15,9 @@ export class MessageSocket implements SocketHandler {
 
   public registerEvents(socket: Socket) {
     socket.on("send_message", (data) => this.sendMessage(data, socket));
+    socket.on("join_priv_chat", (data) =>
+      this.joinPrivateChatRoom(data, socket)
+    );
 
     socket.on("disconnect", () => {
       console.log("User disconnected", socket.id);
@@ -22,56 +25,79 @@ export class MessageSocket implements SocketHandler {
   }
 
   private sendMessage = async (data: any, socket: Socket) => {
-    const { initiatedBy, receivedBy, content } = data;
+    const { chatId, initiatedBy, receivedBy, content } = data;
 
     if (!initiatedBy || !receivedBy) {
       socket.emit("error", "Invalid data");
       return;
     }
 
-    let chat = (await ChatModel.findOne({
-      participants: { $all: [initiatedBy, receivedBy] },
-    })) as DocumentType<Chat> | null;
-    let message: DocumentType<Message>;
-
     try {
+      let chat = (await ChatModel.findById(
+        chatId
+      )) as DocumentType<Chat> | null;
+
       if (!chat) {
         chat = await this.chatService.createNewChat({
           initiatedBy,
           receivedBy,
         });
-        message = new MessageModel({
-          chatId: chat._id,
-          initiatedBy: initiatedBy,
-          receivedBy:receivedBy,
-          content,
-        });
-      } else {
-        message = new MessageModel({
-          chatId: chat._id,
-          initiatedBy: initiatedBy,
-          receivedBy: receivedBy,
-          content,
-        });
       }
+      const message = new MessageModel({
+        chatId: chat._id,
+        initiatedBy,
+        receivedBy,
+        content,
+      });
 
-      await this.userService.addChatId({ userId: initiatedBy, chat });
-      await this.userService.addChatId({ userId: receivedBy, chat });
-      await chat.save();
-      await message.save();
-      await ChatModel.findOneAndUpdate(
-        { _id: chat._id },
-        {
-          $set: {
-            lastMessage: message._id,
-          },
-        },
+      await Promise.all([
+        this.userService.addChatId({ userId: initiatedBy, chat }),
+        this.userService.addChatId({ userId: receivedBy, chat }),
+        chat.save(),
+        message.save(),
+      ]);
+
+      await ChatModel.findByIdAndUpdate(
+        chat._id,
+        { $set: { lastMessage: message._id } },
         { new: true }
       );
+      const populatedMessage = (await MessageModel.findById(message._id)
+        .populate({
+          path: "initiatedBy",
+          select: "profilePic displayName",
+        })
+        .exec()) as DocumentType<Message>;
 
-      socket.emit("message_sent", message);
+      this.io.to(chatId).emit("message_sent", populatedMessage);
     } catch (error) {
       socket.emit("error", "Error sending message");
+      console.error(error);
+    }
+  };
+
+  private joinPrivateChatRoom = async (data: any, socket: Socket) => {
+    const { chatId, userId } = data;
+
+    if (!chatId) {
+      socket.emit("error", "Invalid data");
+      return;
+    }
+    const chat = await ChatModel.findById(chatId);
+    if (!chat) {
+      socket.emit("error", "404 chat not found");
+      return;
+    }
+    if (!chat.participants.includes(userId)) {
+      socket.emit("error", "Unauthorized access");
+      return;
+    }
+
+    try {
+      socket.join(chatId);
+      socket.emit("joined_room", chatId);
+    } catch (error) {
+      socket.emit("error", "Error joining private chat room.");
       console.error(error);
     }
   };

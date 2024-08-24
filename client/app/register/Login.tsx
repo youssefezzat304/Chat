@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { BiMessageSquareError } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import { Icon } from "../components/rightSection/NotificationsHeader";
+import { Icon } from "../components/headers/NotificationsHeader";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const Login = ({ signUp }: any) => {

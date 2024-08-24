@@ -47,6 +47,7 @@
 }
 /* ---------- Subject ------------- */
 .subject-main {
+  cursor: pointer;
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
@@ -57,6 +58,13 @@
   border: none;
   border-radius: 10px;
   transition: 0.1s;
+}
+.subject-main.friend {
+  display: flex;
+  align-items: center;
+}
+.friend-name {
+  margin-left: 1rem;
 }
 .subject-main:hover {
   background-color: var(--secondary-soft);
@@ -106,6 +114,7 @@
   font-weight: 600;
 }
 .top {
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
 }
@@ -166,7 +175,6 @@
   color: var(--text-gray);
   font-size: x-large;
   display: flex;
-  gap: 16px;
   padding-right: 10px;
 }
 .chat-console {
@@ -208,8 +216,10 @@
 .send-icon {
   cursor: pointer;
   position: absolute;
-  font-size: x-large;
   right: 15px;
+}
+.send-icon.active {
+  color: var(--primary-hard);
 }
 .circular-progress {
   align-self: center;

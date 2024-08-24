@@ -6,7 +6,8 @@ import { MessageInterface } from "../utils/types/chat.interfaces";
 import { CircularProgress } from "@mui/material";
 import dayjs from "dayjs";
 import { useChatStore, useUserStore } from "../utils/stores";
-import ScrollToBottom from "react-scroll-to-bottom";
+import { receiveMessage } from "../api/messages.api";
+import { socket } from "../socket";
 
 export const MessagesSystem = () => {
   const messages = useChatStore((state) => state.messages);
@@ -14,9 +15,18 @@ export const MessagesSystem = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    receiveMessage(socket);
+
+    return () => {
+      socket.off("message_sent");
+    };
+  }, []);
+
+  useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
+    console.log(messages);
   }, [messages]);
 
   return (
@@ -26,11 +36,12 @@ export const MessagesSystem = () => {
           <CircularProgress color="secondary" />
         </div>
       ) : (
-        <ScrollToBottom className="messages-container">
+        <div className="messages-container">
           {messages.map((message) => {
             return <Message key={message._id} message={message} />;
           })}
-        </ScrollToBottom>
+          <span className="invis" ref={messagesEndRef}></span>
+        </div>
       )}
     </>
   );
@@ -42,7 +53,8 @@ type MessageProps = {
 export const Message = memo(({ message }: MessageProps) => {
   const currentUser = useUserStore((state) => state.user);
   const isSentByCurrentUser =
-    (message.initiatedBy._id || message.initiatedBy) === currentUser?._id;
+    message.initiatedBy._id === currentUser?._id;
+
   return (
     <div
       className={`message-container ${
@@ -61,7 +73,7 @@ export const Message = memo(({ message }: MessageProps) => {
           isSentByCurrentUser ? "sent-bubble" : "received-bubble"
         }`}
       >
-        {isSentByCurrentUser ? null : (
+        {!isSentByCurrentUser && (
           <strong>{message.initiatedBy.displayName}</strong>
         )}
         <p>{message.content}</p>
