@@ -1,4 +1,4 @@
-import { useChatStore } from "@/app/utils/stores/chat.store";
+import { useChatStore } from "@/app/utils/stores";
 import NoMessages from "./NoMessages";
 import PrivateChat from "./PrivateChat";
 

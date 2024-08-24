@@ -1,35 +1,36 @@
 "use client";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import DisplayImage from "../components/others/DisplayImage";
-import { useFindChat, useGetMessages } from "../utils/queries/chat.query";
+import { useGetMessages } from "../utils/queries/chat.query";
 import { MessageInterface } from "../utils/types/chat.interfaces";
 import { CircularProgress } from "@mui/material";
 import dayjs from "dayjs";
-import { useUserStore } from "../utils/stores/user.store";
+import { useChatStore, useUserStore } from "../utils/stores";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 export const MessagesSystem = () => {
-  const [messages, setMessages] = useState<JSX.Element[]>([]);
-  const { allMessages } = useGetMessages();
-  const { isLoading: findingChat } = useFindChat();
+  const messages = useChatStore((state) => state.messages);
+  const { isLoading } = useGetMessages();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (Array.isArray(allMessages?.data)) {
-      const newMessages = allMessages.data.map((message) => (
-        <Message key={message._id} message={message} />
-      ));
-      setMessages(newMessages);
-      console.log("ccc", allMessages);
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [allMessages]);
+  }, [messages]);
 
   return (
     <>
-      {findingChat ? (
+      {isLoading ? (
         <div className="center-loading">
           <CircularProgress color="secondary" />
         </div>
       ) : (
-        <div className="messages-continer">{messages}</div>
+        <ScrollToBottom className="messages-container">
+          {messages.map((message) => {
+            return <Message key={message._id} message={message} />;
+          })}
+        </ScrollToBottom>
       )}
     </>
   );
@@ -38,9 +39,10 @@ export const MessagesSystem = () => {
 type MessageProps = {
   message: MessageInterface;
 };
-export const Message = ({ message }: MessageProps) => {
+export const Message = memo(({ message }: MessageProps) => {
   const currentUser = useUserStore((state) => state.user);
-  const isSentByCurrentUser = message.initiatedBy._id === currentUser?._id;
+  const isSentByCurrentUser =
+    (message.initiatedBy._id || message.initiatedBy) === currentUser?._id;
   return (
     <div
       className={`message-container ${
@@ -69,4 +71,5 @@ export const Message = ({ message }: MessageProps) => {
       </div>
     </div>
   );
-};
+});
+Message.displayName = "Message";

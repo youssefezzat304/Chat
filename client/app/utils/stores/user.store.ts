@@ -10,7 +10,7 @@ type UserStore = {
   setPpFile: (ppFileState: any) => void;
 };
 
-export const useUserStore = create<UserStore>((set) => ({
+const useUserStore = create<UserStore>((set) => ({
   user: null,
   setUser: (userState) => {
     set({ user: userState });
@@ -24,3 +24,5 @@ export const useUserStore = create<UserStore>((set) => ({
     set({ ppFile: ppFileState });
   },
 }));
+
+export default useUserStore

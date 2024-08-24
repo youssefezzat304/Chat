@@ -13,18 +13,17 @@
   padding: 1rem 3rem 0rem 3rem;
   text-wrap: pretty;
 }
-.messages-continer {
+.messages-container {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 0 0.7rem;
 }
 .message-container {
   display: flex;
   justify-content: flex-start;
   margin-bottom: 8px;
   width: 100%;
+  padding: 0 0.2rem 0 1rem;
 }
 .message-container strong {
   margin-bottom: 0.4rem;
@@ -32,7 +31,6 @@
 .message-bubble {
   display: flex;
   flex-direction: column;
-  background-color: var(--primary-soft);
   border-radius: 16px;
   padding: 10px 15px;
   max-width: 70%;
@@ -40,7 +38,7 @@
   font-size: 14px;
 }
 .message-container.sent .message-bubble {
-  background-color: var(--primary-soft);
+  background-color: var(--primary-hard);
   color: white;
 }
 .message-container.received .message-bubble {

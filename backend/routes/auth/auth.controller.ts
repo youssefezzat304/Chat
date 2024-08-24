@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import AuthService from "./auth.service";
-import Controller from "../../utils/interfaces/controller.interface";
+import {Controller} from "../../utils/interfaces/interface";
 import { verifyJwt } from "../../utils/jwt";
 import UserService from "../user/user.service";
 

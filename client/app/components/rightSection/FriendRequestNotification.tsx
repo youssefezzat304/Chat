@@ -4,7 +4,6 @@ import { IoCheckmark, IoClose } from "react-icons/io5";
 import { NotificationProps } from "./Notification";
 import dayjs from "dayjs";
 import { useHandleFriendRequest } from "@/app/utils/queries/friendRequest.query";
-import { deflate } from "zlib";
 
 const FriendRequestNotification = ({
   request,

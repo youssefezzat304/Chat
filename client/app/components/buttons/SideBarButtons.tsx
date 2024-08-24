@@ -1,33 +1,32 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { FaUserFriends } from "react-icons/fa";
-import { IoNotifications, IoSettingsSharp } from "react-icons/io5";
-import { PiChatsFill } from "react-icons/pi";
-import { RiContactsBook3Fill, RiLogoutCircleLine } from "react-icons/ri";
+import DisplayImage from "../others/DisplayImage";
 import UploadProfilePic from "../SVGs/UploadProfilePic";
 import AddFriendDialog from "../dialogs/AddFriendDialog";
 import { useThemeContext } from "@/app/contexts/ThemeContext";
-import { useUserStore } from "@/app/utils/stores/user.store";
 import useAxiosPrivate from "@/app/hooks/useAxiosPrivate";
-import { useAuthStore } from "@/app/utils/stores/auth.store";
 import { useQueryClient } from "@tanstack/react-query";
-import DisplayImage from "../others/DisplayImage";
-import { useOpenTabsStore } from "@/app/utils/stores/handleTabs.store";
 import SideButton from "./SideButton";
+import { useUserStore, useAuthStore, useTabsStore } from "@/app/utils/stores";
+
+import { IoNotifications, IoSettingsSharp } from "react-icons/io5";
+import { RiContactsBook3Fill, RiLogoutCircleLine } from "react-icons/ri";
+import { PiChatsFill } from "react-icons/pi";
+import { FaUserFriends } from "react-icons/fa";
 
 const SideBarButtons = () => {
   const router = useRouter();
   const axiosPrivate = useAxiosPrivate();
   const queryClient = useQueryClient();
   const { setUser, profilePic } = useUserStore();
-  const { openFriendsTab, openChatsTab } = useOpenTabsStore();
+  const { openFriendsTab, openChatsTab } = useTabsStore();
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
-  const handelNotificationsTab = useOpenTabsStore(
-    (state) => state.handleNotificationsTab,
+  const handelNotificationsTab = useTabsStore(
+    (state) => state.handleNotificationsTab
   );
-  const handelFriendRequestsTab = useOpenTabsStore(
-    (state) => state.handleFriendRequestsTab,
+  const handelFriendRequestsTab = useTabsStore(
+    (state) => state.handleFriendRequestsTab
   );
 
   const handleLogOut = async () => {

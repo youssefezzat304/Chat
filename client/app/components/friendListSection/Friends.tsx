@@ -1,4 +1,4 @@
-import { useUserStore } from "@/app/utils/stores/user.store";
+import { useUserStore } from "@/app/utils/stores";
 import SearchBar from "./SearchBar";
 import Subject from "./Subject";
 import { useEffect, useState } from "react";

@@ -21,7 +21,6 @@ type ProfileFormSectionProps = {
   errors: FieldErrors<User>;
   setValue: UseFormSetValue<User>;
 };
-
 const ProfileFormSection = ({
   control,
   activeUser,

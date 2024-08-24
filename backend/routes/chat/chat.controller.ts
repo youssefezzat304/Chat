@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import Controller from "../../utils/interfaces/controller.interface";
+import {Controller} from "../../utils/interfaces/interface";
 import { ChatModel, UserModel } from "../models";
 import { DocumentType } from "@typegoose/typegoose";
 import { User } from "../user/user.model";

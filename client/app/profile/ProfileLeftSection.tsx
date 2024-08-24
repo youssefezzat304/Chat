@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import UploadProfilePic from "../components/SVGs/UploadProfilePic";
 import DisplayImage from "../components/others/DisplayImage";
 import UploadFileBtn from "../components/buttons/UploadFileBtn";
 import { User } from "../utils/types/user.interfaces";
-import { useUserStore } from "../utils/stores/user.store";
+import { useUserStore } from "../utils/stores";
 import { Control, FieldErrors, SubmitHandler } from "react-hook-form";
 import {
   MdDelete,
@@ -14,14 +14,6 @@ import {
 import { FaUndo } from "react-icons/fa";
 import { LuUpload } from "react-icons/lu";
 
-type ProfileLeftSectionProps = {
-  control: Control<any>;
-  activeUser: User;
-  saveChanges: SubmitHandler<User>;
-  resetSettings: () => void;
-  errors: FieldErrors<User>;
-};
-
 const ProfileLeftSection = ({
   control,
   activeUser,
@@ -30,15 +22,13 @@ const ProfileLeftSection = ({
   errors,
 }: ProfileLeftSectionProps) => {
   const [editName, setEditName] = useState(false);
-  const setProfilePic = useUserStore((state) => state.setProfilePic);
-  const profilePic = useUserStore((state) => state.profilePic);
-  const setPpFile = useUserStore((state) => state.setPpFile);
+  const { setProfilePic, profilePic, setPpFile } = useUserStore();
 
   const handleEditName = () => {
     setEditName(!editName);
   };
-  const handleUploadProfilePicture = (event: any) => {
-    const file = event.target.files[0];
+  const handleUploadProfilePicture = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     setPpFile(file);
     if (file) {
       const reader = new FileReader();
@@ -124,3 +114,11 @@ const ProfileLeftSection = ({
 };
 
 export default ProfileLeftSection;
+
+type ProfileLeftSectionProps = {
+  control: Control<any>;
+  activeUser: User;
+  saveChanges: SubmitHandler<User>;
+  resetSettings: () => void;
+  errors: FieldErrors<User>;
+};

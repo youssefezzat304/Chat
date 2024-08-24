@@ -31,16 +31,14 @@ const SignUp = ({ logIn }: any) => {
       });
       return;
     }
-
     const userData = {
       displayName: data.displayName,
       email: data.email,
       password: data.password,
       confirmPassword: data.confirmPassword,
     };
-
     try {
-      const response = await api.post("/users/signup", userData, {
+      await api.post("/users/signup", userData, {
         withCredentials: true,
       });
       return router.replace("/dashboard");
@@ -50,7 +48,6 @@ const SignUp = ({ logIn }: any) => {
           message: error.response.data.message,
         });
       }
-      console.log("handleSignup in userContext.tsx >>>>>", error.response);
     }
   };
   return (

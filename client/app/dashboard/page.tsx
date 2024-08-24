@@ -4,26 +4,20 @@ import {
   Members,
   Notifications,
   FriendRequests,
-} from "../components/windows";
+  Loading,
+  Home,
+} from "../components/";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import SideBarButtons from "../components/buttons/SideBarButtons";
-import { Loading, Home } from "../components/scenes";
-import { DashboardLoading } from "./dashboardLoading";
-import { useOpenTabsStore } from "../utils/stores/handleTabs.store";
-import { useUserStore } from "../utils/stores/user.store";
+import { useTabsStore, useUserStore } from "../utils/stores";
 import useAuthenticateUser from "../hooks/useAuthenticateUser";
 
 export default function Dashboard() {
   const user = useUserStore((state) => state.user);
   const { isLoading } = useAuthenticateUser();
-  const friendRequestsTab = useOpenTabsStore(
-    (state) => state.friendRequestsTab
-  );
-  const notificationsTab = useOpenTabsStore((state) => state.notificationsTab);
-
-  if (isLoading) {
-    return <DashboardLoading />;
-  }
+  const friendRequestsTab = useTabsStore((state) => state.friendRequestsTab);
+  const notificationsTab = useTabsStore((state) => state.notificationsTab);
+  
   if (!user) {
     return <Loading />;
   }

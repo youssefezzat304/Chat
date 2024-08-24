@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useThemeContext } from "../contexts/ThemeContext";
-import { BlackBg, LightBg, LoginIcon, SignUpIcon } from "../components/SVGs";
+import { BlackBg, LightBg, LoginIcon, SignUpIcon } from "../components";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import DarkModeBtn from "../components/buttons/DarkModeBtn";
 import Loading from "../components/scenes/loading";
-import { useUserStore } from "../utils/stores/user.store";
+import { useUserStore } from "../utils/stores";
 import useAuthenticateUser from "../hooks/useAuthenticateUser";
 import { useRouter } from "next/navigation";
 
@@ -37,7 +37,6 @@ const Register = () => {
   if (user) {
     return <Loading />;
   }
-
   return (
     <main className="register-main">
       <div className="register-card" data-theme={theme && "dark"}>

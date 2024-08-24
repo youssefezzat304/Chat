@@ -1,9 +1,9 @@
 import { Panel, PanelGroup } from "react-resizable-panels";
 import NotificationsHeader from "../rightSection/NotificationsHeader";
 import { List } from "@mui/material";
-import { FriendRequestNotification } from "../rightSection/FriendRequestNotification";
+import { FriendRequestNotification } from "../";
 import { useEffect, useState } from "react";
-import { useUserStore } from "@/app/utils/stores/user.store";
+import { useUserStore } from "@/app/utils/stores";
 
 const FriendRequests = () => {
   const [friendRequests, setFriendRequests] = useState<

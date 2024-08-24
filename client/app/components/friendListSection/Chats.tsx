@@ -3,9 +3,8 @@ import SearchBar from "./SearchBar";
 import Subject from "./Subject";
 import EmptyChats from "../SVGs/emptyChats";
 import { useGetChats } from "@/app/utils/queries/chat.query";
-import { useChatStore } from "@/app/utils/stores/chat.store";
+import { useChatStore, useUserStore } from "@/app/utils/stores";
 import { ChatInfo } from "@/app/utils/types/chat.interfaces";
-import { useUserStore } from "@/app/utils/stores/user.store";
 import { useEffect } from "react";
 import { CircularProgress } from "@mui/material";
 
@@ -16,10 +15,10 @@ const Chats = () => {
   const { allChats, isLoading } = useGetChats();
 
   useEffect(() => {
-    if (!isLoading && allChats) {
+    if (recentChats.length === 0 && !isLoading && allChats) {
       setRecentChats(allChats.data);
     }
-  }, [isLoading, allChats, setRecentChats]);
+  }, [recentChats, isLoading, allChats, setRecentChats]);
   return (
     <main className="friendList-main">
       <SearchBar />

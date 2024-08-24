@@ -1,19 +1,24 @@
 import axios, { AxiosResponse } from "axios";
 import { MessageInterface } from "../utils/types/chat.interfaces";
+import { Socket } from "socket.io-client";
 
-const orginURL = "http://localhost:3000/api";
+const orginURL = process.env.NEXT_PUBLIC_API_MESSAGES;
 
 const api = axios.create({
   baseURL: orginURL,
 });
 
-export const getMessages = async (
-  chatId: string | undefined,
-): Promise<AxiosResponse<MessageInterface[] | null> | undefined> => {
+export const getMessages = async ({
+  userId,
+  chatterId,
+}: {
+  userId?: string;
+  chatterId?: string;
+}) => {
   try {
-    const messages = await api.get(`/messages/get-messages/${chatId}`, {
+    const messages = (await api.get(`/get-messages/${userId}/${chatterId}`, {
       withCredentials: true,
-    });
+    })) as AxiosResponse<MessageInterface[]>;
     return messages;
   } catch (error) {
     console.log(error);
@@ -26,25 +31,24 @@ type SendMessageProps = {
   receivedBy: string;
   content: string;
 };
-export const sendMessage = async ({
-  chatId,
-  initiatedBy,
-  receivedBy,
-  content,
-}: SendMessageProps) => {
-  const data = {
-    chatId,
-    initiatedBy,
-    receivedBy,
-    content,
-  };
-  try {
-    const message = api.post("/messages/send", data, {
-      withCredentials: true,
-    });
-    return message;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+
+export const sendMessage = (
+  socket: Socket,
+  { initiatedBy, receivedBy, content }: SendMessageProps
+) => {
+  return new Promise((resolve, reject) => {
+    try {
+      socket.emit("send_message", { initiatedBy, receivedBy, content });
+
+      socket.on("message_sent", (message: MessageInterface) => {
+        resolve(message);
+      });
+
+      setTimeout(() => {
+        reject(new Error("Message not acknowledged by server"));
+      }, 5000); 
+    } catch (error) {
+      reject(error);
+    }
+  });
 };

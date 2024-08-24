@@ -5,7 +5,7 @@ import { FaUserPlus } from "react-icons/fa";
 import AddFriend from "../scenes/AddFriend";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useUserStore } from "@/app/utils/stores/user.store";
+import { useUserStore } from "@/app/utils/stores";
 import { FriendRequestState } from "@/app/utils/types/friendSystem.interfaces";
 import {
   FriendRequestSchema,
@@ -18,18 +18,19 @@ export default function AddFriendDialog() {
   const [open, setOpen] = useState(false);
   const [isFriendReqSuccessful, setIsFriendReqSuccessful] =
     useState<FriendRequestState>(null);
-  // ------------- Add Friend ------------------------------ //
+
   const {
     control,
     setError,
     formState: { errors },
+    handleSubmit,
     clearErrors,
   } = useForm<FriendRequestSchema>({
     resolver: zodResolver(friendRequestValidation),
   });
 
   const handleFriendRequest: SubmitHandler<FriendRequestSchema> = async (
-    data,
+    data
   ) => {
     if (data.recipientEmail === user?.email) {
       setIsFriendReqSuccessful(null);
@@ -52,7 +53,7 @@ export default function AddFriendDialog() {
           headers: {
             "Content-Type": "application/json",
           },
-        },
+        }
       );
 
       clearErrors();
@@ -75,12 +76,10 @@ export default function AddFriendDialog() {
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     clearErrors();
     setOpen(false);
   };
-
   return (
     <Fragment>
       <button
@@ -97,7 +96,7 @@ export default function AddFriendDialog() {
         onClose={handleClose}
         PaperProps={{
           component: "form",
-          onSubmit: control.handleSubmit(handleFriendRequest),
+          onSubmit: handleSubmit(handleFriendRequest),
         }}
       >
         <DialogContent>

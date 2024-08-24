@@ -1,4 +1,4 @@
-import { useOpenTabsStore } from "@/app/utils/stores/handleTabs.store";
+import { useTabsStore } from "@/app/utils/stores";
 import { IconButton, Tooltip } from "@mui/material";
 import React, { ComponentProps, ReactNode } from "react";
 import { BiSolidMessageSquareDots } from "react-icons/bi";
@@ -8,11 +8,11 @@ import { PiListFill } from "react-icons/pi";
 import { TbAlertSquareRoundedFilled } from "react-icons/tb";
 
 const NotificationsHeader = () => {
-  const openNotificationsTab = useOpenTabsStore(
-    (state) => state.openNotificationsTab,
+  const openNotificationsTab = useTabsStore(
+    (state) => state.openNotificationsTab
   );
-  const openFriendRequestsTab = useOpenTabsStore(
-    (state) => state.openFriendRequestsTab,
+  const openFriendRequestsTab = useTabsStore(
+    (state) => state.openFriendRequestsTab
   );
   return (
     <main className="notifications-sec">

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
-import Controller from "../../utils/interfaces/controller.interface";
+import {Controller} from "../../utils/interfaces/interface";
 import { CreateFriendRequestInput } from "./friendRequest.schema";
 import { DocumentType } from "@typegoose/typegoose";
 import { Types } from "mongoose";

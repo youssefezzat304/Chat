@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { handleFriendRequest } from "../../api/friendrequest.api";
-import { useUserStore } from "../stores/user.store";
+import { useUserStore } from "../stores";
 import { NotificationProps } from "../../components/rightSection/Notification";
 
 export const useHandleFriendRequest = () => {

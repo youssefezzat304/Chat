@@ -1,23 +1,21 @@
 import { User } from "@/app/utils/types/user.interfaces";
 import DisplayImage from "../others/DisplayImage";
 import { ComponentProps } from "react";
-import { useChatStore } from "@/app/utils/stores/chat.store";
+import { useChatStore, useUserStore } from "@/app/utils/stores";
 import { MessageInterface } from "@/app/utils/types/chat.interfaces";
 import dayjs from "dayjs";
-import { useUserStore } from "@/app/utils/stores/user.store";
 
 type SubjectProps = ComponentProps<"div"> & {
   subject: User;
   lastMessage?: MessageInterface;
 };
 const Subject = ({ subject, lastMessage }: SubjectProps) => {
-  const { setChatWith } = useChatStore();
+  const  setChatWith  = useChatStore(state => state.setChatWith);
   const currentUser = useUserStore((state) => state.user);
   const isSentByCurrentUser = lastMessage?.initiatedBy === currentUser?._id;
 
   const handleSelectChatId = () => {
     setChatWith(subject);
-    console.log(lastMessage);
   };
   return (
     <main className="subject-main" onClick={handleSelectChatId}>

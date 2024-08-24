@@ -13,7 +13,7 @@ type OpenTabsStore = {
   openChatsTab: () => void;
 };
 
-export const useOpenTabsStore = create<OpenTabsStore>((set) => ({
+const useTabsStore = create<OpenTabsStore>((set) => ({
   notificationsTab: false,
   friendRequestsTab: false,
   friendsTab: false,
@@ -49,3 +49,5 @@ export const useOpenTabsStore = create<OpenTabsStore>((set) => ({
     set({ chatsTab: true, friendsTab: false });
   },
 }));
+
+export default useTabsStore;

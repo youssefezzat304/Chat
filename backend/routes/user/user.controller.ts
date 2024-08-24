@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
-import Controller from "../../utils/interfaces/controller.interface";
+import { Controller } from "../../utils/interfaces/interface";
 import UserService from "./user.service";
 import { ValidationError } from "../../utils/exceptions/validationError.exception";
 import { CreateUserInput, createUserSchema, UserSchema } from "./user.schema";

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const orginURL = "http://localhost:3000/api";
+const orginURL = process.env.NEXT_PUBLIC_API_FRIEND_REQUEST;
 
 const api = axios.create({
   baseURL: orginURL,
@@ -20,14 +20,9 @@ export const handleFriendRequest = async ({
     recipientId: recipientId,
   };
   try {
-    const response = await api.patch(
-      `/friend-request/${status}/${recipientId}`,
-      reqData,
-      {
-        headers: { withCredentials: true },
-      },
-    );
-    console.log(response);
+    const response = await api.patch(`/${status}/${recipientId}`, reqData, {
+      headers: { withCredentials: true },
+    });
     return response.data;
   } catch (error) {
     console.log(error);

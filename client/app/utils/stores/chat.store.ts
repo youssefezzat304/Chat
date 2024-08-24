@@ -13,9 +13,10 @@ type ChatStore = {
   setChatWith: (chatWithState: User) => void;
   messages: MessageInterface[];
   setMessages: (messagesState: MessageInterface[]) => void;
+  addMessage: (newMessage: MessageInterface) => void;
 };
 
-export const useChatStore = create<ChatStore>((set) => ({
+const useChatStore = create<ChatStore>((set) => ({
   selectedChatId: "",
   chatInfo: undefined,
   recentChats: [],
@@ -36,4 +37,11 @@ export const useChatStore = create<ChatStore>((set) => ({
   setMessages: (messagesState) => {
     set({ messages: messagesState });
   },
+  addMessage: (newMessage) => {
+    set((state) =>({
+      messages: [...state.messages, newMessage]
+    }))
+  },
 }));
+
+export default useChatStore;

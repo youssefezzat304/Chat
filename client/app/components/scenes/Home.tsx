@@ -1,13 +1,12 @@
 "use client";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-//----- Components --------------
 import Chat from "../windows/Chat";
 import Chats from "../friendListSection/Chats";
-import { useOpenTabsStore } from "@/app/utils/stores/handleTabs.store";
+import { useTabsStore } from "@/app/utils/stores";
 import Friends from "../friendListSection/Friends";
 
 const Home = () => {
-  const friendsTab = useOpenTabsStore((state) => state.friendsTab);
+  const friendsTab = useTabsStore((state) => state.friendsTab);
   return (
     <PanelGroup
       className="dashboard-main"

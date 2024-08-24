@@ -4,7 +4,7 @@ import {
   setupInterceptors,
 } from "../api/axios";
 import { useEffect } from "react";
-import { useAuthStore } from "../utils/stores/auth.store";
+import { useAuthStore } from "../utils/stores";
 
 const useAxiosPrivate = () => {
   const accessToken = useAuthStore((state) => state.accessToken);

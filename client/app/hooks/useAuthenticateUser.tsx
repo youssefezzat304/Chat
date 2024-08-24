@@ -2,14 +2,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { useUserStore } from "../utils/stores/user.store";
+import { useUserStore } from "../utils/stores";
 import { checkUser } from "../api/axios";
 
 const useAuthenticateUser = () => {
   const router = useRouter();
-  const user = useUserStore((state) => state.user);
-  const setCurrentUser = useUserStore((state) => state.setUser);
-  const setProfilePic = useUserStore((state) => state.setProfilePic);
+  const { user, setUser, setProfilePic } = useUserStore();
   const [initialUser, setInitialUser] = useState(null);
 
   useEffect(() => {
@@ -32,7 +30,7 @@ const useAuthenticateUser = () => {
 
   useEffect(() => {
     if (currentUser) {
-      setCurrentUser(currentUser);
+      setUser(currentUser);
       setProfilePic(currentUser.profilePic);
       localStorage.setItem("currentUser", JSON.stringify(currentUser));
     }
@@ -40,8 +38,7 @@ const useAuthenticateUser = () => {
     if (!user && !isLoading) {
       router.replace("/register");
     }
-    // console.log(user);
-  }, [currentUser, router, setCurrentUser, user, isLoading, setProfilePic]);
+  }, [currentUser, router, setUser, user, isLoading, setProfilePic]);
 
   return { isLoading };
 };

@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { ChatInfo } from "../utils/types/chat.interfaces";
 
-const orginURL = "http://localhost:3000/api";
+const orginURL = process.env.NEXT_PUBLIC_API_CHAT;
 
 const api = axios.create({
   baseURL: orginURL,
@@ -10,7 +10,7 @@ export const getAllChats = async (
   userId?: string,
 ): Promise<AxiosResponse<ChatInfo[]> | undefined> => {
   try {
-    const chats = (await api.get(`/chats/get-recent/${userId}`, {
+    const chats = (await api.get(`/get-recent/${userId}`, {
       withCredentials: true,
     })) as AxiosResponse<ChatInfo[]>;
     return chats;
@@ -26,7 +26,7 @@ export const findChat = async ({
   chatterId?: string;
 }): Promise<AxiosResponse<ChatInfo> | undefined> => {
   try {
-    const chats = (await api.get(`/chats/find-chat/${userId}/${chatterId}`, {
+    const chats = (await api.get(`/find-chat/${userId}/${chatterId}`, {
       withCredentials: true,
     })) as AxiosResponse<ChatInfo>;
     return chats;

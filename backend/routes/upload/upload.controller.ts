@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { Request, Response, Router } from "express";
-import Controller from "../../utils/interfaces/controller.interface";
+import {Controller} from "../../utils/interfaces/interface";
 import { uploadProfilePictureMiddleware } from "../../middlewares/upload.middleware";
 import { UserModel } from "../models";
 

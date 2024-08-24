@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { User } from "../utils/types/user.interfaces";
 
-const orginURL = "http://localhost:3000/api";
+const orginURL = process.env.NEXT_PUBLIC_API_HOST;
 
 export const api = axios.create({
   baseURL: orginURL,
@@ -46,7 +46,7 @@ export const checkUser = async (): Promise<User | null> => {
 };
 
 export const updateInfo = async (
-  data: any,
+  data: any
 ): Promise<AxiosResponse<User> | null> => {
   try {
     const response = api.patch("/users/update-info", data, {
@@ -76,9 +76,9 @@ export const deleteProfilePic = async (userId: string | undefined) => {
     userId: userId,
   };
   try {
-    const response = await api.patch("/upload/delete-profile-picture", data, {
+    const response = (await api.patch("/upload/delete-profile-picture", data, {
       withCredentials: true,
-    });
+    })) as AxiosResponse<User>;
     return response.data;
   } catch (error: unknown) {
     console.error(error);
@@ -96,7 +96,6 @@ export const refreshToken = async () => {
     return null;
   }
 };
-
 export const setupInterceptors = (accessToken: string) => {
   const requestIntercept = axiosPrivate.interceptors.request.use(
     (config) => {
@@ -105,9 +104,8 @@ export const setupInterceptors = (accessToken: string) => {
       }
       return config;
     },
-    (error) => Promise.reject(error),
+    (error) => Promise.reject(error)
   );
-
   const responseIntercept = axiosPrivate.interceptors.response.use(
     (response) => response,
     async (error) => {
@@ -118,12 +116,11 @@ export const setupInterceptors = (accessToken: string) => {
         return axiosPrivate(prevRequest);
       }
       return Promise.reject(error);
-    },
+    }
   );
 
   return { requestIntercept, responseIntercept };
 };
-
 export const cleanupInterceptors = (interceptors: {
   requestIntercept: number;
   responseIntercept: number;

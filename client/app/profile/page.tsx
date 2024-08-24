@@ -9,21 +9,16 @@ import { User } from "../utils/types/user.interfaces";
 import { userValidation } from "../utils/validation/user.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import ProfileLoading from "./ProfileLoading";
 import { deleteProfilePic, sendProfilePic, updateInfo } from "../api/axios";
 import { Alert, Snackbar } from "@mui/material";
 import Notifications from "../components/windows/Notifications";
-import { useOpenTabsStore } from "../utils/stores/handleTabs.store";
+import { useTabsStore, useUserStore } from "../utils/stores";
 import FriendRequests from "../components/windows/FriendRequests";
-import { useUserStore } from "../utils/stores/user.store";
 import useAuthenticateUser from "../hooks/useAuthenticateUser";
 
 const ProfileSettings = () => {
   const [open, setOpen] = useState(false);
-  const user = useUserStore((state) => state.user);
-  const ppFile = useUserStore((state) => state.ppFile);
-  const profilePic = useUserStore((state) => state.profilePic);
-  const setProfilePic = useUserStore((state) => state.setProfilePic);
+  const { user, ppFile, profilePic, setProfilePic } = useUserStore();
   const { isLoading } = useAuthenticateUser();
 
   const {
@@ -43,7 +38,7 @@ const ProfileSettings = () => {
       const response = await updateInfo(data);
       if (profilePic === "") {
         const profilePicRes = await deleteProfilePic(user?._id);
-        setProfilePic(profilePicRes.data.profilePic);
+        setProfilePic(profilePicRes?.profilePic);
       }
       if (ppFile) {
         const profilePicRes = await sendProfilePic(ppFile, user?._id);
@@ -59,20 +54,14 @@ const ProfileSettings = () => {
   function resetSettings() {
     if (user) reset(user);
   }
-
-  const notificationsTab = useOpenTabsStore((state) => state.notificationsTab);
-  const friendRequestsTab = useOpenTabsStore(
-    (state) => state.friendRequestsTab,
-  );
-
+  
+  const notificationsTab = useTabsStore((state) => state.notificationsTab);
+  const friendRequestsTab = useTabsStore((state) => state.friendRequestsTab);
   const handleClose = () => {
     setOpen(false);
   };
 
-  if (isLoading) return <ProfileLoading />;
-
   if (!user) return <Loading />;
-
   return (
     <main className="main">
       <div className="main-screen">

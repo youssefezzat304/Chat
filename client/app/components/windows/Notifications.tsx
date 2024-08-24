@@ -1,5 +1,5 @@
 import { Panel, PanelGroup } from "react-resizable-panels";
-import { Notification, NotificationsHeader } from "../rightSection"
+import { Notification, NotificationsHeader } from "../"
 import { List } from "@mui/material";
 
 const Notifications = () => {

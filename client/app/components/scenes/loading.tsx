@@ -1,7 +1,7 @@
 "use client";
 import { SyncLoader } from "react-spinners";
 import { useThemeContext } from "@/app/contexts/ThemeContext";
-import { LightBg, BlackBg } from "../SVGs";
+import { LightBg, BlackBg } from "../";
 
 const Loading = () => {
   const { theme } = useThemeContext();

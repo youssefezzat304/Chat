@@ -1,5 +1,5 @@
 import { MessagesSystem } from "@/app/dashboard/MessagesSystem";
-import { useChatStore } from "@/app/utils/stores/chat.store";
+import { useChatStore } from "@/app/utils/stores";
 import { BsSearch, BsTelephone } from "react-icons/bs";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import MessageInput from "../inputs/MessageInput";
