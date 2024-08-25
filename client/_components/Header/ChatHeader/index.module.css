@@ -1,0 +1,6 @@
+.chatHeaderIcons {
+  color: var(--text-gray);
+  font-size: x-large;
+  display: flex;
+  padding-right: 10px;
+}

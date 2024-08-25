@@ -12,7 +12,9 @@ import { erroMiddleware } from "../middlewares/errorHandler.middleware";
 import deserializeUser from "../middlewares/deserializeUser.middleware";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { MessageSocket } from "../routes/message/message.socket";
+import { config } from "dotenv";
 
+config();
 const corsOptions = {
   origin: "http://localhost:8080",
   credentials: true,
@@ -34,12 +36,6 @@ class App {
     this.server = http.createServer(this.express);
     this.io = new Server(this.server, {
       cors: corsOptions,
-      // cors: {
-      //   origin: "http://localhost:8080",
-      //   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-      //   allowedHeaders: ["my-custom-header"],
-      //   credentials: true,
-      // },
     });
 
     const messageSocket = new MessageSocket(this.io);
@@ -61,11 +57,17 @@ class App {
     this.express.use(deserializeUser);
   }
   private initialiseDatabaseConnection(): void {
+    const dbConnection = process.env.DATABASE_CONNECTION;
+    if (!dbConnection) {
+      throw new Error("DATABASE_CONNECTION environment variable is not set");
+    }
     mongoose
-      .connect(
-        "mongodb+srv://joussef3044:17100772@chatapp.idrqc.mongodb.net/?retryWrites=true&w=majority&appName=Chatapp"
-      )
-      .then(() => console.log("Database is ONLINE"));
+      .connect(dbConnection)
+      .then(() => console.log("Database is ONLINE"))
+      .catch((error) => {
+        console.error("Database connection error:", error);
+        process.exit(1);
+      });
   }
   private initializeSocketConnection(socketHandlers: SocketHandler[]) {
     this.io.on("connection", (socket: Socket) => {

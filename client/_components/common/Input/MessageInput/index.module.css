@@ -1,0 +1,7 @@
+.inputBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
+  color: rgba(26, 26, 26, 0.6);
+}

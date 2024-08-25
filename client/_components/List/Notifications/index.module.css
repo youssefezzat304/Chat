@@ -1,0 +1,52 @@
+.rightSec {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-left: 6px;
+  height: 100%;
+}
+.thirdSec {
+  background-color: var(--secondary-soft);
+  overflow: hidden !important;
+  border-radius: 22px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.listOfNotifications {
+  padding: 0px 12px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  width: 96%;
+  gap: 0.3rem;
+}
+.listOfNotifications::-webkit-scrollbar {
+  cursor: pointer;
+  width: 0;
+  background: transparent;
+}
+.listOfNotifications:hover::-webkit-scrollbar {
+  cursor: pointer;
+  width: 6px;
+}
+.listOfNotifications::-webkit-scrollbar-track {
+  cursor: pointer;
+  background-color: transparent;
+}
+.listOfNotifications::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+}
+.listOfNotifications::-webkit-scrollbar {
+  cursor: pointer;
+  width: none;
+}
+.listOfNotifications:hover::-webkit-scrollbar {
+  cursor: pointer;
+  width: thin;
+  color: rgba(82, 28, 135, 0.5) transparent;
+}

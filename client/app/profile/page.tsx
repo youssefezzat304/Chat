@@ -1,20 +1,20 @@
 "use client";
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import SideBarButtons from "../components/buttons/SideBarButtons";
-import Loading from "../components/scenes/loading";
+
+
+import { useState } from "react";
+import styles from "./index.module.css";
+import { useTabsStore, useUserStore } from "@/utils/stores";
+import useAuthenticateUser from "@/hooks/useAuthenticateUser";
+import { useForm } from "react-hook-form";
+import { User } from "@/types/user.types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userValidation } from "@/utils/validation/user.validation";
+import { deleteProfilePic, sendProfilePic, updateInfo } from "@/api/axios";
+import { FriendRequests, NavBar, Notifications, RoutesLoading } from "@/_components";
+import { Panel, PanelGroup } from "react-resizable-panels";
 import ProfileLeftSection from "./ProfileLeftSection";
 import ProfileFormSection from "./ProfileFormSection";
-import { useForm } from "react-hook-form";
-import { User } from "../utils/types/user.interfaces";
-import { userValidation } from "../utils/validation/user.validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { deleteProfilePic, sendProfilePic, updateInfo } from "../api/axios";
 import { Alert, Snackbar } from "@mui/material";
-import Notifications from "../components/tabs/Notifications";
-import { useTabsStore, useUserStore } from "../utils/stores";
-import FriendRequests from "../components/tabs/FriendRequests";
-import useAuthenticateUser from "../hooks/useAuthenticateUser";
 
 const ProfileSettings = () => {
   const [open, setOpen] = useState(false);
@@ -54,21 +54,21 @@ const ProfileSettings = () => {
   function resetSettings() {
     if (user) reset(user);
   }
-  
+
   const notificationsTab = useTabsStore((state) => state.notificationsTab);
   const friendRequestsTab = useTabsStore((state) => state.friendRequestsTab);
   const handleClose = () => {
     setOpen(false);
   };
 
-  if (!user) return <Loading />;
+  if (!user) return <RoutesLoading />;
   return (
-    <main className="main">
-      <div className="main-screen">
-        <SideBarButtons />
+    <main className={styles.main}>
+      <div className={styles.mainScreen}>
+        <NavBar />
         <PanelGroup direction="horizontal" autoSaveId="main">
           <Panel defaultSize={75} minSize={75}>
-            <div className="main-profile-sec">
+            <div className={styles.mainProfileSec}>
               <ProfileLeftSection
                 control={control}
                 activeUser={user}
@@ -96,7 +96,7 @@ const ProfileSettings = () => {
             </Panel>
           ) : (
             <Panel
-              className="profile-settings-sec right-sec"
+              className={styles.profileSettingsSec}
               defaultSize={30}
               minSize={20}
               maxSize={30}

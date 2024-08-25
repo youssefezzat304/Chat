@@ -1,0 +1,25 @@
+.infoInput {
+  display: flex;
+  flex-direction: column;
+}
+.infoInput input {
+  font-size: large;
+  border: none;
+  background-color: transparent;
+  padding: 5px 0px;
+  border-radius: 5px;
+}
+.infoInput input:active {
+  outline: none;
+}
+.infoInput input:focus {
+  outline: none;
+}
+.infoInput input:focus::placeholder {
+  color: transparent;
+}
+.inlineError {
+  font-size: small;
+  color: var(--error-soft);
+  height: 16px;
+}

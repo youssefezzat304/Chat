@@ -1,0 +1,100 @@
+.main {
+  height: 100vh;
+  display: flex;
+  min-width: 1024px;
+  min-height: 512px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.mainScreen {
+  position: relative;
+  background-color: var(--primary-dark);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 2;
+  justify-content: center;
+  align-items: center;
+  padding-top: 6px;
+  padding-right: 6px;
+  padding-bottom: 6px;
+  overflow: hidden;
+}
+.mainScreen button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text-gray);
+  font-weight: 500;
+  background-color: transparent;
+  border: none;
+}
+.mainScreen::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  height: 74px;
+  width: 74px;
+  background-color: var(--white);
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: -40px;
+  box-shadow:
+    rgba(50, 50, 93, 0.2) 0px 0px 50px -8px inset,
+    rgba(0, 0, 0, 0.2) 0px 0px 0px -12px inset;
+}
+.mainProfileSec {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--white);
+  height: 100%;
+  margin-left: 82px;
+  border-radius: 22px;
+  border-top-left-radius: 0;
+  padding: 0.6rem;
+  gap: 0.6rem;
+}
+.mainProfileSec::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -74px;
+  background-color: var(--white);
+  height: 74px;
+  width: 74px;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: -40px;
+  z-index: 10;
+  box-shadow: none;
+}
+.mainProfileSec::after {
+  content: "";
+  position: absolute;
+  z-index: 50;
+  background-color: var(--primary-dark);
+  top: 74.05px;
+  left: -12.48px;
+  height: 25px;
+  width: 12.5px;
+  border-top-right-radius: 12.5px;
+  box-shadow: 0 -12.5px 0 0 var(--white);
+}
+.profileSettingsSec {
+  background-color: var(--secondary-soft);
+  margin-left: 6px;
+  border-radius: 22px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  padding-left: 6px;
+  height: 100%;
+}

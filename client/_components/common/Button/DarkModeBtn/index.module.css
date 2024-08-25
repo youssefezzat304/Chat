@@ -1,0 +1,70 @@
+.darkmodeBtn {
+  position: absolute;
+  right: 20px;
+  top: 4px;
+  overflow: hidden;
+  z-index: 10;
+}
+.darkmodeBtn label {
+  position: relative;
+  width: 50px;
+  height: 20px;
+  display: block;
+  background: #ebebeb;
+  border-radius: 20px;
+  box-shadow:
+    inset 0px 0.5px 1.5px rgba(0, 0, 0, 0.4),
+    inset 0px -0.5px 1.5px rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.darkmodeBtn label::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  background: linear-gradient(180deg, #ffcc89, #d8860b);
+  border-radius: 18px;
+  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.4);
+  transition: 0.3s;
+}
+.darkmodeBtn input {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+.darkmodeBtn input:checked + label {
+  background: #242424;
+}
+.darkmodeBtn input:checked + label::after {
+  left: 49px;
+  transform: translateX(-100%);
+  background: linear-gradient(180deg, #777, #3a3a3a);
+}
+.darkmodeBtn label:active:after {
+  width: 26px;
+}
+.darkmodeBtn label svg {
+  position: absolute;
+  width: 12px;
+  top: 4px;
+  z-index: 100;
+}
+.darkmodeBtn label svg.sun {
+  left: 4px;
+  fill: white;
+  transition: 0.3s;
+}
+.darkmodeBtn label svg.moon {
+  left: 34px;
+  fill: #7e7e7e;
+  transition: 0.3s;
+}
+.darkmodeBtn input:checked + label svg.sun {
+  fill: #7e7e7e;
+}
+.darkmodeBtn input:checked + label svg.moon {
+  fill: #fff;
+}

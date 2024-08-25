@@ -186,7 +186,7 @@ class UserController implements Controller {
       .clearCookie("refreshToken", {
         httpOnly: true,
       })
-      .redirect("/register");
+      .send("logged out")
   };
 }
 

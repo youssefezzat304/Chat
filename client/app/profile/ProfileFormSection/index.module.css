@@ -1,0 +1,78 @@
+.profileFormSec {
+  display: flex;
+  flex-direction: column;
+  grid-area: 6px;
+  background-color: #b0a3b311;
+  height: 100%;
+  width: 100%;
+  padding: 0 0.6rem;
+  border-radius: 22px;
+  box-shadow:
+    rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+.personalInfoSec {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  padding: 1.2rem;
+  height: 33%;
+  margin-top: 0.6rem;
+  border-radius: 12px;
+  box-shadow:
+    rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+}
+.personalInfoSec section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-column-gap: 3rem;
+  grid-row-gap: 4px;
+  padding-right: 3rem;
+}
+.personalInfoSec .sectionLabel {
+  color: black;
+  font-weight: 700;
+  font-size: large;
+  margin-bottom: 16px;
+}
+.personalInfoSec label {
+  font-size: small;
+  color: var(--text-gray);
+}
+.bio {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  overflow: none;
+  height: 25%;
+  padding: 1.2rem;
+  border-radius: 12px;
+  margin-top: 0.6rem;
+  padding-right: 4rem;
+  box-shadow:
+    rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+}
+.bio p {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 5px;
+}
+.bio label {
+  font-weight: 700;
+  font-size: large;
+  margin-bottom: 8px;
+}
+.inlineError {
+  font-size: small;
+  color: var(--error-soft);
+  height: 16px;
+}
+/* .infoInput .bioParagraph {
+  font-size: medium;
+  text-wrap: wrap;
+} */

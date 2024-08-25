@@ -1,8 +1,6 @@
 import jwt from "jsonwebtoken";
 import config from "config";
 import { DocumentType } from "@typegoose/typegoose";
-import { User } from "../routes/user/user.model";
-import { Session } from "../routes/auth/session.model";
 
 type privateKeyNames = "accessTokenPrivateKey" | "refreshTokenPrivateKey";
 type publicKeyNames = "accessTokenPublicKey" | "refreshTokenPublicKey";

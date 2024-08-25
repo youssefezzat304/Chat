@@ -1,18 +1,17 @@
 "use client";
-import { memo, useEffect, useRef, useState } from "react";
-import DisplayImage from "../components/others/DisplayImage";
-import { useGetMessages } from "../utils/queries/chat.query";
-import { MessageInterface } from "../utils/types/chat.interfaces";
+import { useEffect, useRef } from "react";
+import { useGetMessages } from "../../utils/queries/chat.query";
 import { CircularProgress } from "@mui/material";
-import dayjs from "dayjs";
-import { useChatStore, useUserStore } from "../utils/stores";
-import { receiveMessage } from "../api/messages.api";
+import { useChatStore } from "../../utils/stores";
+import { receiveMessage } from "../../api/messages.api";
 import { socket } from "../socket";
+import { ChatMessage } from "@/_components";
+import styles from "./index.module.css";
 
 export const MessagesSystem = () => {
-  const messages = useChatStore((state) => state.messages);
-  const { isLoading } = useGetMessages();
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messages = useChatStore((state) => state.messages),
+    { isLoading } = useGetMessages(),
+    messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     receiveMessage(socket);
@@ -26,62 +25,22 @@ export const MessagesSystem = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-    console.log(messages);
   }, [messages]);
 
   return (
     <>
       {isLoading ? (
-        <div className="center-loading">
+        <div className={styles.centerLoading}>
           <CircularProgress color="secondary" />
         </div>
       ) : (
-        <div className="messages-container">
+        <div className={styles.messagesContainer}>
           {messages.map((message) => {
-            return <Message key={message._id} message={message} />;
+            return <ChatMessage key={message._id} message={message} />;
           })}
-          <span className="invis" ref={messagesEndRef}></span>
+          <span ref={messagesEndRef}></span>
         </div>
       )}
     </>
   );
 };
-
-type MessageProps = {
-  message: MessageInterface;
-};
-export const Message = memo(({ message }: MessageProps) => {
-  const currentUser = useUserStore((state) => state.user);
-  const isSentByCurrentUser =
-    message.initiatedBy._id === currentUser?._id;
-
-  return (
-    <div
-      className={`message-container ${
-        isSentByCurrentUser ? "sent" : "received"
-      }`}
-    >
-      {isSentByCurrentUser ? null : (
-        <DisplayImage
-          base64String={message.initiatedBy.profilePic}
-          variant="rounded"
-          className="message-pp"
-        />
-      )}
-      <div
-        className={`message-bubble ${
-          isSentByCurrentUser ? "sent-bubble" : "received-bubble"
-        }`}
-      >
-        {!isSentByCurrentUser && (
-          <strong>{message.initiatedBy.displayName}</strong>
-        )}
-        <p>{message.content}</p>
-        <p className="mssg-time">
-          {dayjs(message.createdAt).format("DD/MM/YY hh:mm A")}
-        </p>
-      </div>
-    </div>
-  );
-});
-Message.displayName = "Message";

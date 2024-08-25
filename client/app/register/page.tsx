@@ -1,55 +1,50 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useThemeContext } from "../contexts/ThemeContext";
-import { BlackBg, LightBg, LoginIcon, SignUpIcon } from "../components";
+import {
+  LightBg,
+  LoginIcon,
+  SignUpIcon,
+  RoutesLoading,
+} from "../../_components";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import DarkModeBtn from "../components/buttons/DarkModeBtn";
-import Loading from "../components/scenes/loading";
-import { useUserStore } from "../utils/stores";
-import useAuthenticateUser from "../hooks/useAuthenticateUser";
+import { useUserStore } from "../../utils/stores";
+import useAuthenticateUser from "../../hooks/useAuthenticateUser";
 import { useRouter } from "next/navigation";
+
+import styles from "./index.module.css";
 
 const Register = () => {
   const router = useRouter();
-  const user = useUserStore((state) => state.user);
   const { isLoading } = useAuthenticateUser();
+  const user = useUserStore((state) => state.user);
 
   useEffect(() => {
     if (user) return router.replace("/dashboard");
   }, [user, router]);
 
-  const { theme, setTheme } = useThemeContext(),
-    [loginScreen, setLoginScreen] = useState(true);
-
+  const [loginScreen, setLoginScreen] = useState(true);
   const signUp = () => {
     setLoginScreen(false);
   };
   const logIn = () => {
     setLoginScreen(true);
   };
-  const toggleDarkMode = () => {
-    setTheme(!theme);
-  };
 
-  if (isLoading) return <Loading />;
-
-  if (user) {
-    return <Loading />;
-  }
+  if (isLoading) return <RoutesLoading />;
+  if (user) return <RoutesLoading />;
   return (
-    <main className="register-main">
-      <div className="register-card" data-theme={theme && "dark"}>
-        <DarkModeBtn toggleDarkMode={toggleDarkMode} />
-        <div className="register-image">
+    <main className={styles.registerMain}>
+      <div className={styles.registerCard}>
+        <div className={styles.registerImage}>
           {loginScreen ? <LoginIcon /> : <SignUpIcon />}
         </div>
-        <div className="register-form">
+        <div className={styles.registerForm}>
           {loginScreen ? <Login signUp={signUp} /> : <SignUp logIn={logIn} />}
         </div>
       </div>
-      <div className="glass"></div>
-      {theme ? <BlackBg className="bg" /> : <LightBg className="bg" />}
+      <div className={styles.glass}></div>
+      <LightBg className={styles.bg} />
     </main>
   );
 };

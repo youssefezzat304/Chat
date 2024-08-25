@@ -1,0 +1,12 @@
+.notificationsSec header {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  height: 4rem;
+  width: 100%;
+}
+.notificationsSec .icon {
+  font-size: x-large;
+  cursor: pointer;
+}

@@ -1,0 +1,9 @@
+.sideBtn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sideBtn:hover {
+  color: var(--primary-hard);
+  border-radius: 10px;
+}

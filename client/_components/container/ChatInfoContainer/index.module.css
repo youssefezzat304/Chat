@@ -1,0 +1,9 @@
+.chatInfoContainer {
+  background-color: var(--white);
+  border-radius: 22px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

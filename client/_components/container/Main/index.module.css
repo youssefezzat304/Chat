@@ -1,0 +1,15 @@
+.dashboardMain {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.friendList {
+  display: flex;
+}
+.chatSec {
+  display: flex;
+  height: 100%;
+}

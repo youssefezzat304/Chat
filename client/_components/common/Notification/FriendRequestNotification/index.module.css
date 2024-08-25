@@ -1,0 +1,49 @@
+.friendRequestNotification {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--white);
+  border-radius: 1rem;
+  height: 5rem;
+  min-height: 5rem;
+  max-height: 5rem;
+  padding: 0.3rem 0.6rem;
+  width: 100%;
+}
+.friendRequestNotification p {
+  font-size: 14px;
+}
+.friendRequestNotification section {
+  display: flex;
+  align-items: center;
+}
+.friendRequestNotification span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.acceptIcon {
+  color: var(--white);
+  background-color: var(--primary-hard);
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+  padding: 7px;
+}
+.declineIcon {
+  color: var(--white);
+  background-color: var(--error-soft);
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+  padding: 7px;
+}
+.time {
+  font-size: small;
+  color: var(--text-gray);
+  font-style: italic;
+  position: absolute;
+  bottom: 4px;
+  right: 18px;
+}
