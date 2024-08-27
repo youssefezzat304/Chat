@@ -37,7 +37,7 @@ const NotificationsHeader = () => {
         <ButtonIcon
           title="Close"
           icon={<IoClose className="icon" />}
-          onClick={closeNotifications}
+          onClick={() => closeNotifications()}
         />
       </header>
     </main>

@@ -42,25 +42,7 @@ html {
   margin: 0;
   padding: 0;
 }
-.pp-placeholder {
-  margin-top: 0.3rem;
-}
-.friendrequest-response {
-  background-color: var(--done-soft);
-  color: var(--done-heavy);
-  font-weight: 700;
-  border-radius: 6px;
-  padding: 1.5rem 2rem;
-}
-.create-contact-card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 70%;
-  width: 70%;
-  background-color: var(--white);
-  border-radius: 20px;
-}
+
 /* --------------------------- ScrollBar --------------------------------------- */
 ::-webkit-scrollbar {
   width: 6px;
@@ -78,98 +60,10 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
-.notification-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--log-out);
-  color: rgb(245, 245, 245);
-  font-size: small;
-  border-radius: 20px;
-  padding: 0px 3px;
-  min-width: 18px;
-  height: 18px;
+.profile-pic {
+  height: 100% !important;
+  width: 100% !important;
 }
-
-.mic-icon {
-  cursor: pointer;
-  position: absolute;
-  font-size: x-large;
-  right: 60px;
+.pp-placeholder {
+  margin-top: 0.3rem;
 }
-
-.circular-progress {
-  align-self: center;
-}
-/* --------------------------- ERRORS --------------------------------------- */
-.error-container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background-color: var(--error-soft);
-  position: absolute;
-  z-index: 10;
-  bottom: -5px;
-  left: 50px;
-  min-width: 25rem;
-  max-width: 32rem;
-  border-radius: 20px;
-  padding: 1.5rem 1.5rem;
-  margin-bottom: 2rem;
-}
-.error-icon {
-  font-size: 3rem;
-  min-width: 3rem;
-  color: var(--error-hard);
-}
-.error-close {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  font-size: 1.5rem;
-  min-width: 1.5rem;
-  color: var(--error-hard);
-  cursor: pointer;
-}
-.error-container strong {
-  color: var(--error-hard);
-}
-.flex-col {
-  display: flex;
-  flex-direction: column;
-}
-.flex {
-  display: flex;
-}
-.justify-center {
-  justify-content: center;
-}
-.align-center {
-  align-items: center;
-}
-.justify-start {
-  justify-content: flex-start !important;
-}
-.regular-avatar {
-  cursor: pointer;
-  margin-right: 8px;
-  width: 3rem !important;
-  height: 3rem !important;
-}
-.empty-chats {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 80vh;
-}
-.empty-chats span {
-  color: rgba(0, 0, 0, 0.48);
-  text-align: center;
-  font-size: large;
-  font-weight: bold;
-  padding: 1rem 3rem 0rem 3rem;
-  text-wrap: pretty;
-}
-
-

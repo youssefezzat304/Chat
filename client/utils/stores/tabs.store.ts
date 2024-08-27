@@ -16,6 +16,7 @@ type TabsStore = {
     tab: "friendsTab" | "chatsTab" | "notificationsTab" | "friendRequestsTab"
   ) => void;
   setChatInfo: (state: boolean) => void;
+  setFriendsTab: (state: boolean) => void;
   setMembersTab: (state: boolean) => void;
   closeTabs: () => void;
 };
@@ -55,6 +56,7 @@ const useTabsStore = create<TabsStore>((set) => ({
     }),
 
   setChatInfo: (state) => set({ chatInfoTab: state }),
+  setFriendsTab: (state) => set({ friendsTab: state }),
   setMembersTab: (state) => set({ membersTab: state }),
 
   closeTabs: () =>

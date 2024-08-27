@@ -1,20 +1,22 @@
 import "dotenv/config";
-import App from "./app";
+import { initializeApp, listen } from "./app";
 import "express-async-error";
-import UserController from "../routes/user/user.controller";
-import AuthController from "../routes/auth/auth.controller";
+import authController from "../routes/auth/auth.controller";
+import chatController from "../routes/chat/chat.controller";
 import FriendRequestController from "../routes/friendRequest/friendRequest.controller";
-import { UploadController } from "../routes/upload/upload.controller";
-import { ChatController } from "../routes/chat/chat.controller";
-import { MessageController } from "../routes/message/message.controller";
+import messageController from "../routes/message/message.controller";
+import uploadController from "../routes/upload/upload.controller";
+import userController from "../routes/user/user.controller";
 
-const app = new App(Number(process.env.PORT), [
-  new UserController(),
-  new AuthController(),
-  new FriendRequestController(),
-  new UploadController(),
-  new ChatController(),
-  new MessageController(),
-]);
+const controllers = [
+  authController,
+  chatController,
+  FriendRequestController,
+  messageController,
+  uploadController,
+  userController,
+];
 
-app.listen();
+initializeApp(controllers);
+
+listen();

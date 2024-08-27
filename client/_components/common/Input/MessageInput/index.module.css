@@ -5,3 +5,17 @@
   padding-left: 0.5rem;
   color: rgba(26, 26, 26, 0.6);
 }
+.inputBox input {
+  outline: none;
+}
+.sendIcon {
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+}
+.sendActive {
+  color: var(--primary-hard) !important;
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+}

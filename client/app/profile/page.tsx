@@ -1,25 +1,42 @@
 "use client";
-
-
+import {
+  FriendRequests,
+  NavBar,
+  Notifications,
+  RoutesLoading,
+  SaveChangesAlert,
+} from "@/_components";
 import { useState } from "react";
-import styles from "./index.module.css";
 import { useTabsStore, useUserStore } from "@/utils/stores";
-import useAuthenticateUser from "@/hooks/useAuthenticateUser";
 import { useForm } from "react-hook-form";
 import { User } from "@/types/user.types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userValidation } from "@/utils/validation/user.validation";
 import { deleteProfilePic, sendProfilePic, updateInfo } from "@/api/axios";
-import { FriendRequests, NavBar, Notifications, RoutesLoading } from "@/_components";
 import { Panel, PanelGroup } from "react-resizable-panels";
+import useAuthenticateUser from "@/hooks/useAuthenticateUser";
 import ProfileLeftSection from "./ProfileLeftSection";
 import ProfileFormSection from "./ProfileFormSection";
-import { Alert, Snackbar } from "@mui/material";
+import useMediaQuery from "@/hooks/useMediaQuery";
+
+import styles from "./index.module.css";
 
 const ProfileSettings = () => {
   const [open, setOpen] = useState(false);
-  const { user, ppFile, profilePic, setProfilePic } = useUserStore();
   const { isLoading } = useAuthenticateUser();
+  const { isTablet } = useMediaQuery();
+
+  const { user, ppFile, profilePic, setProfilePic } = useUserStore((state) => ({
+    user: state.user,
+    ppFile: state.ppFile,
+    profilePic: state.profilePic,
+    setProfilePic: state.setProfilePic,
+  }));
+
+  const { notificationsTab, friendRequestsTab } = useTabsStore((state) => ({
+    notificationsTab: state.notificationsTab,
+    friendRequestsTab: state.friendRequestsTab,
+  }));
 
   const {
     control,
@@ -37,8 +54,8 @@ const ProfileSettings = () => {
     try {
       const response = await updateInfo(data);
       if (profilePic === "") {
-        const profilePicRes = await deleteProfilePic(user?._id);
-        setProfilePic(profilePicRes?.profilePic);
+        await deleteProfilePic(user?._id);
+        setProfilePic("");
       }
       if (ppFile) {
         const profilePicRes = await sendProfilePic(ppFile, user?._id);
@@ -54,12 +71,6 @@ const ProfileSettings = () => {
   function resetSettings() {
     if (user) reset(user);
   }
-
-  const notificationsTab = useTabsStore((state) => state.notificationsTab);
-  const friendRequestsTab = useTabsStore((state) => state.friendRequestsTab);
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   if (!user) return <RoutesLoading />;
   return (
@@ -86,11 +97,11 @@ const ProfileSettings = () => {
               />
             </div>
           </Panel>
-          {notificationsTab || friendRequestsTab ? (
+          {notificationsTab.isOpen || friendRequestsTab.isOpen ? (
             <Panel defaultSize={30} minSize={22} maxSize={30}>
-              {notificationsTab ? (
+              {notificationsTab.isOpen ? (
                 <Notifications />
-              ) : friendRequestsTab ? (
+              ) : friendRequestsTab.isOpen ? (
                 <FriendRequests />
               ) : null}
             </Panel>
@@ -104,23 +115,7 @@ const ProfileSettings = () => {
           )}
         </PanelGroup>
       </div>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={open}
-        autoHideDuration={4000}
-        onClose={handleClose}
-      >
-        <Alert
-          onClose={handleClose}
-          severity="success"
-          variant="filled"
-          sx={{
-            width: "100%",
-          }}
-        >
-          Changes saved successfully!
-        </Alert>
-      </Snackbar>
+      <SaveChangesAlert open={open} setOpen={setOpen} />
     </main>
   );
 };

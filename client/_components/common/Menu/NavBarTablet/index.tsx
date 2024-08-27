@@ -1,5 +1,4 @@
 import { IoNotifications, IoSettingsSharp } from "react-icons/io5";
-import styles from "./index.module.css";
 import { PiChatsFill } from "react-icons/pi";
 import { RiContactsBook3Fill, RiLogoutCircleLine } from "react-icons/ri";
 import { FaUserFriends } from "react-icons/fa";
@@ -7,47 +6,29 @@ import AddFriendDialog from "../../Dialog/AddFriendDialog";
 import NavBarTabletBtn from "../../Button/NavBarTabletBtn";
 import UploadProfilePic from "@/_components/SVGs/UploadProfilePic";
 import { DisplayImage } from "@/_components";
-import { useTabsStore, useUserStore } from "@/utils/stores";
-import { useRouter } from "next/navigation";
-import { useThemeContext } from "@/contexts/ThemeContext";
-import useTabletStore from "@/utils/stores/tablet.store";
+import useLogOut from "@/hooks/useLogOut";
+import useNavBar from "@/hooks/useNavBar";
+import { useUserStore } from "@/utils/stores";
+
+import styles from "./index.module.css";
 
 const NavBarTablet = () => {
-  // const router = useRouter();
-  // const setUser = useUserStore((state) => state.setUser);
-  const currentUser = useUserStore((state) => state.user);
-  const profilePic = useUserStore((state) => state.profilePic);
-  // const setTabletNavBar = useTabletStore((state) => state.setTabletNavBar);
-  // const openChatsTab = useTabsStore((state) => state.openChatsTab);
-  // const openFriendsTab = useTabsStore((state) => state.openFriendsTab);
+  const {
+    gotoChats,
+    gotoContacts,
+    gotoProfileSettings,
+    handleFriendRequests,
+    handleNotifications,
+  } = useNavBar();
+  const { profilePic, currentUser } = useUserStore((state) => ({
+    profilePic: state.profilePic,
+    currentUser: state.user,
+  }));
+  const { handleLogOut } = useLogOut();
 
-  // const handelNotificationsTab = useTabsStore(
-  //   (state) => state.handleNotificationsTab
-  // );
-  // const handelFriendRequestsTab = useTabsStore(
-  //   (state) => state.handleFriendRequestsTab
-  // );
-
-  // const { setSystemLoading } = useThemeContext();
-
-  // const gotoChats = () => {
-  //   setTabletNavBar(false);
-  //   openChatsTab();
-  //   router.replace("/dashboard");
-  // };
-  // const gotoFriends = () => {
-  //   setTabletNavBar(false);
-  //   openFriendsTab();
-  //   router.replace("/dashboard");
-  // };
-  // const gotoProfileSettings = () => {
-  //   setTabletNavBar(false);
-  //   setSystemLoading(true);
-  //   router.replace("/profile");
-  // };
   return (
     <main className={styles.main}>
-      <div className={styles.profileContainer} >
+      <div className={styles.profileContainer} onClick={gotoProfileSettings}>
         {profilePic === "" ? (
           <div className={styles.profilePicture}>
             <UploadProfilePic />
@@ -65,23 +46,25 @@ const NavBarTablet = () => {
           divProps={{ className: styles.button }}
           buttonProps={{ title: "Notifications" }}
           icon={<IoNotifications className={styles.sideIcon} />}
+          action={handleNotifications}
         />
         <NavBarTabletBtn
           divProps={{ className: styles.button }}
           buttonProps={{ title: "Chats" }}
           icon={<PiChatsFill className={styles.sideIcon} />}
-
+          action={gotoChats}
         />
         <NavBarTabletBtn
           divProps={{ className: styles.button }}
           buttonProps={{ title: "Contacts" }}
           icon={<RiContactsBook3Fill className={styles.sideIcon} />}
-
+          action={gotoContacts}
         />
         <NavBarTabletBtn
           divProps={{ className: styles.button }}
           buttonProps={{ title: "Friend requests" }}
           icon={<FaUserFriends className={styles.sideIcon} />}
+          action={handleFriendRequests}
         />
         <AddFriendDialog />
         <NavBarTabletBtn
@@ -93,6 +76,7 @@ const NavBarTablet = () => {
           divProps={{ className: styles.logoutBtn }}
           buttonProps={{ title: "Log-out" }}
           icon={<RiLogoutCircleLine className={styles.logoutIcon} />}
+          action={handleLogOut}
         />
       </section>
     </main>

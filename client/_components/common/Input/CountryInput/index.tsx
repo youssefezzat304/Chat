@@ -28,7 +28,6 @@ const CountryInput = ({ control, selectedCountry }: CountryInputProps) => {
               loading="lazy"
               width={30}
               height={30}
-              // srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
               src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
               alt=""
             />

@@ -1,7 +1,8 @@
+import styles from "./index.module.css";
 function EmptyChats() {
   return (
     <>
-      <div className="flex-col empty-chats">
+      <div className={styles.emptyChats}>
         <span>
           Start a new conversation to see your chats here. You currently have no
           recent chats.

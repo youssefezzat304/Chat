@@ -1,53 +1,40 @@
 import { Request, Response, Router } from "express";
 import AuthService from "./auth.service";
-import { Controller } from "../../utils/interfaces/interface";
 import { verifyJwt } from "../../utils/jwt";
 import { UserModel } from "../models";
 import { User } from "../user/user.model";
 import { DocumentType } from "@typegoose/typegoose";
 
-class AuthController implements Controller {
-  public path = "/sessions";
-  public router = Router();
-  private auth = new AuthService();
+const authController = Router();
+const auth = new AuthService();
 
-  constructor() {
-    this.initialiseRoutes();
-  }
+const refreshAccessTokenHandler = async (req: Request, res: Response) => {
+  const refreshToken = (req.cookies.refreshToken || "").split(" ")[1] as string;
 
-  private initialiseRoutes(): void {
-    this.router.post(`${this.path}/refresh`, this.refreshAccessTokenHandler);
-  }
+  const decoded = verifyJwt<{ session: string }>(
+    refreshToken,
+    "refreshTokenPublicKey",
+  );
 
-  private refreshAccessTokenHandler = async (req: Request, res: Response) => {
-    const refreshToken = (req.cookies.refreshToken || "").split(
-      " "
-    )[1] as string;
+  if (!decoded) return res.status(401).send("Could not refresh access token.");
 
-    const decoded = verifyJwt<{ session: string }>(
-      refreshToken,
-      "refreshTokenPublicKey"
-    );
+  const session = await auth.findSessionById(decoded.session);
 
-    if (!decoded)
-      return res.status(401).send("Could not refresh access token.");
+  if (!session || !session.valid)
+    return res.status(401).send("Could not refresh access token");
 
-    const session = await this.auth.findSessionById(decoded.session);
+  const user = (await UserModel.findById(String(session.user))
+    .populate("friends")
+    .populate("chats")
+    .exec()) as DocumentType<User>;
 
-    if (!session || !session.valid)
-      return res.status(401).send("Could not refresh access token");
+  if (!user) return res.status(401).send("Could not refresh access token");
 
-    const user = (await UserModel.findById(String(session.user))
-      .populate("friends")
-      .populate("chats")
-      .exec()) as DocumentType<User>;
+  const accessToken = auth.signAccessToken(user);
 
-    if (!user) return res.status(401).send("Could not refresh access token");
+  return res.json({ accessToken });
+};
 
-    const accessToken = this.auth.signAccessToken(user);
+authController.post("/sessions/refresh", refreshAccessTokenHandler);
 
-    return res.json({ accessToken });
-  };
-}
-
-export default AuthController;
+export default authController;

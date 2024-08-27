@@ -31,11 +31,6 @@
   border: none;
   border-radius: 10px;
 }
-@media (max-width: 500px) {
-  .chatHeader .headerInfo {
-    padding-left: 3.2rem;
-  }
-}
 @media (max-width: 435px) {
   .chatHeader {
     justify-content: center;

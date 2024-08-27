@@ -11,11 +11,15 @@ import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { useTabsStore, useUserStore } from "../../utils/stores";
 import useAuthenticateUser from "../../hooks/useAuthenticateUser";
 import ChatInfoContainer from "@/_components/container/ChatInfoContainer";
+import useMediaQuery from "@/hooks/useMediaQuery";
+
 import styles from "./index.module.css";
 
 export default function Dashboard() {
   const user = useUserStore((state) => state.user);
   const { isLoading } = useAuthenticateUser();
+
+  const { isTablet } = useMediaQuery();
 
   const { friendRequestsTab, membersTab, chatInfoTab, notificationsTab } =
     useTabsStore((state) => ({
@@ -26,15 +30,18 @@ export default function Dashboard() {
     }));
 
   const tabs =
-    notificationsTab || friendRequestsTab || chatInfoTab || membersTab;
-    
+    notificationsTab.isOpen ||
+    friendRequestsTab.isOpen ||
+    chatInfoTab ||
+    membersTab;
+
   if (!user) {
     return <RoutesLoading />;
   }
   return (
     <main className={styles.main}>
       <div className={styles.mainScreen}>
-        <NavBar />
+        {!isTablet && <NavBar />}
         <PanelGroup direction="horizontal" autoSaveId="main">
           <Panel defaultSize={tabs ? 75 : 100}>
             <section className={styles.mainSec}>
@@ -44,7 +51,7 @@ export default function Dashboard() {
           {tabs && (
             <>
               <PanelResizeHandle />
-              {notificationsTab || friendRequestsTab ? (
+              {notificationsTab.isOpen || friendRequestsTab.isOpen ? (
                 <Panel defaultSize={30} minSize={22} maxSize={30}>
                   {notificationsTab ? (
                     <Notifications />

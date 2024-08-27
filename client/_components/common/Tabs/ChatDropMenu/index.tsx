@@ -5,13 +5,13 @@ import Divider from "@mui/material/Divider";
 import { ComponentProps, useEffect, useState } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { IconButton, Tooltip } from "@mui/material";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import { useTabsStore } from "@/utils/stores";
-import useIsMobile from "@/hooks/MediaQuery/useIsMobile";
 
 export default function ChatDropMenu({ ...props }: ComponentProps<"div">) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const { isMobile } = useIsMobile();
+  const { isMobile } = useMediaQuery();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -108,7 +108,7 @@ const StyledMenu = styled((props: MenuProps) => (
       "&:active": {
         backgroundColor: alpha(
           theme.palette.primary.main,
-          theme.palette.action.selectedOpacity
+          theme.palette.action.selectedOpacity,
         ),
       },
     },

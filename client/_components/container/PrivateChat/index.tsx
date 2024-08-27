@@ -3,14 +3,14 @@ import { useChatStore } from "@/utils/stores";
 import MessageInput from "../../common/Input/MessageInput";
 import ChatHeaderIcons from "../../Header/ChatHeaderIcons";
 import BackBtn from "@/_components/common/Button/BackBtn";
-import useIsMobile from "@/hooks/MediaQuery/useIsMobile";
 import Chats from "@/_components/List/Chats";
 import useMobileStore from "@/utils/stores/mobile.store";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 import styles from "./index.module.css";
 
 const PrivateChat = () => {
-  const { isMobile } = useIsMobile();
+  const { isSmallTab, isMobile } = useMediaQuery();
   const chatWith = useChatStore((state) => state.chatWith);
   const mobileChats = useMobileStore((state) => state.mobileChats);
   const setMobileChats = useMobileStore((state) => state.setMobileChats);
@@ -20,12 +20,12 @@ const PrivateChat = () => {
   };
   return (
     <>
-      {mobileChats && isMobile ? (
+      {mobileChats && (isMobile || isSmallTab) ? (
         <Chats />
       ) : (
         <>
           <header className={styles.chatHeader}>
-            {isMobile && (
+            {isSmallTab && (
               <BackBtn onClick={backToChats} className={styles.backBtn} />
             )}
             <div className={styles.headerInfo}>

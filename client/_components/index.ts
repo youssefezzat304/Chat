@@ -18,6 +18,7 @@ export { default as BurgerMenuBtn } from "./common/Button/BurgerMenuBtn";
 // --------------- Common -----------------//
 export { default as ButtonIcon } from "./common/Icon/ButtonIcon";
 export { default as FriendRequestAlert } from "./common/Alert/FriendRequestAlert";
+export { default as SaveChangesAlert } from "./common/Alert/SaveChangesAlert";
 export { default as AddFriendDialog } from "./common/Dialog/AddFriendDialog";
 export { default as SearchBar } from "./common/Search/FriendsSearch";
 export { default as MessageInput } from "./common/Input/MessageInput";

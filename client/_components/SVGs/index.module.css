@@ -1,0 +1,15 @@
+.emptyChats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+.emptyChats span {
+  color: rgba(0, 0, 0, 0.48);
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+  padding: 1rem 3rem 0rem 3rem;
+  text-wrap: pretty;
+}

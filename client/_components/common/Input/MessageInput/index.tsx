@@ -1,7 +1,7 @@
 import { sendMessage } from "@/api/messages.api";
 import { socket } from "@/app/socket";
 import { useChatStore, useUserStore } from "@/utils/stores";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import AttachBtn from "../../Button/AttachBtn";
 import VoiceNoteBtn from "../../Button/VoiceNoteBtn";
@@ -10,10 +10,11 @@ import SendMessageBtn from "../../Button/SendMessageBtn";
 import styles from "./index.module.css";
 
 const MessageInput = () => {
-  const { register, handleSubmit, reset } = useForm(),
-    chatId = useChatStore((state) => state.selectedChatId),
-    chatWith = useChatStore((state) => state.chatWith),
-    currentUser = useUserStore((state) => state.user);
+  const { register, handleSubmit, reset, watch } = useForm();
+  const chatId = useChatStore((state) => state.selectedChatId);
+  const chatWith = useChatStore((state) => state.chatWith);
+  const currentUser = useUserStore((state) => state.user);
+  const message = watch("message");
 
   const handleSendMessage = useCallback(
     async (data: any) => {
@@ -39,7 +40,11 @@ const MessageInput = () => {
     >
       <AttachBtn />
       <VoiceNoteBtn />
-      <SendMessageBtn onClick={handleSubmit(handleSendMessage)} />
+      <SendMessageBtn
+        onClick={handleSubmit(handleSendMessage)}
+        className={styles.sendIcon}
+        iconClass={!message ? styles.sendIcon : styles.sendActive}
+      />
       <input
         {...register("message")}
         type="text"

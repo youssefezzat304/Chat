@@ -6,17 +6,15 @@ import { useTabsStore } from "@/utils/stores";
 import Friends from "../../List/Friends";
 import useTabletStore from "@/utils/stores/tablet.store";
 import NavBarTablet from "@/_components/common/Menu/NavBarTablet";
-import useIsTablet from "@/hooks/MediaQuery/useIsTablet";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 import styles from "./index.module.css";
 
 const MainConsole = () => {
   const friendsTab = useTabsStore((state) => state.friendsTab);
   const tabletNavBar = useTabletStore((state) => state.tabletNavBar);
-  const { isTablet } = useIsTablet();
+  const { isTablet } = useMediaQuery();
 
-  const friends = friendsTab && !tabletNavBar && !isTablet;
-  const tabletNav = tabletNavBar && !friendsTab && isTablet;
   return (
     <PanelGroup
       className={styles.mainConsole}
@@ -30,7 +28,13 @@ const MainConsole = () => {
         minSize={isTablet ? 35 : 25}
         maxSize={isTablet ? 35 : 100}
       >
-        {friends ? <Friends /> : tabletNav ? <NavBarTablet /> : <Chats />}
+        {friendsTab ? (
+          <Friends />
+        ) : tabletNavBar && isTablet ? (
+          <NavBarTablet />
+        ) : (
+          <Chats />
+        )}
       </Panel>
       <PanelResizeHandle />
       <Panel className={styles.chatSec} defaultSize={65} minSize={40}>

@@ -1,8 +1,0 @@
-.sendIcon {
-  cursor: pointer;
-  position: absolute;
-  right: 15px;
-}
-.sendIcon.active {
-  color: var(--primary-hard);
-}

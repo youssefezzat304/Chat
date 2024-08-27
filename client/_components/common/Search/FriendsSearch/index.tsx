@@ -1,16 +1,19 @@
 import { CiSearch } from "react-icons/ci";
-
-import styles from "./index.module.css";
 import BurgerMenuBtn from "../../Button/BurgerMenuBtn";
-import useIsTablet from "@/hooks/MediaQuery/useIsTablet";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import GenericInput from "../../Input/GenericInput";
 import useTabletStore from "@/utils/stores/tablet.store";
+import { useTabsStore } from "@/utils/stores";
+
+import styles from "./index.module.css";
 
 const FriendsSearch = () => {
-  const { isTablet } = useIsTablet();
+  const { isTablet } = useMediaQuery();
   const setTabletNavBar = useTabletStore((state) => state.setTabletNavBar);
+  const setFriendsTab = useTabsStore((state) => state.setFriendsTab);
 
   const openNavBar = () => {
+    setFriendsTab(false);
     setTabletNavBar(true);
   };
   return (

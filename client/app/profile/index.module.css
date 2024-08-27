@@ -98,3 +98,39 @@
   padding-left: 6px;
   height: 100%;
 }
+@media (max-width: 1024px) {
+  .mainScreen::before {
+    display: none;
+  }
+  .mainProfileSec::before {
+    display: none;
+  }
+  .mainProfileSec::after {
+    display: none;
+  }
+  .main {
+    min-width: 800px;
+  }
+  .mainScreen {
+    padding-left: 6px;
+  }
+  .mainProfileSec {
+    border-top-left-radius: 22px;
+    margin-left: 0px;
+  }
+  .profileSettingsSec {
+    display: none;
+  }
+}
+@media (max-width: 510px) {
+  .main {
+    min-width: 435px;
+  }
+  .mainScreen{
+    overflow-y: auto;
+  }
+  .mainProfileSec {
+    overflow-y: auto;
+    flex-direction: column;
+  }
+}
