@@ -75,3 +75,8 @@
   color: var(--primary-hard);
   border-radius: 10px;
 }
+@media (max-width: 1024px) {
+  .sidebarIcons {
+    display: none;
+  }
+}

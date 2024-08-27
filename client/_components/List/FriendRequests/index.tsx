@@ -15,7 +15,9 @@ const FriendRequests = () => {
   const user = useUserStore((state) => state.user);
 
   useEffect(() => {
-    setFriendRequests(user?.friendRequestsReceived);
+    if (user) {
+      setFriendRequests(user.friendRequestsReceived);
+    }
   }, [user]);
 
   return (

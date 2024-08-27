@@ -13,6 +13,8 @@ export { default as VoiceNoteBtn } from "./common/Button/VoiceNoteBtn";
 export { default as SendMessageBtn } from "./common/Button/SendMessageBtn";
 export { default as UploadFileBtn } from "./common/Button/UploadFileBtn";
 export { default as NavBarBtn } from "./common/Button/NavBarBtn";
+export { default as BackBtn } from "./common/Button/BackBtn";
+export { default as BurgerMenuBtn } from "./common/Button/BurgerMenuBtn";
 // --------------- Common -----------------//
 export { default as ButtonIcon } from "./common/Icon/ButtonIcon";
 export { default as FriendRequestAlert } from "./common/Alert/FriendRequestAlert";
@@ -44,5 +46,5 @@ export { default as Friends } from "./List/Friends";
 export { default as FriendRequests } from "./List/FriendRequests";
 export { default as Notifications } from "./List/Notifications";
 // --------------- Headers -----------------//
-export { default as ChatHeader } from "./Header/ChatHeader";
+export { default as ChatHeader } from "./Header/ChatHeaderIcons";
 export { default as NotificationsHeader } from "./Header/NotificationsHeader";

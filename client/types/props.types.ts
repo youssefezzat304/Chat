@@ -51,7 +51,7 @@ export type MessageNotificationProps = {
 export type FriendRequestNotificationProps = {
   recipientId?: string;
   requesterId?: string;
-  request?: any;
+  request: any;
 };
 
 export type ProfileInfoInputProps = ComponentProps<"input"> & {
@@ -95,4 +95,10 @@ export type ProfileLeftSectionProps = {
   saveChanges: SubmitHandler<User>;
   resetSettings: () => void;
   errors: FieldErrors<User>;
+};
+
+export type GenericInputType = {
+  icons: any;
+  inputProps: ComponentProps<"input">;
+  divProps: ComponentProps<"div">;
 };

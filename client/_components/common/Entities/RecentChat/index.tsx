@@ -4,15 +4,18 @@ import dayjs from "dayjs";
 import { useFindChat } from "@/utils/queries/chat.query";
 import { SubjectProps } from "@/types/props.types";
 import styles from "./index.module.css";
+import useMobileStore from "@/utils/stores/mobile.store";
 
 const RecentChat = ({ subject, lastMessage }: SubjectProps) => {
   const setChatWith = useChatStore((state) => state.setChatWith);
+  const setMobileChats = useMobileStore((state) => state.setMobileChats);
   const currentUser = useUserStore((state) => state.user);
   const { isLoading } = useFindChat();
   const isSentByCurrentUser = lastMessage?.initiatedBy === currentUser?._id;
 
   const handleSelectChatId = () => {
     setChatWith(subject);
+    setMobileChats(false);
   };
   return (
     <main className={styles.subjectMain} onClick={handleSelectChatId}>

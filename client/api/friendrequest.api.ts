@@ -1,3 +1,4 @@
+import { FriendRequestType } from "@/types/friendSystem.types";
 import axios from "axios";
 
 const orginURL = process.env.NEXT_PUBLIC_API_FRIEND_REQUEST;
@@ -7,7 +8,7 @@ const api = axios.create({
 });
 
 export const sendFriendRequest = async (requestData: {
-  requesterEmail?: string;
+  requesterEmail: string;
   recipientEmail: string;
 }) => {
   try {
@@ -30,11 +31,7 @@ export const handleFriendRequest = async ({
   recipientId,
   requesterId,
   status,
-}: {
-  recipientId: string | undefined;
-  requesterId: string | undefined;
-  status: string;
-}) => {
+}: FriendRequestType) => {
   const reqData = {
     requesterId: requesterId,
     recipientId: recipientId,

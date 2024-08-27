@@ -1,16 +1,22 @@
 .friendsSearchMain {
-  position: relative;
   display: flex;
   width: 100%;
-  padding: 16px 20px 5px 20px;
+  padding: 16px 20px 0px 20px;
   align-items: center;
+}
+.searchBarContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
 }
 .friendsSearchIcon {
   position: absolute;
   font-size: large;
-  left: 26px;
+  left: 0.5rem;
 }
 .friendsSearchBar {
+  position: relative;
   background-color: var(--secondary-soft);
   flex-grow: 1;
   padding: 10px 5px 10px 28px;
@@ -19,4 +25,9 @@
 }
 .friendsSearchBar::placeholder {
   color: rgb(36, 36, 36);
+}
+@media (max-width: 1024px) {
+  .friendsSearchMain {
+    padding: 16px 10px 0px 10px;
+  }
 }

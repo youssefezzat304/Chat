@@ -15,10 +15,10 @@ import styles from "./index.module.css";
 import { sendFriendRequest } from "@/api/friendrequest.api";
 
 export default function AddFriendDialog() {
-  const user = useUserStore((state) => state.user),
-    [open, setOpen] = useState(false),
-    [isFriendReqSuccessful, setIsFriendReqSuccessful] =
-      useState<FriendRequestState>(null);
+  const user = useUserStore((state) => state.user);
+  const [open, setOpen] = useState(false);
+  const [isFriendReqSuccessful, setIsFriendReqSuccessful] =
+    useState<FriendRequestState>(null);
 
   const {
     control,
@@ -33,7 +33,8 @@ export default function AddFriendDialog() {
   const handleFriendRequest: SubmitHandler<FriendRequestSchema> = async (
     data
   ) => {
-    if (data.recipientEmail === user?.email) {
+    if (!user) throw Error("NO Current User data.");
+    if (data.recipientEmail === user.email) {
       setIsFriendReqSuccessful(null);
       setError("root", {
         message:
@@ -42,7 +43,7 @@ export default function AddFriendDialog() {
       return;
     }
     const requestData = {
-      requesterEmail: user?.email,
+      requesterEmail: user.email,
       recipientEmail: data.recipientEmail,
     };
     try {

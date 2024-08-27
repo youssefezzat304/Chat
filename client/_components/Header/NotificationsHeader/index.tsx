@@ -9,13 +9,12 @@ import { TbAlertSquareRoundedFilled } from "react-icons/tb";
 import styles from "./index.module.css";
 
 const NotificationsHeader = () => {
-  const openNotificationsTab = useTabsStore(
-    (state) => state.openNotificationsTab
-  );
-  const openFriendRequestsTab = useTabsStore(
-    (state) => state.openFriendRequestsTab
-  );
-  const closeNotifications = useTabsStore((state) => state.closeNotifications);
+  const { openNotificationsTab, openFriendRequestsTab, closeNotifications } =
+    useTabsStore((state) => ({
+      openNotificationsTab: state.openTab,
+      openFriendRequestsTab: state.openTab,
+      closeNotifications: state.closeTabs,
+    }));
   return (
     <main className={styles.notificationsSec}>
       <header>
@@ -23,12 +22,12 @@ const NotificationsHeader = () => {
         <ButtonIcon
           title="Messages"
           icon={<BiSolidMessageSquareDots className="icon" />}
-          onClick={openNotificationsTab}
+          onClick={() => openNotificationsTab("notificationsTab")}
         />
         <ButtonIcon
           title="Friend Requests"
           icon={<FaUserFriends className="icon" />}
-          onClick={openFriendRequestsTab}
+          onClick={() => openFriendRequestsTab("friendRequestsTab")}
         />
         <ButtonIcon
           title="Alerts"

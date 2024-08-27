@@ -1,9 +1,8 @@
 import { Request, Response, Router } from "express";
 import { Controller } from "../../utils/interfaces/interface";
-import { ChatModel, MessageModel } from "../models";
+import { MessageModel } from "../models";
 import { DocumentType } from "@typegoose/typegoose";
 import { Message } from "./message.model";
-import { Chat } from "../chat/chat.model";
 
 export class MessageController implements Controller {
   public path = "/messages";

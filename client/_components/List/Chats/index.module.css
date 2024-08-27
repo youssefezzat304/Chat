@@ -18,3 +18,11 @@
 .friendList {
   display: flex;
 }
+@media (max-width: 435px) {
+  .friendListMain {
+    height: 100%;
+    margin-top: 0.5rem;
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+  }
+}

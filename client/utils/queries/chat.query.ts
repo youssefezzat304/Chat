@@ -8,8 +8,10 @@ import { socket } from "@/app/socket";
 export const useGetChats = () => {
   const currentUser = useUserStore((state) => state.user);
   const setRecentChats = useChatStore((state) => state.setRecentChats);
+
+  if (!currentUser) throw Error("No current User");
   const { data: allChats, isLoading } = useQuery({
-    queryFn: () => getAllChats(currentUser?._id),
+    queryFn: () => getAllChats(currentUser._id),
     queryKey: ["allChats"],
   });
   useEffect(() => {
@@ -20,14 +22,23 @@ export const useGetChats = () => {
 
   return { allChats, isLoading };
 };
+
 export const useFindChat = () => {
   const currentUser = useUserStore((state) => state.user);
   const chatWith = useChatStore((state) => state.chatWith);
   const setSelectedChatId = useChatStore((state) => state.setSelectedChatId);
   const selectedChatId = useChatStore((state) => state.selectedChatId);
+
   const { data: currentChat, isLoading } = useQuery({
-    queryFn: () =>
-      findChat({ userId: currentUser?._id, chatterId: chatWith?._id }),
+    queryFn: async () => {
+      if (currentUser && chatWith) {
+        const data = await findChat({
+          userId: currentUser._id,
+          chatterId: chatWith._id,
+        });
+        return data;
+      }
+    },
     queryKey: ["currentChat", chatWith],
     enabled: !!chatWith,
   });
@@ -39,6 +50,7 @@ export const useFindChat = () => {
 
   return { currentChat, isLoading };
 };
+
 export const useGetMessages = () => {
   const setMessages = useChatStore((state) => state.setMessages);
   const selectedChatId = useChatStore((state) => state.selectedChatId);
@@ -55,10 +67,11 @@ export const useGetMessages = () => {
     }
   }, [allMessages, setMessages]);
   useEffect(() => {
+    if (!currentUser) return;
     if (selectedChatId) {
       joinPrivateChat(socket, {
         chatId: selectedChatId,
-        userId: currentUser?._id,
+        userId: currentUser._id,
       });
     }
   }, [selectedChatId]);

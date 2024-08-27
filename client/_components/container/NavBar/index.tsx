@@ -16,19 +16,29 @@ import NavBarBtn from "@/_components/common/Button/NavBarBtn";
 import styles from "./index.module.css";
 
 const NavBar = () => {
+  const {
+    openChatsTab,
+    openFriendsTab,
+    toggleNotifications,
+    toggleFriendRequests,
+  } = useTabsStore((state) => ({
+    openChatsTab: state.openTab,
+    openFriendsTab: state.openTab,
+    toggleNotifications: state.toggleTab,
+    toggleFriendRequests: state.toggleTab,
+  }));
+
+  const { setUser, profilePic } = useUserStore((state) => ({
+    setUser: state.setUser,
+    profilePic: state.profilePic,
+  }));
+
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const { setSystemLoading } = useThemeContext();
+
   const router = useRouter();
   const axiosPrivate = useAxiosPrivate();
   const queryClient = useQueryClient();
-  const { setUser, profilePic } = useUserStore();
-  const { openFriendsTab, openChatsTab } = useTabsStore();
-  const setAccessToken = useAuthStore((state) => state.setAccessToken);
-
-  const handelNotificationsTab = useTabsStore(
-    (state) => state.handleNotificationsTab
-  );
-  const handelFriendRequestsTab = useTabsStore(
-    (state) => state.handleFriendRequestsTab
-  );
 
   const handleLogOut = async () => {
     localStorage.removeItem("currentUser");
@@ -39,25 +49,25 @@ const NavBar = () => {
       await axiosPrivate.get("/users/logout", {
         withCredentials: true,
       });
+      router.replace("/register");
     } catch (error: any) {
       console.log(error);
     } finally {
       router.replace("/register");
     }
   };
-  const { setSystemLoading } = useThemeContext();
 
   const gotoChats = () => {
-      openChatsTab();
-      router.replace("/dashboard");
-    },
-    gotoProfileSettings = () => {
-      setSystemLoading(true);
-      router.replace("/profile");
-    },
-    consolee = () => {
-      console.log("nothing");
-    };
+    openChatsTab("chatsTab");
+    router.replace("/dashboard");
+  };
+  const gotoProfileSettings = () => {
+    setSystemLoading(true);
+    router.replace("/profile");
+  };
+  const consolee = () => {
+    console.log("nothing");
+  };
 
   return (
     <main className={styles.sidebarIcons}>
@@ -77,7 +87,7 @@ const NavBar = () => {
         <NavBarBtn
           icon={<IoNotifications className={styles.sideIcon} />}
           title="Notifications"
-          onClick={handelNotificationsTab}
+          onClick={() => toggleNotifications("notificationsTab")}
         />
         <NavBarBtn
           icon={<PiChatsFill className={styles.sideIcon} />}
@@ -87,12 +97,12 @@ const NavBar = () => {
         <NavBarBtn
           icon={<RiContactsBook3Fill className={styles.sideIcon} />}
           title="Contacts"
-          onClick={openFriendsTab}
+          onClick={() => openFriendsTab("friendsTab")}
         />
         <NavBarBtn
           icon={<FaUserFriends className={styles.sideIcon} />}
           title="Friend requests"
-          onClick={handelFriendRequestsTab}
+          onClick={() => toggleFriendRequests("friendRequestsTab")}
         />
         <AddFriendDialog />
       </section>

@@ -1,10 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { handleFriendRequest } from "../../api/friendrequest.api";
 import { useUserStore } from "../stores";
-import {
-  FriendRequestNotificationProps,
-  MessageNotificationProps,
-} from "@/types/props.types";
+import { FriendRequestType } from "@/types/friendSystem.types";
 
 export const useHandleFriendRequest = () => {
   const queryClient = useQueryClient();
@@ -24,7 +21,7 @@ export const useHandleFriendRequest = () => {
   const acceptRequest = async ({
     recipientId,
     requesterId,
-  }: FriendRequestNotificationProps) => {
+  }: Omit<FriendRequestType, "status">) => {
     try {
       await handleFriendrequest({
         recipientId: recipientId,
@@ -39,7 +36,7 @@ export const useHandleFriendRequest = () => {
   const rejectRequest = async ({
     recipientId,
     requesterId,
-  }: FriendRequestNotificationProps) => {
+  }: Omit<FriendRequestType, "status">) => {
     try {
       await handleFriendrequest({
         recipientId: recipientId,

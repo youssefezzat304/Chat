@@ -1,13 +1,14 @@
 import { Request, Response, Router } from "express";
 import AuthService from "./auth.service";
-import {Controller} from "../../utils/interfaces/interface";
+import { Controller } from "../../utils/interfaces/interface";
 import { verifyJwt } from "../../utils/jwt";
-import UserService from "../user/user.service";
+import { UserModel } from "../models";
+import { User } from "../user/user.model";
+import { DocumentType } from "@typegoose/typegoose";
 
 class AuthController implements Controller {
   public path = "/sessions";
   public router = Router();
-  private userService = new UserService();
   private auth = new AuthService();
 
   constructor() {
@@ -19,7 +20,9 @@ class AuthController implements Controller {
   }
 
   private refreshAccessTokenHandler = async (req: Request, res: Response) => {
-    const refreshToken = (req.cookies.refreshToken || "").split(" ")[1] as string;
+    const refreshToken = (req.cookies.refreshToken || "").split(
+      " "
+    )[1] as string;
 
     const decoded = verifyJwt<{ session: string }>(
       refreshToken,
@@ -34,7 +37,10 @@ class AuthController implements Controller {
     if (!session || !session.valid)
       return res.status(401).send("Could not refresh access token");
 
-    const user = await this.userService.findUserById(String(session.user));
+    const user = (await UserModel.findById(String(session.user))
+      .populate("friends")
+      .populate("chats")
+      .exec()) as DocumentType<User>;
 
     if (!user) return res.status(401).send("Could not refresh access token");
 

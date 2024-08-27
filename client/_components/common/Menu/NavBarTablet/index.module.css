@@ -1,0 +1,70 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  overflow: hidden;
+  background-color: var(--primary-dark);
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  width: 100%;
+  max-width: 100%;
+  padding: 1rem 0.5rem;
+  box-shadow:
+    rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+.profileContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+  height: 4rem;
+  width: 90%;
+  border-radius: 10rem;
+  cursor: pointer;
+}
+.profilePicture {
+  position: absolute;
+  left: 3px;
+  bottom: 6px;
+  height: 62px;
+  width:  62px;
+}
+.sideIcon {
+  font-size: 22px;
+}
+.logoutBtn {
+  cursor: pointer;
+  padding-left: 1rem;
+  display: flex;
+  color: var(--text-gray);
+  font-size: large;
+  gap: 1rem;
+}
+.logoutBtn:hover {
+  color: var(--log-out) !important;
+}
+.logoutIcon {
+  font-size: 22px;
+  color: var(--log-out);
+}
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+.button {
+  display: flex;
+  color: var(--text-gray);
+  font-size: large;
+  gap: 1rem;
+  padding-left: 1rem;
+  cursor: pointer;
+}
+.button:hover {
+  color: var(--primary-hard);
+  .sideIcon {
+    color: var(--primary-hard);
+  }
+}

@@ -1,0 +1,17 @@
+.chatHeaderIcons {
+  color: var(--text-gray);
+  font-size: x-large;
+  display: flex;
+  padding-right: 10px;
+}
+@media (max-width: 435px) {
+  .chatHeaderIcons > * {
+    display: none;
+  }
+  .chatDropMenu {
+    display: block;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}

@@ -1,6 +1,5 @@
 "use client";
 import {
-  ChatInfo,
   Notifications,
   FriendRequests,
   RoutesLoading,
@@ -15,16 +14,20 @@ import ChatInfoContainer from "@/_components/container/ChatInfoContainer";
 import styles from "./index.module.css";
 
 export default function Dashboard() {
-  const user = useUserStore((state) => state.user),
-    { isLoading } = useAuthenticateUser(),
-    friendRequestsTab = useTabsStore((state) => state.friendRequestsTab),
-    membersTab = useTabsStore((state) => state.membersTab),
-    chatInfoTab = useTabsStore((state) => state.chatInfoTab),
-    notificationsTab = useTabsStore((state) => state.notificationsTab);
+  const user = useUserStore((state) => state.user);
+  const { isLoading } = useAuthenticateUser();
+
+  const { friendRequestsTab, membersTab, chatInfoTab, notificationsTab } =
+    useTabsStore((state) => ({
+      friendRequestsTab: state.friendRequestsTab,
+      membersTab: state.membersTab,
+      chatInfoTab: state.chatInfoTab,
+      notificationsTab: state.notificationsTab,
+    }));
 
   const tabs =
     notificationsTab || friendRequestsTab || chatInfoTab || membersTab;
-
+    
   if (!user) {
     return <RoutesLoading />;
   }
@@ -50,7 +53,7 @@ export default function Dashboard() {
                   ) : null}
                 </Panel>
               ) : (
-                <Panel defaultSize={25} maxSize={40} minSize={15} collapsible>
+                <Panel defaultSize={25} maxSize={40} minSize={15}>
                   <PanelGroup direction="vertical" className={styles.rightSec}>
                     {chatInfoTab && <ChatInfoContainer />}
                     <PanelResizeHandle />

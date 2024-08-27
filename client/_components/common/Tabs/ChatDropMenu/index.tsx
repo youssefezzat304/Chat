@@ -2,14 +2,17 @@ import { styled, alpha } from "@mui/material/styles";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
-import { useState } from "react";
+import { ComponentProps, useEffect, useState } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { IconButton, Tooltip } from "@mui/material";
 import { useTabsStore } from "@/utils/stores";
+import useIsMobile from "@/hooks/MediaQuery/useIsMobile";
 
-export default function ChatDropMenu() {
+export default function ChatDropMenu({ ...props }: ComponentProps<"div">) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const { isMobile } = useIsMobile();
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -24,7 +27,7 @@ export default function ChatDropMenu() {
     };
 
   return (
-    <div>
+    <div {...props}>
       <Tooltip title="Settings">
         <IconButton
           id="long-button"
@@ -50,13 +53,20 @@ export default function ChatDropMenu() {
         <MenuItem onClick={handleClose} disableRipple>
           Mute
         </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={handleClose} disableRipple>
           Archive
         </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          More
-        </MenuItem>
+        {isMobile && (
+          <>
+            <Divider sx={{ my: 0.5 }} />
+            <MenuItem onClick={handleClose} disableRipple>
+              Search
+            </MenuItem>
+            <MenuItem onClick={handleClose} disableRipple>
+              Voice Call
+            </MenuItem>
+          </>
+        )}
       </StyledMenu>
     </div>
   );

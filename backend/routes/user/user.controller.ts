@@ -156,6 +156,7 @@ class UserController implements Controller {
       );
     }
   };
+
   private updateInfo = async (req: Request, res: Response) => {
     const { email } = req.body;
     const data = req.body;
@@ -178,6 +179,7 @@ class UserController implements Controller {
       });
     }
   };
+  
   private logOut = async (req: Request, res: Response) => {
     return res
       .clearCookie("accessToken", {

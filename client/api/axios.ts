@@ -15,31 +15,21 @@ export const axiosPrivate = axios.create({
 });
 
 export const checkUser = async (): Promise<User | null> => {
-  // let requestIntercept: number | null = null;
-  // let responseIntercept: number | null = null;
-
   try {
     const token: string | null = await refreshToken();
     if (!token) {
       return null;
     }
 
-    // const interceptors = setupInterceptors(token);
-    // requestIntercept = interceptors.requestIntercept;
-    // responseIntercept = interceptors.responseIntercept;
+    const decodedUser = decode(token) as User | null;
 
-    const decodedUser = decode(token) as User;
+    if (!decodedUser) throw Error("Failed to decode token.");
 
     return decodedUser;
-  } catch (error: any) {
-    console.error("Failed to fetch user:", error.response?.data);
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
     return null;
   }
-  // } finally {
-  //   if (requestIntercept !== null && responseIntercept !== null) {
-  //     cleanupInterceptors({ requestIntercept, responseIntercept });
-  //   }
-  // }
 };
 
 export const refreshToken = async () => {
@@ -67,6 +57,7 @@ export const updateInfo = async (
     return null;
   }
 };
+
 export const sendProfilePic = async (profilePic: any, requester: any) => {
   const formData = new FormData();
   formData.append("profilePic", profilePic);
@@ -117,7 +108,6 @@ export const setupInterceptors = (accessToken: string) => {
       return Promise.reject(error);
     }
   );
-
   return { requestIntercept, responseIntercept };
 };
 

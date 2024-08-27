@@ -1,12 +1,19 @@
-.sideIcon {
-  font-size: 22px;
-}
 .sideBtn {
   display: flex;
-  flex-direction: column;
   gap: 8px;
+}
+.sideIcon {
+  font-size: 22px;
 }
 .sideBtn:hover {
   color: var(--primary-hard);
   border-radius: 10px;
+}
+@media (max-width: 1024px) {
+  .sideBtn {
+    font-size: large;
+    flex-direction: row !important;
+    padding-left: 1rem;
+    gap: 1rem;
+  }
 }

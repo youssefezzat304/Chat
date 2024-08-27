@@ -31,3 +31,23 @@
   border: none;
   border-radius: 10px;
 }
+@media (max-width: 500px) {
+  .chatHeader .headerInfo {
+    padding-left: 3.2rem;
+  }
+}
+@media (max-width: 435px) {
+  .chatHeader {
+    justify-content: center;
+  }
+  .chatHeader .headerInfo {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0rem;
+    align-items: center;
+  }
+  .backBtn {
+    position: absolute;
+    left: 1rem;
+  }
+}

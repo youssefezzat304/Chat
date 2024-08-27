@@ -21,7 +21,7 @@ const FriendRequestNotification = ({
     rejectRequest({ recipientId, requesterId });
   };
   return (
-    <main className={`${styles.friendRequestNotification}`}>
+    <main className={styles.friendRequestNotification}>
       <section>
         <Avatar
           alt={request.displayName}
@@ -39,18 +39,18 @@ const FriendRequestNotification = ({
       <section className="flex">
         <ButtonIcon
           title="Accept"
-          icon={<IoCheckmark className={`${styles.acceptIcon}`} />}
+          icon={<IoCheckmark className={styles.acceptIcon} />}
           value="accepted"
           onClick={handleAccept}
         />
         <ButtonIcon
           title="Reject"
-          icon={<IoClose className={`${styles.declienIcon}`} />}
+          icon={<IoClose className={styles.declienIcon} />}
           value="rejected"
           onClick={handleReject}
         />
       </section>
-      <div className={`${styles.time}`}>
+      <div className={styles.time}>
         {dayjs(request.createAt).format("MMM D, YYYY h:mm A")}
       </div>
     </main>
