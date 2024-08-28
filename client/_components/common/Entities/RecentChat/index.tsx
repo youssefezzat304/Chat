@@ -1,10 +1,10 @@
 import DisplayImage from "../../Display/ImageDisplay";
 import { useChatStore, useUserStore } from "@/utils/stores";
-import dayjs from "dayjs";
 import { useFindChat } from "@/utils/queries/chat.query";
 import { SubjectProps } from "@/types/props.types";
 import styles from "./index.module.css";
 import useMobileStore from "@/utils/stores/mobile.store";
+import { hourTimestamp } from "@/utils/functions/time";
 
 const RecentChat = ({ subject, lastMessage }: SubjectProps) => {
   const setChatWith = useChatStore((state) => state.setChatWith);
@@ -30,7 +30,7 @@ const RecentChat = ({ subject, lastMessage }: SubjectProps) => {
           <section className={styles.top}>
             <label htmlFor="">{subject.displayName}</label>
             <p className={styles.lastSeen}>
-              {dayjs(lastMessage?.createdAt).format("MM/DD/YY	h:mm A")}
+              {hourTimestamp(lastMessage?.createdAt)}
             </p>
           </section>
           <section className={styles.bottom}>

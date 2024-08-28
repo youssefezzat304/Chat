@@ -13,7 +13,7 @@ const ProfileInfoInput = ({
   type,
 }: ProfileInfoInputProps) => {
   return (
-    <div className={`${styles.infoInput}`}>
+    <div className={styles.infoInput}>
       <label htmlFor="Email address">{label}</label>
       <Input
         placeholder={holder}
@@ -22,9 +22,9 @@ const ProfileInfoInput = ({
         type={!type ? "text" : type}
       />
       {errorCondition ? (
-        <span className={`${styles.inlineError}`}>{errorMessage}</span>
+        <span className={styles.inlineError}>{errorMessage}</span>
       ) : (
-        <span className={`${styles.inlineError}`}></span>
+        <span className={styles.inlineError}></span>
       )}
     </div>
   );

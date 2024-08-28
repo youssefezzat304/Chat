@@ -4,15 +4,15 @@ import { User } from "../../types/user.types";
 
 type ChatStore = {
   selectedChatId: string;
-  setSelectedChatId: (selectedChatIdState: string) => void;
-  chatInfo: ChatInfo | undefined;
-  setChatInfo: (chatInfoState: ChatInfo | undefined) => void;
+  chatInfo?: ChatInfo;
   recentChats: ChatInfo[];
-  setRecentChats: (recentChatsState: ChatInfo[]) => void;
   chatWith?: User;
-  setChatWith: (chatWithState: User) => void;
   messages: MessageInterface[];
-  setMessages: (messagesState: MessageInterface[]) => void;
+  setSelectedChatId: (state: string) => void;
+  setChatInfo: (state?: ChatInfo) => void;
+  setRecentChats: (state: ChatInfo[]) => void;
+  setChatWith: (state: User) => void;
+  setMessages: (state: MessageInterface[]) => void;
   addMessage: (newMessage: MessageInterface) => void;
 };
 
@@ -22,26 +22,21 @@ const useChatStore = create<ChatStore>((set) => ({
   recentChats: [],
   chatWith: undefined,
   messages: [],
-  setSelectedChatId: (selectedChatIdState) => {
-    set({ selectedChatId: selectedChatIdState });
-  },
-  setChatInfo: (chatInfoState) => {
-    set({ chatInfo: chatInfoState });
-  },
-  setRecentChats: (recentChatsState) => {
-    set({ recentChats: recentChatsState });
-  },
-  setChatWith: (chatWithState) => {
-    set({ chatWith: chatWithState });
-  },
-  setMessages: (messagesState) => {
-    set({ messages: messagesState });
-  },
-  addMessage: (newMessage) => {
-    set((state) =>({
-      messages: [...state.messages, newMessage]
-    }))
-  },
+
+  setSelectedChatId: (state) => set({ selectedChatId: state }),
+
+  setChatInfo: (state) => set({ chatInfo: state }),
+
+  setRecentChats: (state) => set({ recentChats: state }),
+
+  setChatWith: (state) => set({ chatWith: state }),
+
+  setMessages: (state) => set({ messages: state }),
+
+  addMessage: (newMessage) =>
+    set((state) => ({
+      messages: [...state.messages, newMessage],
+    })),
 }));
 
 export default useChatStore;

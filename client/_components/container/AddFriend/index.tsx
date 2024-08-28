@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import AddFriendRequest from "../../SVGs/AddFriendRequest";
 import { AddFriendProps } from "@/types/props.types";
-import FriendRequestMessage from "../FriendRequestMessage";
+import FriendRequestMessage from "../../common/Alert/FriendRequestMessage";
 
 import styles from "./index.module.css";
 

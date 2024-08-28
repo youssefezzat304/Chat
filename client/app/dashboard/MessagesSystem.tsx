@@ -9,9 +9,9 @@ import { ChatMessage } from "@/_components";
 import styles from "./index.module.css";
 
 export const MessagesSystem = () => {
-  const messages = useChatStore((state) => state.messages),
-    { isLoading } = useGetMessages(),
-    messagesEndRef = useRef<HTMLDivElement>(null);
+  const messages = useChatStore((state) => state.messages);
+  const { isLoading } = useGetMessages();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     receiveMessage(socket);

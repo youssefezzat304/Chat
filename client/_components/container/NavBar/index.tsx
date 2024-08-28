@@ -1,6 +1,4 @@
 "use client";
-import DisplayImage from "../../common/Display/ImageDisplay";
-import UploadProfilePic from "../../SVGs/UploadProfilePic";
 import AddFriendDialog from "../../common/Dialog/AddFriendDialog";
 import { useUserStore } from "@/utils/stores";
 import { IoNotifications, IoSettingsSharp } from "react-icons/io5";
@@ -12,6 +10,7 @@ import useLogOut from "@/hooks/useLogOut";
 import useNavBar from "@/hooks/useNavBar";
 
 import styles from "./index.module.css";
+import { Avatar } from "@mui/material";
 
 const NavBar = () => {
   const {
@@ -27,13 +26,11 @@ const NavBar = () => {
   return (
     <main className={styles.navBar}>
       <div className={styles.profile} onClick={gotoProfileSettings}>
-        {profilePic === "" ? (
-          <div className={styles.ppContainer}>
-            <UploadProfilePic />
-          </div>
-        ) : (
-          <DisplayImage base64String={profilePic} />
-        )}
+        <Avatar
+          src={profilePic}
+          className={styles.placeholder}
+          sx={{ width: "3.3rem", height: "3.3rem" }}
+        />
       </div>
       <section className={styles.icons}>
         <NavBarBtn

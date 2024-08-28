@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import SearchBar from "../../common/Search/FriendsSearch";
 import RecentChat from "../../common/Entities/RecentChat";
 import EmptyChats from "../../SVGs/emptyChats";
@@ -11,47 +11,51 @@ import { CircularProgress } from "@mui/material";
 import styles from "./index.module.css";
 
 const Chats = () => {
-  const recentChats = useChatStore((state) => state.recentChats),
-    setRecentChats = useChatStore((state) => state.setRecentChats),
-    currentUser = useUserStore((state) => state.user),
-    { allChats, isLoading } = useGetChats();
+  const { recentChats, setRecentChats } = useChatStore((state) => ({
+    recentChats: state.recentChats,
+    setRecentChats: state.setRecentChats,
+  }));
+
+  const currentUser = useUserStore((state) => state.user);
+  const { allChats, isLoading } = useGetChats();
 
   useEffect(() => {
     if (recentChats.length === 0 && !isLoading && allChats) {
       setRecentChats(allChats.data);
     }
-  }, [recentChats, isLoading, allChats, setRecentChats]);
+  }, [recentChats.length, isLoading, allChats, setRecentChats]);
+
+  const filteredChats = useMemo(() => {
+    return recentChats?.map((chat: ChatInfo) => {
+      const subject =
+        chat.participants[0]._id !== currentUser?._id
+          ? chat.participants[0]
+          : chat.participants[1];
+      return (
+        <RecentChat
+          key={subject._id}
+          subject={subject}
+          lastMessage={chat.lastMessage}
+        />
+      );
+    });
+  }, [recentChats, currentUser]);
+
+  if (isLoading) {
+    return (
+      <div className={styles.centerLoading}>
+        <CircularProgress color="secondary" />
+      </div>
+    );
+  }
+
   return (
     <main className={styles.friendListMain}>
       <SearchBar />
-      {isLoading ? (
-        <div className={styles.centerLoading}>
-          <CircularProgress color="secondary" />
-        </div>
-      ) : recentChats?.length === 0 ? (
+      {recentChats.length === 0 ? (
         <EmptyChats />
       ) : (
-        <div className={styles.friendList}>
-          {recentChats?.map((chat: ChatInfo) => {
-            if (chat.participants[0]._id !== currentUser?._id) {
-              return (
-                <RecentChat
-                  key={chat.participants[0]._id}
-                  subject={chat.participants[0]}
-                  lastMessage={chat.lastMessage}
-                />
-              );
-            } else {
-              return (
-                <RecentChat
-                  key={chat.participants[1]._id}
-                  subject={chat.participants[1]}
-                  lastMessage={chat.lastMessage}
-                />
-              );
-            }
-          })}
-        </div>
+        <div className={styles.friendList}>{filteredChats}</div>
       )}
     </main>
   );

@@ -21,8 +21,8 @@ const FriendRequests = () => {
   }, [user]);
 
   return (
-    <PanelGroup direction="vertical" className={styles.righSec}>
-      <Panel className={styles.thirdSec}>
+    <PanelGroup direction="vertical" className={styles.main}>
+      <Panel className={styles.container}>
         <NotificationsHeader />
         <List className={styles.listOfNotifications}>
           {friendRequests?.map((request, index) => {

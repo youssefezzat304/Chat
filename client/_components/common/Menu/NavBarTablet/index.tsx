@@ -66,7 +66,9 @@ const NavBarTablet = () => {
           icon={<FaUserFriends className={styles.sideIcon} />}
           action={handleFriendRequests}
         />
+
         <AddFriendDialog />
+
         <NavBarTabletBtn
           divProps={{ className: styles.button }}
           buttonProps={{ title: "Settings" }}

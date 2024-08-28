@@ -1,9 +1,9 @@
 import { DisplayImage } from "@/_components";
 import { MessageInterface } from "@/types/chat.types";
 import { useUserStore } from "@/utils/stores";
-import dayjs from "dayjs";
 import { memo } from "react";
 import styles from "./index.module.css";
+import { assetTimestamp } from "@/utils/functions/time";
 
 const ChatMessage = memo(({ message }: { message: MessageInterface }) => {
   const currentUser = useUserStore((state) => state.user);
@@ -19,7 +19,7 @@ const ChatMessage = memo(({ message }: { message: MessageInterface }) => {
         <DisplayImage
           base64String={message.initiatedBy.profilePic}
           variant="rounded"
-          className={`${styles.messageProfilePic}`}
+          className={styles.messageProfilePic}
         />
       )}
       <div
@@ -31,9 +31,7 @@ const ChatMessage = memo(({ message }: { message: MessageInterface }) => {
           <strong>{message.initiatedBy.displayName}</strong>
         )}
         <p>{message.content}</p>
-        <p className={`${styles.mssgTime}`}>
-          {dayjs(message.createdAt).format("DD/MM/YY hh:mm A")}
-        </p>
+        <p className={styles.mssgTime}>{assetTimestamp(message.createdAt)}</p>
       </div>
     </div>
   );

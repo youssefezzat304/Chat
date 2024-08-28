@@ -29,6 +29,9 @@
 .profileLeftSec input:focus {
   outline: none;
 }
+.placeholder {
+  margin-top: 2rem;
+}
 .editNameIcon {
   background-color: #2424241f;
   margin-left: 0.6rem;
@@ -193,4 +196,3 @@
   color: var(--error-soft);
   height: 16px;
 }
-

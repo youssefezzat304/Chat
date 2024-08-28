@@ -39,7 +39,7 @@ export { default as AddFriend } from "./container/AddFriend";
 export { default as ChatInfo } from "./container/ChatInfo";
 export { default as MainConsole } from "./container/Main";
 export { default as PrivateChat } from "./container/PrivateChat";
-export { default as FriendRequestMessage } from "./container/FriendRequestMessage";
+export { default as FriendRequestMessage } from "./common/Alert/FriendRequestMessage";
 export { default as Members } from "./container/Members";
 // --------------- List -----------------//
 export { default as Chats } from "./List/Chats";

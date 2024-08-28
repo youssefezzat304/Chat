@@ -6,7 +6,7 @@ import {
   RoutesLoading,
   SaveChangesAlert,
 } from "@/_components";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTabsStore, useUserStore } from "@/utils/stores";
 import { useForm } from "react-hook-form";
 import { User } from "@/types/user.types";
@@ -72,7 +72,16 @@ const ProfileSettings = () => {
     if (user) reset(user);
   }
 
-  if (!user) return <RoutesLoading />;
+  const alertsPanel = useMemo(
+    () => (
+      <Panel defaultSize={30} minSize={22} maxSize={30}>
+        {notificationsTab.isOpen ? <Notifications /> : <FriendRequests />}
+      </Panel>
+    ),
+    [notificationsTab.isOpen],
+  );
+  if (!user || isLoading) return <RoutesLoading />;
+
   return (
     <main className={styles.main}>
       <div className={styles.mainScreen}>
@@ -98,13 +107,7 @@ const ProfileSettings = () => {
             </div>
           </Panel>
           {notificationsTab.isOpen || friendRequestsTab.isOpen ? (
-            <Panel defaultSize={30} minSize={22} maxSize={30}>
-              {notificationsTab.isOpen ? (
-                <Notifications />
-              ) : friendRequestsTab.isOpen ? (
-                <FriendRequests />
-              ) : null}
-            </Panel>
+            alertsPanel
           ) : (
             <Panel
               className={styles.profileSettingsSec}

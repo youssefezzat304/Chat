@@ -1,0 +1,17 @@
+.button {
+  display: flex;
+  color: var(--text-gray);
+  font-size: large;
+  gap: 1rem;
+  padding-left: 1rem;
+  cursor: pointer;
+}
+.button:hover {
+  color: var(--primary-hard);
+  .sideIcon {
+    color: var(--primary-hard);
+  }
+}
+.sideIcon {
+  font-size: 22px;
+}

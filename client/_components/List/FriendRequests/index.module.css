@@ -1,14 +1,14 @@
-/* .rightSec {
+.main {
+  animation: slideInFromRight 0.2s ease-out forwards;
   display: flex;
   flex-direction: column;
   margin-left: 6px;
   height: 100%;
-} */
-.thirdSec {
+}
+.container {
   background-color: var(--secondary-soft);
   overflow: hidden !important;
   border-radius: 22px;
-  margin-left: 6px;
   display: flex;
   flex-grow: 1;
   flex-direction: column;
@@ -49,4 +49,14 @@
   cursor: pointer;
   width: thin;
   color: rgba(82, 28, 135, 0.5) transparent;
+}
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%); /* Start position off-screen to the right */
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0); /* End position on-screen */
+    opacity: 1;
+  }
 }

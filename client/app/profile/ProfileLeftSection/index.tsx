@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import {
   MdDelete,
   MdModeEditOutline,
@@ -8,10 +8,11 @@ import {
 import { FaUndo } from "react-icons/fa";
 import { LuUpload } from "react-icons/lu";
 import { useUserStore } from "@/utils/stores";
-import { DisplayImage, UploadFileBtn, UploadProfilePic } from "@/_components";
+import { DisplayImage, UploadFileBtn } from "@/_components";
 import { ProfileLeftSectionProps } from "@/types/props.types";
 
 import styles from "./index.module.css";
+import { Avatar } from "@mui/material";
 
 const ProfileLeftSection = ({
   control,
@@ -23,37 +24,46 @@ const ProfileLeftSection = ({
   const [editName, setEditName] = useState(false);
   const { setProfilePic, profilePic, setPpFile } = useUserStore();
 
-  const handleEditName = () => {
-    setEditName(!editName);
-  };
-  const handleUploadProfilePicture = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    setPpFile(file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfilePic(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const handleEditName = useCallback(() => {
+    setEditName((prev) => !prev);
+  }, []);
 
-  const removeProfilePhoto = () => {
+  const handleUploadProfilePicture = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      setPpFile(file);
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setProfilePic(reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    [setPpFile, setProfilePic],
+  );
+
+  const removeProfilePhoto = useCallback(() => {
     setProfilePic("");
-  };
+  }, [setProfilePic]);
+
+  const profilePicture = useMemo(() => {
+    return (
+      <>
+        <Avatar
+          src={profilePic}
+          className={styles.placeholder}
+          sx={{ width: "14rem", height: "14rem" }}
+        />
+      </>
+    );
+  }, [profilePic]);
   return (
     <form
       className={styles.profileLeftSec}
       onSubmit={control.handleSubmit((data) => saveChanges(data))}
     >
-      {profilePic ? (
-        <DisplayImage
-          className={styles.ppContainer}
-          base64String={profilePic}
-        />
-      ) : (
-        <UploadProfilePic />
-      )}
+      {profilePicture}
       <section>
         <input
           type="text"
@@ -90,29 +100,27 @@ const ProfileLeftSection = ({
         <FaUndo className={styles.removePpIcon} />
         Reset
       </button>
-      {errors.displayName ? (
+      {errors.displayName && (
         <span className={styles.profilePicError}>
           {errors.displayName.message}
         </span>
-      ) : (
-        <span className={styles.profilePicError}></span>
       )}
 
-      {control._formState.isLoading ? (
-        <button
-          type="button"
-          disabled
-          title="Save changes"
-          className={styles.saveBtn}
-        >
-          loading...
-        </button>
-      ) : (
-        <button type="submit" title="Save changes" className={styles.saveBtn}>
-          <MdOutlineDataSaverOn className={styles.removePpIcon} />
-          Save changes
-        </button>
-      )}
+      <button
+        type="submit"
+        disabled={control._formState.isLoading}
+        title="Save changes"
+        className={styles.saveBtn}
+      >
+        {control._formState.isLoading ? (
+          "loading..."
+        ) : (
+          <>
+            <MdOutlineDataSaverOn className={styles.removePpIcon} />
+            Save changes
+          </>
+        )}
+      </button>
     </form>
   );
 };

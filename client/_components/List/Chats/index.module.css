@@ -1,4 +1,6 @@
 .friendListMain {
+  will-change: transform;
+  animation: slideIn 0.3s ease-out forwards;
   overflow-x: hidden;
   border-bottom-left-radius: 22px;
   width: 100%;
@@ -24,5 +26,15 @@
     margin-top: 0.5rem;
     border-top-left-radius: 22px;
     border-top-right-radius: 22px;
+  }
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
