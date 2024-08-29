@@ -58,7 +58,7 @@ const findChat = async (req: Request, res: Response) => {
   }
 };
 
-chatController.get("/chats/get-recent/:userId", getRecentChats);
-chatController.get("/chats/find-chat/:userId/:chatterId", findChat);
+chatController.get(process.env.RECENT_CHATS_ENDPOINT as string, getRecentChats);
+chatController.get(process.env.RECENT_FIND_CHAT_ENDPOINT as string, findChat);
 
 export default chatController;

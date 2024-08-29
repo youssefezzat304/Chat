@@ -20,6 +20,12 @@
 .friendList {
   display: flex;
 }
+.groupSubjects {
+  display: flex;
+  justify-content: start !important;
+  margin: 0.5rem 1rem;
+  margin-bottom: 0rem;
+}
 @media (max-width: 435px) {
   .friendListMain {
     height: 100%;

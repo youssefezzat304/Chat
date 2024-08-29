@@ -149,19 +149,18 @@ const logOut = async (req: Request, res: Response) => {
     .send("logged out");
 };
 
-// Define routes
 userController.post(
-  "/users/signup",
+  process.env.SIGNUP_ENDPOINT as string,
   validateResourceMidlleware(createUserSchema),
   register,
 );
-userController.get("/users/me", requireUserMiddleware, getCurrentUser);
 userController.patch(
-  "/users/update-info",
+  process.env.UPDATE_USER_ENDPOINT as string,
   validateResourceMidlleware(UserSchema),
   updateInfo,
 );
-userController.post("/users/login", logIn);
-userController.get("/users/logout", logOut);
+userController.get(process.env.CURRENT_USER_ENDPOINT as string, getCurrentUser);
+userController.post(process.env.LOGIN_ENDPOINT as string, logIn);
+userController.get(process.env.LOGOUT_ENDPOINT as string, logOut);
 
 export default userController;

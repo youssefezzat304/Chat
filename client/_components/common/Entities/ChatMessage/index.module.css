@@ -1,9 +1,9 @@
 .messageContainer {
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 8px;
+  margin-bottom: 0.1rem;
   width: 100%;
-  padding: 0 0.2rem 0 1rem;
+  padding: 0 0.2rem 0 0.7rem;
 }
 .messageContainer strong {
   margin-bottom: 0.4rem;
@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   border-radius: 16px;
-  padding: 10px 15px;
+  padding: 0.5rem 1rem;
   max-width: 70%;
   word-wrap: break-word;
   font-size: 14px;
@@ -22,6 +22,11 @@
   color: white;
 }
 .messageContainer.received .messageBubble {
+  background-color: #f1f0f0;
+  color: black;
+  margin-left: 3.2rem;
+}
+.messageContainer.receivedLast .messageBubble {
   background-color: #f1f0f0;
   color: black;
 }

@@ -1,0 +1,23 @@
+.container {
+  width: 100%;
+}
+.accordion {
+  background-color: var(--white) !important;
+  align-items: center !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: 100% !important;
+}
+.photos {
+  padding: 0px !important;
+  margin: 0px !important;
+  padding-left: 1.3rem !important;
+}
+.accordion::before {
+  display: none !important;
+}
+.accordionTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

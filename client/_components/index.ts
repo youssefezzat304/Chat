@@ -36,7 +36,6 @@ export { default as chatInfoContainer } from "./container/ChatInfoContainer";
 export { default as NavBar } from "./container/NavBar";
 export { default as Chat } from "./container/Chat";
 export { default as AddFriend } from "./container/AddFriend";
-export { default as ChatInfo } from "./container/ChatInfo";
 export { default as MainConsole } from "./container/Main";
 export { default as PrivateChat } from "./container/PrivateChat";
 export { default as FriendRequestMessage } from "./common/Alert/FriendRequestMessage";

@@ -35,10 +35,10 @@
 .icons {
   display: flex;
   flex-direction: column;
-  gap: 26px;
+  gap: 1rem;
 }
 .sideIcon {
-  font-size: 22px;
+  font-size: 1.3rem;
 }
 .logoutBtn {
   display: flex;

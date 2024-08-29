@@ -35,6 +35,9 @@ const refreshAccessTokenHandler = async (req: Request, res: Response) => {
   return res.json({ accessToken });
 };
 
-authController.post("/sessions/refresh", refreshAccessTokenHandler);
+authController.post(
+  process.env.REFRESH_TOKEN_ENDPOINT as string,
+  refreshAccessTokenHandler,
+);
 
 export default authController;

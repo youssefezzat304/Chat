@@ -6,6 +6,8 @@ import { useChatStore } from "../../utils/stores";
 import { receiveMessage } from "../../api/messages.api";
 import { socket } from "../socket";
 import { ChatMessage } from "@/_components";
+import { groupMessagesByDay } from "@/utils/functions/time";
+
 import styles from "./index.module.css";
 
 export const MessagesSystem = () => {
@@ -27,6 +29,8 @@ export const MessagesSystem = () => {
     }
   }, [messages]);
 
+  const groupedMessages = groupMessagesByDay(messages);
+
   return (
     <>
       {isLoading ? (
@@ -35,9 +39,26 @@ export const MessagesSystem = () => {
         </div>
       ) : (
         <div className={styles.messagesContainer}>
-          {messages.map((message) => {
-            return <ChatMessage key={message._id} message={message} />;
-          })}
+          {Object.entries(groupedMessages).map(([dayLabel, msgs]) => (
+            <div key={dayLabel}>
+              <div className={styles.dayLabel}>
+                <span>{dayLabel}</span>
+              </div>
+              {msgs.map((message, index) => {
+                const isLastInStack =
+                  index === msgs.length - 1 ||
+                  msgs[index + 1].initiatedBy._id !== message.initiatedBy._id;
+
+                return (
+                  <ChatMessage
+                    key={message._id}
+                    message={message}
+                    isLastInStack={isLastInStack}
+                  />
+                );
+              })}
+            </div>
+          ))}
           <span ref={messagesEndRef}></span>
         </div>
       )}

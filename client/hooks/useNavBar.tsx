@@ -2,6 +2,7 @@ import { useTabsStore } from "@/utils/stores";
 import useTabletStore from "@/utils/stores/tablet.store";
 import { useRouter } from "next/navigation";
 import { useThemeContext } from "@/contexts/ThemeContext";
+import { useEffect } from "react";
 
 const useNavBar = () => {
   const {
@@ -19,6 +20,10 @@ const useNavBar = () => {
   const setTabletNavBar = useTabletStore((state) => state.setTabletNavBar);
   const router = useRouter();
   const { setSystemLoading } = useThemeContext();
+
+  useEffect(() => {
+    router.prefetch("/profile");
+  }, [router]);
 
   const handleNotifications = () => {
     toggleNotifications("notificationsTab");

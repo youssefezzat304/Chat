@@ -3,21 +3,29 @@ import { MessageInterface } from "@/types/chat.types";
 import { useUserStore } from "@/utils/stores";
 import { memo } from "react";
 import styles from "./index.module.css";
-import { assetTimestamp } from "@/utils/functions/time";
+import { messageTimestamp } from "@/utils/functions/time";
+import { Avatar } from "@mui/material";
 
-const ChatMessage = memo(({ message }: { message: MessageInterface }) => {
+interface ChatMessageProps {
+  message: MessageInterface;
+  isLastInStack: boolean;
+}
+
+const ChatMessage = memo(({ message, isLastInStack }: ChatMessageProps) => {
   const currentUser = useUserStore((state) => state.user);
   const isSentByCurrentUser = message.initiatedBy._id === currentUser?._id;
 
   return (
     <div
       className={`${styles.messageContainer} ${
-        isSentByCurrentUser ? `${styles.sent}` : `${styles.received}`
+        isSentByCurrentUser
+          ? `${styles.sent}`
+          : `${isLastInStack ? styles.receivedLast : styles.received}`
       }`}
     >
-      {isSentByCurrentUser ? null : (
-        <DisplayImage
-          base64String={message.initiatedBy.profilePic}
+      {!isSentByCurrentUser && isLastInStack && (
+        <Avatar
+          src={message.initiatedBy.profilePic}
           variant="rounded"
           className={styles.messageProfilePic}
         />
@@ -31,7 +39,7 @@ const ChatMessage = memo(({ message }: { message: MessageInterface }) => {
           <strong>{message.initiatedBy.displayName}</strong>
         )}
         <p>{message.content}</p>
-        <p className={styles.mssgTime}>{assetTimestamp(message.createdAt)}</p>
+        <p className={styles.mssgTime}>{messageTimestamp(message.createdAt)}</p>
       </div>
     </div>
   );

@@ -66,10 +66,13 @@ const profilePictureDelete = async (req: Request, res: Response) => {
 };
 
 uploadController.post(
-  "/upload/profile-picture",
+  process.env.UPLOAD_PROFILE_PIC_ENDPOINT as string,
   uploadProfilePictureMiddleware.single("profilePic"),
   profilePictureUpload,
 );
-uploadController.patch("/upload/delete-profile-picture", profilePictureDelete);
+uploadController.patch(
+  process.env.DELETE_PROFILE_PIC_ENDPOINT as string,
+  profilePictureDelete,
+);
 
 export default uploadController;

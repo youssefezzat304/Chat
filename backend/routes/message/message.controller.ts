@@ -22,6 +22,6 @@ const getMessages = async (req: Request, res: Response) => {
   }
 };
 
-messageController.get("/messages/get-messages/:chatId", getMessages);
+messageController.get(process.env.GET_MESSAGES_ENDPOINT as string, getMessages);
 
 export default messageController;

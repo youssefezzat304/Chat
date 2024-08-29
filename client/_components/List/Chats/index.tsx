@@ -9,6 +9,7 @@ import { ChatInfo } from "@/types/chat.types";
 import { CircularProgress } from "@mui/material";
 
 import styles from "./index.module.css";
+import GroupSubjects from "@/_components/common/Entities/GroupSubjects";
 
 const Chats = () => {
   const { recentChats, setRecentChats } = useChatStore((state) => ({
@@ -52,6 +53,7 @@ const Chats = () => {
   return (
     <main className={styles.friendListMain}>
       <SearchBar />
+      <GroupSubjects styles={styles.groupSubjects} />
       {recentChats.length === 0 ? (
         <EmptyChats />
       ) : (

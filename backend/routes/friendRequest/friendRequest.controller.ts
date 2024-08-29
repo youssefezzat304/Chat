@@ -163,7 +163,13 @@ FriendRequestController.post(
   // validateResourceMidlleware(createFriendRequestSchema),
   friendRequest,
 );
-FriendRequestController.patch("/friend-request/accepted/:id", friendAccept);
-FriendRequestController.patch("/friend-request/rejected/:id", friendReject);
+FriendRequestController.patch(
+  process.env.ACCEPT_FRIEND_ENDPOINT as string,
+  friendAccept,
+);
+FriendRequestController.patch(
+  process.env.REJECT_FRIEND_ENDPOINT as string,
+  friendReject,
+);
 
 export default FriendRequestController;

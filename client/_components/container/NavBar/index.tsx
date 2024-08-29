@@ -8,9 +8,9 @@ import { FaUserFriends } from "react-icons/fa";
 import NavBarBtn from "@/_components/common/Button/NavBarBtn";
 import useLogOut from "@/hooks/useLogOut";
 import useNavBar from "@/hooks/useNavBar";
+import { Avatar } from "@mui/material";
 
 import styles from "./index.module.css";
-import { Avatar } from "@mui/material";
 
 const NavBar = () => {
   const {
@@ -35,7 +35,7 @@ const NavBar = () => {
       <section className={styles.icons}>
         <NavBarBtn
           icon={<IoNotifications className={styles.sideIcon} />}
-          title="Notifications"
+          title="Alerts"
           onClick={handleNotifications}
         />
         <NavBarBtn

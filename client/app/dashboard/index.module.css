@@ -72,6 +72,22 @@
   display: flex;
   flex-direction: column;
 }
+.dayLabel {
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+  font-style: oblique;
+}
+.dayLabel span {
+  font-weight: 300;
+  color: var(--white);
+  background-color: var(--primary-soft);
+  padding: 8px 10px;
+  border-radius: 10px;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
 .messageContainer {
   display: flex;
   justify-content: flex-start;
