@@ -1,7 +1,7 @@
 import { Alert, AlertTitle, Collapse, IconButton } from "@mui/material";
 import { ComponentProps } from "react";
 import { MdClose } from "react-icons/md";
-import styles from "./index.module.css"
+import styles from "./index.module.css";
 
 type AlertType = ComponentProps<"div"> & {
   message: string | undefined;
@@ -22,7 +22,7 @@ const FriendRequestAlert = ({
     <Collapse in={watch}>
       <Alert
         severity={type}
-        className={`${styles.addfriendAlert}`}
+        className={styles.addfriendAlert}
         variant="filled"
         action={
           <IconButton

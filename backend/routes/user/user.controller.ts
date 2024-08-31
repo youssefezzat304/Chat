@@ -10,6 +10,7 @@ import { SessionModel, UserModel } from "../models";
 import { DocumentType } from "@typegoose/typegoose";
 import { User } from "./user.model";
 import { Session } from "../auth/session.model";
+import path from "path";
 
 const userController = Router();
 const userService = new UserService();
@@ -92,10 +93,7 @@ const getCurrentUser = async (
     const userId = res.locals.user._id;
 
     const user = (await UserModel.findById(userId)
-      .populate({
-        path: "friendRequestsReceived",
-        select: ["displayName", "profilePic"],
-      })
+      .populate("friendRequests.incoming")
       .populate("friends")
       .populate("chats")
       .exec()) as DocumentType<User> | null;

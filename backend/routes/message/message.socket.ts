@@ -1,18 +1,18 @@
-import { ChatModel, MessageModel, UserModel } from "../models";
-import { ChatService } from "../chat/chat.service";
+import { PrivateChatModel, MessageModel, UserModel } from "../models";
+import { PrivateChatService } from "../privateChat/privateChat.service";
 import UserService from "../user/user.service";
 import { DocumentType } from "@typegoose/typegoose";
-import { Chat } from "../chat/chat.model";
+import { PrivateChat } from "../privateChat/privateChat.model";
 import { Message } from "./message.model";
 import { Server, Socket } from "socket.io";
 
-const chatService = new ChatService();
+const privateChatService = new PrivateChatService();
 const userService = new UserService();
 
 const createMessageSocketHandler = (io: Server) => {
   const registerEvents = (socket: Socket) => {
     socket.on("send_message", async (data) => {
-      const { chatId, initiatedBy, receivedBy, content } = data;
+      const { chatId, initiatedBy, receivedBy, content, receivedByType } = data;
 
       if (!initiatedBy || !receivedBy) {
         socket.emit("error", "Invalid data");
@@ -20,18 +20,22 @@ const createMessageSocketHandler = (io: Server) => {
       }
 
       try {
-        let chat = (await ChatModel.findById(
+        let chat = (await PrivateChatModel.findById(
           chatId,
-        )) as DocumentType<Chat> | null;
+        )) as DocumentType<PrivateChat> | null;
 
         if (!chat) {
-          chat = await chatService.createNewChat({ initiatedBy, receivedBy });
+          chat = await privateChatService.createNewChat({
+            initiatedBy,
+            receivedBy,
+          });
         }
         const message = new MessageModel({
           chatId: chat._id,
           initiatedBy,
           receivedBy,
           content,
+          receivedByType,
         });
 
         await Promise.all([
@@ -41,7 +45,7 @@ const createMessageSocketHandler = (io: Server) => {
           message.save(),
         ]);
 
-        await ChatModel.findByIdAndUpdate(
+        await PrivateChatModel.findByIdAndUpdate(
           chat._id,
           { $set: { lastMessage: message._id } },
           { new: true },
@@ -64,7 +68,7 @@ const createMessageSocketHandler = (io: Server) => {
         socket.emit("error", "Invalid data");
         return;
       }
-      const chat = await ChatModel.findById(chatId);
+      const chat = await PrivateChatModel.findById(chatId);
       if (!chat) {
         socket.emit("error", "404 chat not found");
         return;

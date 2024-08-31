@@ -1,11 +1,12 @@
-import Avatar from "@mui/material/Avatar";
+import { AvatarPlaceholder1 } from "@/assets/avatarPlaceholder";
 import { IoCheckmark, IoClose } from "react-icons/io5";
 import dayjs from "dayjs";
 import { useHandleFriendRequest } from "@/utils/queries/friendRequest.query";
 import { FriendRequestNotificationProps } from "@/types/props.types";
+import ButtonIcon from "../../Icon/ButtonIcon";
+import Image from "next/image";
 
 import styles from "./index.module.css";
-import ButtonIcon from "../../Icon/ButtonIcon";
 
 const FriendRequestNotification = ({
   request,
@@ -23,11 +24,10 @@ const FriendRequestNotification = ({
   return (
     <main className={styles.friendRequestNotification}>
       <section>
-        <Avatar
+        <Image
           alt={request.displayName}
-          src={request.profilePic}
-          variant="rounded"
-          className="regular-avatar"
+          src={!request.profilePic ? AvatarPlaceholder1 : request.profilePic}
+          className={styles.avatar}
         />
         <div>
           <span>
@@ -45,7 +45,7 @@ const FriendRequestNotification = ({
         />
         <ButtonIcon
           title="Reject"
-          icon={<IoClose className={styles.declienIcon} />}
+          icon={<IoClose className={styles.declineIcon} />}
           value="rejected"
           onClick={handleReject}
         />

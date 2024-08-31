@@ -1,5 +1,5 @@
 import { DocumentType } from "@typegoose/typegoose";
-import { Chat } from "../chat/chat.model";
+import { PrivateChat } from "../privateChat/privateChat.model";
 import { UserModel } from "../models";
 import { User } from "./user.model";
 import { UserSchemaInput } from "./user.schema";
@@ -40,16 +40,22 @@ class UserService {
       { email: email },
       {
         $set: data,
-      }
+      },
     );
   }
-  public async addChatId({ userId, chat }: { userId: string; chat: Chat }) {
+  public async addChatId({
+    userId,
+    chat,
+  }: {
+    userId: string;
+    chat: PrivateChat;
+  }) {
     await UserModel.findByIdAndUpdate(
       userId,
       {
         $addToSet: { chats: chat._id },
       },
-      { new: true }
+      { new: true },
     );
   }
 }

@@ -1,7 +1,7 @@
 import { sendMessage } from "@/api/messages.api";
 import { socket } from "@/app/socket";
 import { useChatStore, useUserStore } from "@/utils/stores";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import AttachBtn from "../../Button/AttachBtn";
 import VoiceNoteBtn from "../../Button/VoiceNoteBtn";
@@ -21,6 +21,7 @@ const MessageInput = () => {
       reset();
       try {
         await sendMessage(socket, {
+          receivedByType: "user",
           chatId: chatId,
           initiatedBy: currentUser!._id,
           receivedBy: chatWith!._id,
@@ -30,7 +31,7 @@ const MessageInput = () => {
         console.error("Failed to send message:", error);
       }
     },
-    [chatId, chatWith, reset, currentUser]
+    [chatId, chatWith, reset, currentUser],
   );
   return (
     <form

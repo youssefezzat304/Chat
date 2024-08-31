@@ -19,10 +19,10 @@ export class FriendRequestServices {
       $push: { friends: requesterId },
     });
     await UserModel.findByIdAndUpdate(recipientId, {
-      $pull: { friendRequestsReceived: requesterId },
+      $pull: { "friendRequests.incoming": requesterId },
     });
     await UserModel.findByIdAndUpdate(requesterId, {
-      $pull: { friendRequestsSent: recipientId },
+      $pull: { "friendRequests.outgoing": recipientId },
     });
     await this.friendRequest.findOneAndDelete({
       recipient: recipientId,
@@ -43,10 +43,10 @@ export class FriendRequestServices {
     recipientId: string;
   }) => {
     await UserModel.findByIdAndUpdate(recipientId, {
-      $pull: { friendRequestsReceived: requesterId },
+      $pull: { "friendRequests.incoming": requesterId },
     });
     await UserModel.findByIdAndUpdate(requesterId, {
-      $pull: { friendRequestsSent: recipientId },
+      $pull: { "friendRequests.outgoing": recipientId },
     });
     await this.friendRequest.findOneAndDelete({
       recipient: recipientId,

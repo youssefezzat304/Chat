@@ -1,6 +1,6 @@
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import { Fragment, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import { FaUserPlus } from "react-icons/fa";
 import AddFriend from "../../../container/AddFriend";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -30,49 +30,54 @@ export default function AddFriendDialog() {
     resolver: zodResolver(friendRequestValidation),
   });
 
-  const handleFriendRequest: SubmitHandler<FriendRequestSchema> = async (
-    data
-  ) => {
-    if (!user) throw Error("NO Current User data.");
-    if (data.recipientEmail === user.email) {
-      setIsFriendReqSuccessful(null);
-      setError("root", {
-        message:
-          "Oops! It looks like you're trying to send a friend request to yourself. While we think you're great, you can't be friends with yourself on this platform. Please choose someone else to connect with!",
-      });
-      return;
-    }
-    const requestData = {
-      requesterEmail: user.email,
-      recipientEmail: data.recipientEmail,
-    };
-    try {
-      await sendFriendRequest(requestData);
+  const handleFriendRequest: SubmitHandler<FriendRequestSchema> = useCallback(
+    async (data) => {
+      if (!user) {
+        console.error("No current user data.");
+        return;
+      }
 
-      clearErrors();
-      setIsFriendReqSuccessful("success");
-    } catch (error: any) {
-      if (error.response.status === 404) {
+      if (data.recipientEmail === user.email) {
         setIsFriendReqSuccessful(null);
         setError("root", {
-          message: error.response.data.message,
+          message: "You can't send a friend request to yourself.",
         });
+        return;
       }
-      if (error.response.status === 400) {
-        clearErrors();
-        setIsFriendReqSuccessful("warning");
-      }
-      console.log(error);
-    }
-  };
 
-  const handleClickOpen = () => {
+      const requestData = {
+        requesterEmail: user.email,
+        recipientEmail: data.recipientEmail,
+      };
+
+      try {
+        const response: any = await sendFriendRequest(requestData);
+        const { status, data: responseData } = response.response;
+
+        clearErrors();
+
+        if (status === 404 || status === 400) {
+          setIsFriendReqSuccessful(status === 400 ? "warning" : null);
+          setError("root", { message: responseData.message });
+        } else if (status === 200) {
+          setIsFriendReqSuccessful("success");
+        }
+      } catch (error) {
+        console.error("Error sending friend request:", error);
+      }
+    },
+    [user, setError, clearErrors],
+  );
+
+  const handleClickOpen = useCallback(() => {
     setOpen(true);
-  };
-  const handleClose = () => {
+  }, []);
+
+  const handleClose = useCallback(() => {
     clearErrors();
+    setIsFriendReqSuccessful(null);
     setOpen(false);
-  };
+  }, [clearErrors]);
   return (
     <Fragment>
       <button

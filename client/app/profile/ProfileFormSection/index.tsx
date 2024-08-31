@@ -5,13 +5,13 @@ import { ProfileInput } from "@/_components";
 import BirthDateInput from "@/_components/common/Input/BirthDateInput";
 import CountryInput from "@/_components/common/Input/CountryInput";
 import { TextField } from "@mui/material";
-import { useCallback } from "react";
+import { use, useCallback, useEffect } from "react";
 import { FieldError } from "react-hook-form";
 import { User } from "@/types/user.types";
+import { useUserStore } from "@/utils/stores";
 
 const ProfileFormSection = ({
   control,
-  activeUser,
   saveChanges,
   errors,
   setValue,
@@ -21,6 +21,7 @@ const ProfileFormSection = ({
     handleSubmit,
     _formState: { isSubmitting },
   } = control;
+  const currentUser = useUserStore((state) => state.user);
 
   const renderInput = useCallback(
     (
@@ -58,7 +59,7 @@ const ProfileFormSection = ({
             "Email Address",
             "email",
             "text",
-            activeUser.email,
+            currentUser!.email,
             errors.email,
             "example@info.com",
           )}
@@ -67,7 +68,7 @@ const ProfileFormSection = ({
             "Phone number",
             "phoneNumber",
             "number",
-            activeUser.phoneNumber,
+            currentUser!.phoneNumber,
             errors.phoneNumber,
             "0123456789",
           )}
@@ -80,13 +81,13 @@ const ProfileFormSection = ({
         </label>
         <section>
           <CountryInput
-            control={register("address.country")}
-            selectedCountry={activeUser.address.country}
+            control={control.register("address.country")}
+            selectedCountry={currentUser!.address.country}
           />
           <ProfileInput
             label="City/State"
             control={control.register("address.city")}
-            defaultValue={activeUser.address.city}
+            defaultValue={currentUser!.address.city}
             errorCondition={errors.address?.city}
             errorMessage={errors.address?.city?.message}
             holder="California"
@@ -94,7 +95,7 @@ const ProfileFormSection = ({
           <ProfileInput
             label="City/State"
             control={control.register("address.postalCode")}
-            defaultValue={activeUser.address.postalCode}
+            defaultValue={currentUser!.address.postalCode}
             errorCondition={errors.address?.postalCode}
             errorMessage={errors.address?.postalCode?.message}
             holder="California"
@@ -111,7 +112,7 @@ const ProfileFormSection = ({
             multiline
             rows={3}
             defaultValue={
-              activeUser.status ?? "Hey there I am using chat app..."
+              currentUser!.status ?? "Hey there I am using chat app..."
             }
             variant="standard"
           />

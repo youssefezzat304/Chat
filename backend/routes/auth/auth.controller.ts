@@ -24,6 +24,13 @@ const refreshAccessTokenHandler = async (req: Request, res: Response) => {
     return res.status(401).send("Could not refresh access token");
 
   const user = (await UserModel.findById(String(session.user))
+    .populate({
+      path: "friendRequests",
+      populate: [
+        { path: "incoming", model: "User" },
+        { path: "outgoing", model: "User" },
+      ],
+    })
     .populate("friends")
     .populate("chats")
     .exec()) as DocumentType<User>;

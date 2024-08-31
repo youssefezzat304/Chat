@@ -8,7 +8,7 @@ import {
 import { FaUndo } from "react-icons/fa";
 import { LuUpload } from "react-icons/lu";
 import { useUserStore } from "@/utils/stores";
-import { DisplayImage, UploadFileBtn } from "@/_components";
+import { UploadFileBtn } from "@/_components";
 import { ProfileLeftSectionProps } from "@/types/props.types";
 
 import styles from "./index.module.css";
@@ -16,13 +16,13 @@ import { Avatar } from "@mui/material";
 
 const ProfileLeftSection = ({
   control,
-  activeUser,
   saveChanges,
   resetSettings,
   errors,
 }: ProfileLeftSectionProps) => {
   const [editName, setEditName] = useState(false);
   const { setProfilePic, profilePic, setPpFile } = useUserStore();
+  const currentUser = useUserStore((state) => state.user);
 
   const handleEditName = useCallback(() => {
     setEditName((prev) => !prev);
@@ -67,7 +67,7 @@ const ProfileLeftSection = ({
       <section>
         <input
           type="text"
-          defaultValue={activeUser.displayName}
+          defaultValue={currentUser?.displayName}
           {...control.register("displayName")}
         />
         <MdModeEditOutline

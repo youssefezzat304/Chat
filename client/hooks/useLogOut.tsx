@@ -1,7 +1,7 @@
 import { useAuthStore, useUserStore } from "@/utils/stores";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import useAxiosPrivate from "./useAxiosPrivate";
+import { useRouter } from "next/navigation";
 
 const useLogOut = () => {
   const router = useRouter();

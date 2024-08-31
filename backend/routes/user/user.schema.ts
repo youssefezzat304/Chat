@@ -50,8 +50,10 @@ export const UserSchema = object({
       postalCode: string().min(1).optional().or(literal("")),
     }),
     birthDate: string().optional().or(literal("")),
-    friendRequestsSent: array(object({ displayName: string() }).optional()),
-    friendRequestsReceived: array(object({ displayName: string() }).optional()),
+    friendRequests: object({
+      incoming: array(object({ displayName: string() }).optional()),
+      outgoing: array(object({ displayName: string() }).optional()),
+    }).optional(),
   }).partial(),
 });
 

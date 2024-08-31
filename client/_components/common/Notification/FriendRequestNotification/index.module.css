@@ -23,6 +23,12 @@
   flex-direction: column;
   gap: 0.2rem;
 }
+.avatar {
+  margin: 0rem 0.6rem 0rem 0.2rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+}
 .acceptIcon {
   color: var(--white);
   background-color: var(--primary-hard);
@@ -33,7 +39,7 @@
 }
 .declineIcon {
   color: var(--white);
-  background-color: var(--error-soft);
+  background-color: var(--error-strong);
   border-radius: 50%;
   height: 32px;
   width: 32px;

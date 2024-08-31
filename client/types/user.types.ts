@@ -1,4 +1,4 @@
-import { ChatInfo } from "./chat.types";
+import { GroupChat, PrivateChat } from "./chat.types";
 
 export interface User {
   _id: string;
@@ -13,8 +13,13 @@ export interface User {
   birthDate: string;
   phoneNumber: string;
   status: string;
-  chats: Array<ChatInfo>;
   friends: Array<User>;
-  friendRequestsSent: Array<{ displayName: string; _id: string }>;
-  friendRequestsReceived: Array<{ displayName: string; _id: string }>;
+  chats: Array<PrivateChat>;
+  groupChats: Array<GroupChat>;
+  onlineStatus: boolean;
+  lastSeen: string;
+  friendRequests: {
+    incoming: Array<User>;
+    outgoing: Array<User>;
+  };
 }

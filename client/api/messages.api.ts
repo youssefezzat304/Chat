@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { MessageInterface } from "../types/chat.types";
+import { MessageType } from "../types/chat.types";
 import { Socket } from "socket.io-client";
 import { useChatStore } from "../utils/stores";
 
@@ -13,7 +13,7 @@ export const getMessages = async (chatId?: string) => {
   try {
     const messages = (await api.get(`/get-messages/${chatId}`, {
       withCredentials: true,
-    })) as AxiosResponse<MessageInterface[]>;
+    })) as AxiosResponse<MessageType[]>;
     return messages;
   } catch (error) {
     console.log(error);
@@ -21,6 +21,7 @@ export const getMessages = async (chatId?: string) => {
 };
 
 type SendMessageProps = {
+  receivedByType: "user" | "group";
   chatId?: string;
   initiatedBy: string;
   receivedBy: string;
@@ -28,11 +29,23 @@ type SendMessageProps = {
 };
 export const sendMessage = (
   socket: Socket,
-  { chatId, initiatedBy, receivedBy, content }: SendMessageProps
+  {
+    chatId,
+    initiatedBy,
+    receivedBy,
+    content,
+    receivedByType,
+  }: SendMessageProps,
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
     try {
-      socket.emit("send_message", { chatId, initiatedBy, receivedBy, content });
+      socket.emit("send_message", {
+        chatId,
+        initiatedBy,
+        receivedBy,
+        content,
+        receivedByType,
+      });
       resolve();
       setTimeout(() => {
         reject(new Error("Message not acknowledged by server"));
@@ -43,13 +56,13 @@ export const sendMessage = (
   });
 };
 export const receiveMessage = (socket: Socket) => {
-  socket.on("message_sent", (message: MessageInterface) => {
+  socket.on("message_sent", (message: MessageType) => {
     useChatStore.getState().addMessage(message);
   });
 };
 export const joinPrivateChat = (
   socket: Socket,
-  { chatId, userId }: { chatId: string; userId?: string }
+  { chatId, userId }: { chatId: string; userId?: string },
 ) => {
   return new Promise((resolve, reject) => {
     try {

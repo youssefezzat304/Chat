@@ -48,7 +48,7 @@ const profilePictureDelete = async (req: Request, res: Response) => {
           profilePic: "",
         },
       },
-      { new: true, select: "profilePic" },
+      { new: true, select: "profilePicture" },
     );
 
     if (!updatedUser) {

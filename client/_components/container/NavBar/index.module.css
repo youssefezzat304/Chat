@@ -3,7 +3,7 @@
   left: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   height: inherit;
   width: 50px;
 }
@@ -19,18 +19,14 @@
   border-top-right-radius: 12.5px;
   box-shadow: 0 -12.5px 0 0 rgba(255, 255, 255, 0.888);
 }
-.profile {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  top: 0.4rem;
-  margin-top: 10px;
-  height: 54px;
-  width: 54px;
-  align-self: center;
+.placeholder {
+  position: absolute;
+  height: 60px;
+  width: 60px;
   border-radius: 50%;
+  top: 13px;
   cursor: pointer;
-  z-index: 15;
+  z-index: 100;
 }
 .icons {
   display: flex;
@@ -43,8 +39,8 @@
 .logoutBtn {
   display: flex;
   flex-direction: column;
+  align-content: center;
   align-items: center;
-  margin-bottom: 28px;
 }
 .logoutBtn:hover {
   color: var(--log-out) !important;
@@ -61,6 +57,13 @@
 .sideBtn:hover {
   color: var(--primary-hard);
   border-radius: 10px;
+}
+.bottom {
+  position: absolute;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 @media (max-width: 1024px) {
   .icons {

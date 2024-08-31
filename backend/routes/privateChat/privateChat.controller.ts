@@ -1,8 +1,8 @@
 import { Request, Response, Router } from "express";
-import { ChatModel, UserModel } from "../models";
+import { PrivateChatModel, UserModel } from "../models";
 import { DocumentType } from "@typegoose/typegoose";
 import { User } from "../user/user.model";
-import { Chat } from "./chat.model";
+import { PrivateChat } from "./privateChat.model";
 
 const chatController = Router();
 
@@ -39,15 +39,15 @@ const findChat = async (req: Request, res: Response) => {
     if (!userId || !chatterId)
       return res.status(400).send("No info has been sent.");
 
-    let chat = (await ChatModel.findOne({
+    let chat = (await PrivateChatModel.findOne({
       participants: { $all: [userId, chatterId] },
     })
       .populate("lastMessage")
       .populate("participants")
-      .exec()) as DocumentType<Chat>;
+      .exec()) as DocumentType<PrivateChat>;
 
     if (!chat) {
-      chat = new ChatModel({ participants: [userId, chatterId] });
+      chat = new PrivateChatModel({ participants: [userId, chatterId] });
       await chat.save();
     }
 

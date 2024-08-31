@@ -1,5 +1,5 @@
 import { DisplayImage } from "@/_components";
-import { MessageInterface } from "@/types/chat.types";
+import { MessageType } from "@/types/chat.types";
 import { useUserStore } from "@/utils/stores";
 import { memo } from "react";
 import styles from "./index.module.css";
@@ -7,7 +7,7 @@ import { messageTimestamp } from "@/utils/functions/time";
 import { Avatar } from "@mui/material";
 
 interface ChatMessageProps {
-  message: MessageInterface;
+  message: MessageType;
   isLastInStack: boolean;
 }
 

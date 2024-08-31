@@ -1,6 +1,7 @@
 import FriendRequestAlert from "@/_components/common/Alert/FriendRequestAlert";
 import { AddFriendRequestMessagesProps } from "@/types/props.types";
 import { LinearProgress } from "@mui/material";
+import { memo } from "react";
 
 const FriendRequestMessage = ({
   control,
@@ -9,43 +10,42 @@ const FriendRequestMessage = ({
   clear,
   open,
 }: AddFriendRequestMessagesProps) => {
+  let alertMessage: string | undefined;
+  let alertTitle: string | undefined;
+  let alertType: "success" | "error" | "warning" | "info" = "error";
+
+  if (control._formState.isLoading) {
+    return <LinearProgress color="secondary" />;
+  }
+
+  if (errors.recipientEmail || errors.requesterEmail) {
+    alertTitle = "Error";
+    alertMessage =
+      errors.requesterEmail?.message || errors.recipientEmail?.message;
+    alertType = "error";
+  } else if (errors.root) {
+    if (isFriendReqSuccessful === "warning") {
+      alertTitle = "Warning";
+      alertMessage = errors.root.message;
+      alertType = "warning";
+    } else {
+      alertTitle = "Error";
+      alertMessage = errors.root.message;
+      alertType = "error";
+    }
+  } else if (isFriendReqSuccessful === "success") {
+    alertTitle = "Success";
+    alertMessage = "Your friend request has been successfully sent!";
+    alertType = "success";
+  }
+
   return (
     <>
-      {control._formState.isLoading && <LinearProgress color="secondary" />}
-      {(errors.recipientEmail || errors.requesterEmail) && (
+      {alertMessage && (
         <FriendRequestAlert
-          title="Error"
-          message={
-            errors.requesterEmail?.message || errors.recipientEmail?.message
-          }
-          type="error"
-          clearErrors={clear}
-          watch={open}
-        />
-      )}
-      {errors.root && !errors.recipientEmail && (
-        <FriendRequestAlert
-          title="Error"
-          message={errors.root.message}
-          type="error"
-          clearErrors={clear}
-          watch={open}
-        />
-      )}
-      {isFriendReqSuccessful === "warning" && (
-        <FriendRequestAlert
-          title="Warning"
-          message="You've already sent a friend request to this user."
-          type="warning"
-          clearErrors={clear}
-          watch={open}
-        />
-      )}
-      {isFriendReqSuccessful === "success" && !errors.root && (
-        <FriendRequestAlert
-          title="Success"
-          message="Your friend request has been successfully sent!"
-          type="success"
+          title={!alertTitle ? "" : alertTitle}
+          message={alertMessage}
+          type={alertType}
           clearErrors={clear}
           watch={open}
         />
@@ -54,4 +54,4 @@ const FriendRequestMessage = ({
   );
 };
 
-export default FriendRequestMessage;
+export default memo(FriendRequestMessage);

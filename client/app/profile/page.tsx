@@ -91,14 +91,12 @@ const ProfileSettings = () => {
             <div className={styles.mainProfileSec}>
               <ProfileLeftSection
                 control={control}
-                activeUser={user}
                 saveChanges={saveChanges}
                 resetSettings={resetSettings}
                 errors={errors}
               />
               <ProfileFormSection
                 control={control}
-                activeUser={user}
                 handleSubmit={handleSubmit}
                 saveChanges={saveChanges}
                 errors={errors}

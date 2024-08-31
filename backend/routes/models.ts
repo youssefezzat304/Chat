@@ -1,10 +1,11 @@
-import { getModelForClass } from "@typegoose/typegoose";
-import { Chat } from "./chat/chat.model";
+import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
+import { PrivateChat } from "./privateChat/privateChat.model";
 import { User } from "./user/user.model";
-import { UploadFile } from "./upload/upload.model";
+import { Attachment } from "./attachment/attachment.model";
 import { Message } from "./message/message.model";
 import { FriendRequest } from "./friendRequest/friendRequest.model";
 import { Session } from "./auth/session.model";
+import { GroupChat } from "./groupChat/groupChat.model";
 
 export const UserModel = getModelForClass(User, {
   schemaOptions: {
@@ -16,9 +17,16 @@ export const FriendRequestModel = getModelForClass(FriendRequest, {
     timestamps: true,
   },
 });
-export const ChatModel = getModelForClass(Chat, {
+export const PrivateChatModel = getModelForClass(PrivateChat, {
   schemaOptions: {
     timestamps: true,
+    collection: "privateChats",
+  },
+});
+export const GroupChatModel = getModelForClass(GroupChat, {
+  schemaOptions: {
+    timestamps: true,
+    collection: "groupChats",
   },
 });
 export const MessageModel = getModelForClass(Message, {
@@ -26,7 +34,7 @@ export const MessageModel = getModelForClass(Message, {
     timestamps: true,
   },
 });
-export const UploadFileModel = getModelForClass(UploadFile, {
+export const AttachmentModel = getModelForClass(Attachment, {
   schemaOptions: {
     timestamps: true,
   },

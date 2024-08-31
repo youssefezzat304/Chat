@@ -20,35 +20,36 @@ const friendRequest = async (
   try {
     const requester = (await UserModel.findOne({
       email: requesterEmail,
-    })) as DocumentType<User> | null;
+    }).exec()) as DocumentType<User> | null;
     const recipient = (await UserModel.findOne({
       email: recipientEmail,
-    })) as DocumentType<User> | null;
+    }).exec()) as DocumentType<User> | null;
 
     if (!requester || !recipient) {
-      return res
-        .status(404)
-        .json({ message: "User not found.", 1: requester, 2: recipient });
+      return res.status(404).json({ message: "User not found." });
     }
 
-    if (requester.friends.includes(recipient)) {
+    if (requester.friends.includes(recipient._id)) {
       return res.status(400).json({ message: "You are already friends" });
     }
 
     const existingRequest = (await FriendRequestModel.findOne({
       requester: requester._id,
       recipient: recipient._id,
-    })) as DocumentType<FriendRequest> | null;
+    }).exec()) as DocumentType<FriendRequest> | null;
 
     if (existingRequest) {
       return res.status(400).json({ message: "Friend request already sent" });
     }
 
-    if (existingRequest) {
-      return res.status(400).json({ message: "Friend request already sent." });
-    }
-    requester.friendRequestsSent.push(recipient._id);
-    recipient.friendRequestsReceived.push(requester._id);
+    await UserModel.updateOne(
+      { _id: recipient._id },
+      { $push: { "friendRequests.incoming": requester._id } },
+    ).exec();
+    await UserModel.updateOne(
+      { _id: requester._id },
+      { $push: { "friendRequests.outgoing": recipient._id } },
+    ).exec();
 
     const friendRequest = new FriendRequestModel({
       requester: requester._id,
@@ -56,11 +57,7 @@ const friendRequest = async (
       status: "pending",
     }) as DocumentType<FriendRequest>;
 
-    await Promise.all([
-      friendRequest.save(),
-      requester.save(),
-      recipient.save(),
-    ]);
+    await friendRequest.save();
 
     return res.status(200).json({ message: "Friend request sent." });
   } catch (error) {

@@ -12,18 +12,20 @@ export const sendFriendRequest = async (requestData: {
   recipientEmail: string;
 }) => {
   try {
-    await api.post(
-      `/friend-request/add/${requestData.recipientEmail}`,
+    const response = await api.post(
+      `/add/${requestData.recipientEmail}`,
       requestData,
       {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
+    return response;
   } catch (error) {
     console.log(error);
+    return error;
   }
 };
 

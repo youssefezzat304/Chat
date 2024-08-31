@@ -16,7 +16,7 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import { User } from "./user.types";
-import { MessageInterface } from "./chat.types";
+import { MessageType } from "./chat.types";
 import { FriendRequestState } from "./friendSystem.types";
 import { FriendRequestSchema } from "@/utils/validation/friendSystem.validation";
 
@@ -72,7 +72,7 @@ export type ImageDisplayProps = ComponentProps<"img"> & {
 
 export type SubjectProps = ComponentProps<"div"> & {
   subject: User;
-  lastMessage?: MessageInterface;
+  lastMessage?: MessageType;
 };
 
 export type IconProps = ComponentProps<"button"> & {
@@ -82,7 +82,6 @@ export type IconProps = ComponentProps<"button"> & {
 
 export type ProfileFormSectionProps = {
   control: Control<User>;
-  activeUser: User;
   handleSubmit: UseFormHandleSubmit<User, undefined>;
   saveChanges: SubmitHandler<User>;
   errors: FieldErrors<User>;
@@ -91,7 +90,6 @@ export type ProfileFormSectionProps = {
 
 export type ProfileLeftSectionProps = {
   control: Control<any>;
-  activeUser: User;
   saveChanges: SubmitHandler<User>;
   resetSettings: () => void;
   errors: FieldErrors<User>;

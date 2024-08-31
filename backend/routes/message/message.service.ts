@@ -1,5 +1,3 @@
-import { ChatModel } from "../models";
+import { PrivateChatModel } from "../models";
 
-export class MessageService {
-
-}
+export class MessageService {}

@@ -5,11 +5,10 @@ import RecentChat from "../../common/Entities/RecentChat";
 import EmptyChats from "../../SVGs/emptyChats";
 import { useGetChats } from "@/utils/queries/chat.query";
 import { useChatStore, useUserStore } from "@/utils/stores";
-import { ChatInfo } from "@/types/chat.types";
+import { PrivateChat } from "@/types/chat.types";
 import { CircularProgress } from "@mui/material";
 
 import styles from "./index.module.css";
-import GroupSubjects from "@/_components/common/Entities/GroupSubjects";
 
 const Chats = () => {
   const { recentChats, setRecentChats } = useChatStore((state) => ({
@@ -27,7 +26,7 @@ const Chats = () => {
   }, [recentChats.length, isLoading, allChats, setRecentChats]);
 
   const filteredChats = useMemo(() => {
-    return recentChats?.map((chat: ChatInfo) => {
+    return recentChats?.map((chat: PrivateChat) => {
       const subject =
         chat.participants[0]._id !== currentUser?._id
           ? chat.participants[0]
@@ -53,7 +52,6 @@ const Chats = () => {
   return (
     <main className={styles.friendListMain}>
       <SearchBar />
-      <GroupSubjects styles={styles.groupSubjects} />
       {recentChats.length === 0 ? (
         <EmptyChats />
       ) : (

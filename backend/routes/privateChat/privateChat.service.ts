@@ -1,6 +1,6 @@
-import { ChatModel } from "../models";
+import { PrivateChatModel } from "../models";
 
-export class ChatService {
+export class PrivateChatService {
   public createNewChat = async ({
     initiatedBy,
     receivedBy,
@@ -8,7 +8,7 @@ export class ChatService {
     initiatedBy: string;
     receivedBy: string;
   }) => {
-    const chat = new ChatModel({
+    const chat = new PrivateChatModel({
       participants: [initiatedBy, receivedBy],
     });
 

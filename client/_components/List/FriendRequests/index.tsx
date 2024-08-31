@@ -16,7 +16,8 @@ const FriendRequests = () => {
 
   useEffect(() => {
     if (user) {
-      setFriendRequests(user.friendRequestsReceived);
+      setFriendRequests(user.friendRequests.incoming);
+      console.log(user);
     }
   }, [user]);
 

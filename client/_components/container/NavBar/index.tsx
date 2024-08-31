@@ -8,7 +8,8 @@ import { FaUserFriends } from "react-icons/fa";
 import NavBarBtn from "@/_components/common/Button/NavBarBtn";
 import useLogOut from "@/hooks/useLogOut";
 import useNavBar from "@/hooks/useNavBar";
-import { Avatar } from "@mui/material";
+import Image from "next/image";
+import { AvatarPlaceholder1 } from "@/assets/avatarPlaceholder";
 
 import styles from "./index.module.css";
 
@@ -25,13 +26,12 @@ const NavBar = () => {
 
   return (
     <main className={styles.navBar}>
-      <div className={styles.profile} onClick={gotoProfileSettings}>
-        <Avatar
-          src={profilePic}
-          className={styles.placeholder}
-          sx={{ width: "3.3rem", height: "3.3rem" }}
-        />
-      </div>
+      <Image
+        src={!profilePic ? AvatarPlaceholder1 : profilePic}
+        alt="Profile Picture"
+        className={styles.placeholder}
+        onClick={gotoProfileSettings}
+      />
       <section className={styles.icons}>
         <NavBarBtn
           icon={<IoNotifications className={styles.sideIcon} />}
@@ -55,7 +55,7 @@ const NavBar = () => {
         />
         <AddFriendDialog />
       </section>
-      <section className={styles.icons}>
+      <section className={styles.bottom}>
         <NavBarBtn
           icon={<IoSettingsSharp className={styles.sideIcon} />}
           title="Settings"

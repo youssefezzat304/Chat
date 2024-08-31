@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useUserStore } from "../utils/stores";
 import { checkUser } from "../api/axios";
+import { useRouter } from "next/navigation";
 
 const useAuthenticateUser = () => {
   const router = useRouter();
@@ -16,8 +16,10 @@ const useAuthenticateUser = () => {
     const storedUser = localStorage.getItem("currentUser");
     if (storedUser) {
       try {
-        setInitialUser(JSON.parse(storedUser));
+        const parsedUser = JSON.parse(storedUser);
+        setInitialUser(parsedUser);
       } catch (error) {
+        console.error("Failed to parse user from localStorage", error);
         setInitialUser(null);
       }
     }
@@ -31,17 +33,17 @@ const useAuthenticateUser = () => {
   });
 
   useEffect(() => {
-    if (user === null && !isLoading) {
-      router.replace("/register");
-    }
+    if (!isLoading) {
+      if (!currentUser) {
+        router.replace("/register");
+      }
 
-    if (currentUser) {
-      setUser(currentUser);
-      // setProfilePic(currentUser.profilePic);
-      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      if (currentUser) {
+        setUser(currentUser);
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      }
     }
-
-  }, [currentUser, router, setUser, user, isLoading, setProfilePic]);
+  }, [currentUser, user, isLoading, setUser, router]);
 
   return { isLoading };
 };
