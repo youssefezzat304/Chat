@@ -10,9 +10,10 @@ import { LuUpload } from "react-icons/lu";
 import { useUserStore } from "@/utils/stores";
 import { UploadFileBtn } from "@/_components";
 import { ProfileLeftSectionProps } from "@/types/props.types";
+import Image from "next/image";
+import { AvatarPlaceholder1 } from "@/assets/avatarPlaceholder";
 
 import styles from "./index.module.css";
-import { Avatar } from "@mui/material";
 
 const ProfileLeftSection = ({
   control,
@@ -50,10 +51,10 @@ const ProfileLeftSection = ({
   const profilePicture = useMemo(() => {
     return (
       <>
-        <Avatar
-          src={profilePic}
+        <Image
+          src={!profilePic ? AvatarPlaceholder1 : profilePic}
           className={styles.placeholder}
-          sx={{ width: "14rem", height: "14rem" }}
+          alt="Profile picture"
         />
       </>
     );

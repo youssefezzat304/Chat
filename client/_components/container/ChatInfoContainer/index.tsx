@@ -1,10 +1,10 @@
 import { Panel } from "react-resizable-panels";
 import ButtonIcon from "@/_components/common/Icon/ButtonIcon";
 import { IoClose } from "react-icons/io5";
-import { Avatar } from "@mui/material";
 import ChatInfoUtilities from "../ChatInfo/ChatInfoUtilities.tsx";
 import { useChatStore, useTabsStore, useUserStore } from "@/utils/stores";
 import Image from "next/image";
+import AvatarPlaceholder1 from "../../../../Database/avatar-placeholder/1.svg";
 
 import styles from "./index.module.css";
 
@@ -25,15 +25,11 @@ const ChatInfoContainer = () => {
       </header>
       <div className={styles.body}>
         <section className={styles.profile}>
-          {profilePic === "" ? (
-            <Avatar sx={{ width: "12rem", height: "12rem" }} />
-          ) : (
-            <Image
-              className={styles.profilePicture}
-              src={profilePic}
-              alt="Contact profile picture"
-            />
-          )}
+          <Image
+            className={styles.profilePicture}
+            src={!profilePic ? AvatarPlaceholder1 : profilePic}
+            alt="Contact profile picture"
+          />
           <span>{contact?.displayName}</span>
         </section>
         <ChatInfoUtilities />

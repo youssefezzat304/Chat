@@ -1,0 +1,120 @@
+.createGroupIcon {
+  color: var(--primary-hard);
+  font-size: xx-large;
+}
+.container {
+  padding: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 60%;
+  height: 95%;
+}
+.groupPic {
+  height: 180px;
+  width: 180px;
+  border-radius: 10%;
+}
+.title {
+  background-color: var(--primary-hard);
+  color: var(--white);
+  border-radius: 10px;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.info {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 0 0.5rem;
+  height: 30%;
+  max-height: 200px;
+}
+.info > div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: start;
+  gap: 0.5rem;
+}
+.info > div > input {
+  border-radius: 5px;
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.description {
+  border-radius: 5px;
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  resize: none;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.friends {
+  flex-grow: 1;
+  border-radius: 10px;
+  padding: 0.5rem;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.searchBarContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+.friendsSearchIcon {
+  position: absolute;
+  font-size: large;
+  left: 0.5rem;
+}
+.friendsSearchBar {
+  position: relative;
+  background-color: var(--secondary-soft);
+  flex-grow: 1;
+  padding: 10px 5px 10px 28px;
+  border: none;
+  border-radius: 12px;
+}
+.friendList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.buttons {
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
+}
+.cancel {
+  cursor: pointer;
+  font-weight: 500;
+  padding: 10px;
+  background-color: var(--white);
+  border-radius: 5px;
+  border: none;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.create {
+  cursor: pointer;
+  color: var(--white);
+  font-weight: 500;
+  padding: 10px;
+  background-color: var(--primary-hard);
+  border-radius: 5px;
+  border: none;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}

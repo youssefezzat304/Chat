@@ -36,6 +36,7 @@
 .profilePicture {
   height: 10rem;
   width: 10rem;
+  border-radius: 10%;
 }
 @keyframes rightToLeft {
   from {

@@ -1,9 +1,9 @@
 import { CiSearch } from "react-icons/ci";
 import BurgerMenuBtn from "../../Button/BurgerMenuBtn";
 import useMediaQuery from "@/hooks/useMediaQuery";
-import GenericInput from "../../Input/GenericInput";
 import useTabletStore from "@/utils/stores/tablet.store";
 import { useTabsStore } from "@/utils/stores";
+import CreateGroup from "@/_components/container/CreateGroup";
 
 import styles from "./index.module.css";
 
@@ -21,14 +21,15 @@ const FriendsSearch = () => {
       {isTablet && (
         <BurgerMenuBtn className={styles.burgerMenu} onClick={openNavBar} />
       )}
-      <GenericInput
-        divProps={{ className: styles.searchBarContainer, title: "Search" }}
-        inputProps={{
-          placeholder: "Search",
-          className: styles.friendsSearchBar,
-        }}
-        icons={<CiSearch className={styles.friendsSearchIcon} />}
-      />
+      <div className={styles.searchBarContainer}>
+        <input
+          title="Search"
+          className={styles.friendsSearchBar}
+          placeholder="Search"
+        />
+        <CiSearch className={styles.friendsSearchIcon} />
+      </div>
+      <CreateGroup />
     </main>
   );
 };

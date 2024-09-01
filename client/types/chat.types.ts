@@ -48,6 +48,7 @@ export interface MessageType {
   chatId: string;
   initiatedBy: User;
   receivedBy: User;
+  receivedByType: "user" | "group";
   content: string;
   isRead: boolean;
   isDelivered: boolean;

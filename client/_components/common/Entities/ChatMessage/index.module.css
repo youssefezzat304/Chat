@@ -43,8 +43,9 @@
   align-self: flex-end;
 }
 .messageProfilePic {
-  align-self: flex-end;
+  align-self: self-end;
   width: 3rem;
   height: 3rem;
-  margin: 0 0.6rem 0.6rem 0;
+  margin: 0 0.6rem 0 0;
+  border-radius: 10%;
 }

@@ -5,8 +5,8 @@ import { User } from "@/types/user.types";
 import styles from "./index.module.css";
 
 const Friend = ({ friend }: { friend: User }) => {
+  useFindChat();
   const setChatWith = useChatStore((state) => state.setChatWith);
-  const { isLoading } = useFindChat();
 
   const handleSelectChatId = () => {
     setChatWith(friend);

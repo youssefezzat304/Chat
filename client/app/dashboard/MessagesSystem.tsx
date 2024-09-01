@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { useGetMessages } from "../../utils/queries/chat.query";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Divider } from "@mui/material";
 import { useChatStore } from "../../utils/stores";
 import { receiveMessage } from "../../api/messages.api";
 import { socket } from "../socket";
@@ -41,9 +41,9 @@ export const MessagesSystem = () => {
         <div className={styles.messagesContainer}>
           {Object.entries(groupedMessages).map(([dayLabel, msgs]) => (
             <div key={dayLabel}>
-              <div className={styles.dayLabel}>
+              <Divider className={styles.dayLabel}>
                 <span>{dayLabel}</span>
-              </div>
+              </Divider>
               {msgs.map((message, index) => {
                 const isLastInStack =
                   index === msgs.length - 1 ||

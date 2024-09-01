@@ -35,7 +35,7 @@ const createMessageSocketHandler = (io: Server) => {
           initiatedBy,
           receivedBy,
           content,
-          receivedByType,
+          receivedByType: "user",
         });
 
         await Promise.all([

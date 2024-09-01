@@ -19,11 +19,11 @@ const useLogOut = () => {
       await axiosPrivate.get("/users/logout", {
         withCredentials: true,
       });
-      router.replace("/register");
+      router.push("/register");
     } catch (error: any) {
       console.log(error);
     } finally {
-      router.replace("/register");
+      router.push("/register");
     }
   };
 

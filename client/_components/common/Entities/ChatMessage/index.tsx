@@ -1,10 +1,10 @@
-import { DisplayImage } from "@/_components";
 import { MessageType } from "@/types/chat.types";
 import { useUserStore } from "@/utils/stores";
 import { memo } from "react";
 import styles from "./index.module.css";
 import { messageTimestamp } from "@/utils/functions/time";
-import { Avatar } from "@mui/material";
+import Image from "next/image";
+import { AvatarPlaceholder1 } from "@/assets/avatarPlaceholder";
 
 interface ChatMessageProps {
   message: MessageType;
@@ -24,9 +24,13 @@ const ChatMessage = memo(({ message, isLastInStack }: ChatMessageProps) => {
       }`}
     >
       {!isSentByCurrentUser && isLastInStack && (
-        <Avatar
-          src={message.initiatedBy.profilePic}
-          variant="rounded"
+        <Image
+          src={
+            !message.initiatedBy.profilePic
+              ? AvatarPlaceholder1
+              : message.initiatedBy.profilePic
+          }
+          alt="Profile Picture"
           className={styles.messageProfilePic}
         />
       )}
@@ -35,7 +39,7 @@ const ChatMessage = memo(({ message, isLastInStack }: ChatMessageProps) => {
           isSentByCurrentUser ? `${styles.sent}` : `${styles.received}`
         }`}
       >
-        {!isSentByCurrentUser && (
+        {!isSentByCurrentUser && message.receivedByType === "group" && (
           <strong>{message.initiatedBy.displayName}</strong>
         )}
         <p>{message.content}</p>

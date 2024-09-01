@@ -30,7 +30,10 @@
   outline: none;
 }
 .placeholder {
-  margin-top: 2rem;
+  margin: 1rem;
+  width: 230px;
+  height: 230px;
+  border-radius: 10%;
 }
 .editNameIcon {
   background-color: #2424241f;

@@ -2,7 +2,7 @@
   animation: slideInFromRight 0.2s ease-out forwards;
   display: flex;
   flex-direction: column;
-  margin-left: 6px;
+  padding-left: 6px;
   height: 100%;
 }
 .container {

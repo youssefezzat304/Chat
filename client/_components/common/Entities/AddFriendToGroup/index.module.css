@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.subjectMain {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.profilePic {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10%;
+}
+.buttons {
+  display: flex;
+  justify-content: self-end;
+  gap: 0.5rem;
+}
+.add {
+  cursor: pointer;
+  color: var(--white);
+  font-weight: 500;
+  padding: 6px 12px;
+  background-color: var(--primary-hard);
+  border-radius: 5px;
+  border: none;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.admin {
+  cursor: pointer;
+  /* color: var(--white); */
+  font-weight: 500;
+  padding: 6px 12px;
+  background-color: gold;
+  border-radius: 5px;
+  border: none;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
