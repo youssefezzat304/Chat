@@ -8,9 +8,10 @@ import VoiceNoteBtn from "../../Button/VoiceNoteBtn";
 import SendMessageBtn from "../../Button/SendMessageBtn";
 
 import styles from "./index.module.css";
+import EmojiPickerBtn from "../../Button/EmojiPickerBtn";
 
 const MessageInput = () => {
-  const { register, handleSubmit, reset, watch } = useForm();
+  const { register, handleSubmit, reset, watch, setValue } = useForm();
   const chatId = useChatStore((state) => state.selectedChatId);
   const chatWith = useChatStore((state) => state.chatWith);
   const currentUser = useUserStore((state) => state.user);
@@ -33,6 +34,9 @@ const MessageInput = () => {
     },
     [chatId, chatWith, reset, currentUser],
   );
+  const handleEmojiSelect = (emoji: any) => {
+    setValue("message", message + emoji.native, { shouldValidate: true });
+  };
   return (
     <form
       autoComplete="off"
@@ -40,6 +44,7 @@ const MessageInput = () => {
       onSubmit={handleSubmit(handleSendMessage)}
     >
       <AttachBtn />
+      <EmojiPickerBtn onEmojiSelect={handleEmojiSelect} />
       <VoiceNoteBtn />
       <SendMessageBtn
         onClick={handleSubmit(handleSendMessage)}

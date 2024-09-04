@@ -3,10 +3,9 @@
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
-  margin: 10px 10px;
   width: 100%;
   max-width: 100%;
-  padding: 14px;
+  padding: 10px;
   border: none;
   border-radius: 10px;
   transition: 0.1s;
@@ -24,10 +23,11 @@
   cursor: pointer;
   transform: scale(0.98);
 }
-.friendPpContainer {
+.profilePic {
   width: 3rem;
   min-width: 3rem;
   height: 3rem;
+  border-radius: 10%;
   margin-right: 8px;
 }
 .subjectMain::selection {

@@ -3,10 +3,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import {
   SignupSchema,
   signupValidation,
-} from "../../../utils/validation/user.validation";
+} from "../../../../utils/validation/user.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { api } from "../../../api/axios";
+import { api } from "@/api/axios";
 import { BiMessageSquareError } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 import { ButtonIcon } from "@/_components";

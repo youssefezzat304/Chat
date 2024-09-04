@@ -23,8 +23,6 @@ export { default as AddFriendDialog } from "./common/Dialog/AddFriendDialog";
 export { default as SearchBar } from "./common/Search/FriendsSearch";
 export { default as MessageInput } from "./common/Input/MessageInput";
 export { default as ProfileInput } from "./common/Input/ProfileInfoInput";
-export { default as DisplayImage } from "./common/Display/ImageDisplay";
-export { default as NoMessages } from "./common/Tabs/NoMessages";
 export { default as RecentChat } from "./common/Entities/RecentChat";
 export { default as ChatMessage } from "./common/Entities/ChatMessage";
 export { default as FriendRequestNotification } from "./common/Notification/FriendRequestNotification";

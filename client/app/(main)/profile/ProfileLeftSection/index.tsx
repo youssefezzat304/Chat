@@ -52,6 +52,8 @@ const ProfileLeftSection = ({
     return (
       <>
         <Image
+          width={230}
+          height={230}
           src={!profilePic ? AvatarPlaceholder1 : profilePic}
           className={styles.placeholder}
           alt="Profile picture"

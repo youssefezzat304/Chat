@@ -1,4 +1,4 @@
-import { MessageInterface } from "@/types/chat.types";
+import { MessageType } from "@/types/chat.types";
 import dayjs from "dayjs";
 
 export const messageTimestamp = (timestamp?: string) => {
@@ -37,28 +37,28 @@ export const timestamp = (timestamp?: string) => {
 export const getDayLabel = (timestamp: string) => {
   const now = dayjs();
   const givenDate = dayjs(timestamp);
-  const differenceInHours = now.diff(givenDate, "hour");
-  const startOfToday = dayjs().startOf("day"); // Midnight of today
+  const startOfToday = now.startOf("day");
+  const differenceInDays = now.diff(givenDate, "day");
 
-  if (
-    givenDate.isAfter(startOfToday) &&
-    now.isBefore(startOfToday.add(24, "hour"))
-  ) {
+  if (givenDate.isAfter(startOfToday)) {
     return "Today";
-  } else if (differenceInHours < 48 && givenDate.isBefore(startOfToday)) {
+  } else if (
+    givenDate.isAfter(startOfToday.subtract(1, "day")) &&
+    givenDate.isBefore(startOfToday)
+  ) {
     return "Yesterday";
-  } else if (now.diff(givenDate, "day") >= 7) {
-    return givenDate.format("DD/MM/YYYY");
-  } else {
+  } else if (differenceInDays < 7) {
     return givenDate.format("dddd");
+  } else {
+    return givenDate.format("DD/MM/YYYY");
   }
 };
 
 interface GroupedMessages {
-  [key: string]: MessageInterface[];
+  [key: string]: MessageType[];
 }
 export const groupMessagesByDay = (
-  messages: MessageInterface[],
+  messages: MessageType[],
 ): GroupedMessages => {
   return messages.reduce((acc: GroupedMessages, message) => {
     const dayLabel = getDayLabel(message.createdAt);

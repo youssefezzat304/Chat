@@ -1,3 +1,4 @@
+"use client";
 import { Panel, PanelGroup } from "react-resizable-panels";
 import NotificationsHeader from "../../Header/NotificationsHeader";
 import { List } from "@mui/material";

@@ -10,28 +10,26 @@ import useLogOut from "@/hooks/useLogOut";
 import useNavBar from "@/hooks/useNavBar";
 import Image from "next/image";
 import { AvatarPlaceholder1 } from "@/assets/avatarPlaceholder";
+import Link from "next/link";
 
 import styles from "./index.module.css";
 
 const NavBar = () => {
-  const {
-    gotoChats,
-    gotoContacts,
-    gotoProfileSettings,
-    handleFriendRequests,
-    handleNotifications,
-  } = useNavBar();
+  const { gotoChats, gotoContacts, handleFriendRequests, handleNotifications } =
+    useNavBar();
   const profilePic = useUserStore((state) => state.profilePic);
   const { handleLogOut } = useLogOut();
 
   return (
-    <main className={styles.navBar}>
-      <Image
-        src={!profilePic ? AvatarPlaceholder1 : profilePic}
-        alt="Profile Picture"
-        className={styles.placeholder}
-        onClick={gotoProfileSettings}
-      />
+    <div className={styles.navBar}>
+      <Link href={"/profile"}>
+        <Image
+          src={!profilePic ? AvatarPlaceholder1 : profilePic}
+          alt="Profile Picture"
+          className={styles.placeholder}
+        />
+      </Link>
+
       <section className={styles.icons}>
         <NavBarBtn
           icon={<IoNotifications className={styles.sideIcon} />}
@@ -70,7 +68,7 @@ const NavBar = () => {
           Log out
         </button>
       </section>
-    </main>
+    </div>
   );
 };
 

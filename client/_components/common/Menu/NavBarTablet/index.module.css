@@ -20,7 +20,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   background-color: var(--white);
   height: 4rem;
   width: 90%;
@@ -28,11 +28,11 @@
   cursor: pointer;
 }
 .profilePicture {
-  position: absolute;
-  left: 3px;
-  bottom: 6px;
+  padding: 0.2rem;
   height: 62px;
   width: 62px;
+  border-radius: 50%;
+  margin-right: 0.7rem;
 }
 .sideIcon {
   font-size: 22px;

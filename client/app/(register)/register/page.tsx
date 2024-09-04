@@ -5,29 +5,22 @@ import {
   LoginIcon,
   SignUpIcon,
   RoutesLoading,
-} from "../../_components";
+} from "../../../_components";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import { useUserStore } from "../../utils/stores";
-import useAuthenticateUser from "../../hooks/useAuthenticateUser";
-import { useRouter } from "next/navigation";
+import useAuthenticateUser from "@/hooks/useAuthenticateUser";
 
 import styles from "./index.module.css";
 
 const Register = () => {
-  const router = useRouter();
-  const { isLoading } = useAuthenticateUser();
-  const user = useUserStore((state) => state.user);
-
-  useEffect(() => {
-    if (user) return router.replace("/dashboard");
-  }, [user, router]);
+  const { isLoading, initialUser } = useAuthenticateUser();
 
   const [loginScreen, setLoginScreen] = useState(true);
   const signUp = useCallback(() => setLoginScreen(false), []);
   const logIn = useCallback(() => setLoginScreen(true), []);
 
-  if (user || isLoading) return <RoutesLoading />;
+  if (initialUser || isLoading) return <RoutesLoading />;
+
   return (
     <main className={styles.registerMain}>
       <div className={styles.registerCard}>

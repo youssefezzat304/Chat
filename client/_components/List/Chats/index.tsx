@@ -50,14 +50,14 @@ const Chats = () => {
   }
 
   return (
-    <main className={styles.friendListMain}>
+    <section className={styles.friendListMain}>
       <SearchBar />
       {recentChats.length === 0 ? (
         <EmptyChats />
       ) : (
         <div className={styles.friendList}>{filteredChats}</div>
       )}
-    </main>
+    </section>
   );
 };
 

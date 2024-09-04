@@ -1,3 +1,4 @@
+"use client";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import { FormEvent, Fragment, useState } from "react";
@@ -60,20 +61,24 @@ export default function CreateGroup() {
             />
           </div>
         </section>
-        <section className={styles.friends}>
-          <div className={styles.searchBarContainer}>
-            <input
-              title="Search"
-              className={styles.friendsSearchBar}
-              placeholder="Search"
-            />
-            <CiSearch className={styles.friendsSearchIcon} />
+
+        <section className={styles.friendsContainer}>
+          <div className={styles.friends}>
+            <div className={styles.searchBarContainer}>
+              <input
+                title="Search"
+                className={styles.friendsSearchBar}
+                placeholder="Search"
+              />
+              <CiSearch className={styles.friendsSearchIcon} />
+            </div>
+            <div className={styles.friendList}>
+              {currentUser?.friends?.map((friend: User) => {
+                return <AddFriendToGroup key={friend._id} friend={friend} />;
+              })}
+            </div>
           </div>
-          <div className={styles.friendList}>
-            {currentUser?.friends?.map((friend: User) => {
-              return <AddFriendToGroup key={friend._id} friend={friend} />;
-            })}
-          </div>
+          <div className={styles.members}></div>
         </section>
 
         <div className={styles.buttons}>

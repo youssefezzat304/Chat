@@ -1,3 +1,4 @@
+"use client";
 import { Panel } from "react-resizable-panels";
 import ButtonIcon from "@/_components/common/Icon/ButtonIcon";
 import { IoClose } from "react-icons/io5";

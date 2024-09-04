@@ -1,19 +1,19 @@
 import { create } from "zustand";
-import { ChatInfo, MessageInterface } from "../../types/chat.types";
+import { PrivateChat, MessageType } from "../../types/chat.types";
 import { User } from "../../types/user.types";
 
 type ChatStore = {
   selectedChatId: string;
-  chatInfo?: ChatInfo;
-  recentChats: ChatInfo[];
+  chatInfo?: PrivateChat;
+  recentChats: PrivateChat[];
   chatWith?: User;
-  messages: MessageInterface[];
+  messages: MessageType[];
   setSelectedChatId: (state: string) => void;
-  setChatInfo: (state?: ChatInfo) => void;
-  setRecentChats: (state: ChatInfo[]) => void;
+  setChatInfo: (state?: PrivateChat) => void;
+  setRecentChats: (state: PrivateChat[]) => void;
   setChatWith: (state: User) => void;
-  setMessages: (state: MessageInterface[]) => void;
-  addMessage: (newMessage: MessageInterface) => void;
+  setMessages: (state: MessageType[]) => void;
+  addMessage: (newMessage: MessageType) => void;
 };
 
 const useChatStore = create<ChatStore>((set) => ({

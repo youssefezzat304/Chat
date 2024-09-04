@@ -3,13 +3,13 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import {
   LoginSchema,
   loginValidation,
-} from "../../../utils/validation/user.validation";
+} from "../../../../utils/validation/user.validation";
+import { ButtonIcon } from "../../../../_components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BiMessageSquareError } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import { ButtonIcon } from "../../../_components";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
 import styles from "./index.module.css";
 

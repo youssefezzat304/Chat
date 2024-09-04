@@ -2,25 +2,17 @@
 import {
   Notifications,
   FriendRequests,
-  RoutesLoading,
   MainConsole,
-  NavBar,
   Members,
-} from "../../_components";
+} from "../../../_components";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import { useTabsStore, useUserStore } from "../../utils/stores";
-import useAuthenticateUser from "../../hooks/useAuthenticateUser";
 import ChatInfoContainer from "@/_components/container/ChatInfoContainer";
-import useMediaQuery from "@/hooks/useMediaQuery";
+import { useMemo } from "react";
+import { useTabsStore } from "@/utils/stores";
 
 import styles from "./index.module.css";
-import { useMemo } from "react";
 
 export default function Dashboard() {
-  const user = useUserStore((state) => state.user);
-  const { isLoading } = useAuthenticateUser();
-  const { isTablet } = useMediaQuery();
-
   const { friendRequestsTab, membersTab, chatInfoTab, notificationsTab } =
     useTabsStore((state) => ({
       friendRequestsTab: state.friendRequestsTab,
@@ -64,29 +56,25 @@ export default function Dashboard() {
     [chatInfoTab, membersTab],
   );
 
-  if (!user || isLoading) {
-    return <RoutesLoading />;
-  }
   return (
-    <main className={styles.main}>
-      <div className={styles.mainScreen}>
-        {!isTablet && <NavBar />}
-        <PanelGroup direction="horizontal" autoSaveId="main">
-          <Panel defaultSize={tabsOpen ? 75 : 100}>
-            <section className={styles.mainSec}>
-              <MainConsole />
-            </section>
-          </Panel>
-          {tabsOpen && (
-            <>
-              <PanelResizeHandle />
-              {notificationsTab.isOpen || friendRequestsTab.isOpen
-                ? Alerts
-                : Info}
-            </>
-          )}
-        </PanelGroup>
-      </div>
-    </main>
+    <>
+      <PanelGroup
+        direction="horizontal"
+        autoSaveId="main"
+        className={styles.main}
+      >
+        <Panel className={styles.hero} defaultSize={tabsOpen ? 75 : 100}>
+          <MainConsole />
+        </Panel>
+        {tabsOpen && (
+          <>
+            <PanelResizeHandle />
+            {notificationsTab.isOpen || friendRequestsTab.isOpen
+              ? Alerts
+              : Info}
+          </>
+        )}
+      </PanelGroup>
+    </>
   );
 }

@@ -4,11 +4,11 @@ import { RiContactsBook3Fill, RiLogoutCircleLine } from "react-icons/ri";
 import { FaUserFriends } from "react-icons/fa";
 import AddFriendDialog from "../../Dialog/AddFriendDialog";
 import NavBarTabletBtn from "../../Button/NavBarTabletBtn";
-import UploadProfilePic from "@/_components/SVGs/UploadProfilePic";
-import { DisplayImage } from "@/_components";
 import useLogOut from "@/hooks/useLogOut";
 import useNavBar from "@/hooks/useNavBar";
 import { useUserStore } from "@/utils/stores";
+import Image from "next/image";
+import { AvatarPlaceholder1 } from "@/assets/avatarPlaceholder";
 
 import styles from "./index.module.css";
 
@@ -29,16 +29,11 @@ const NavBarTablet = () => {
   return (
     <main className={styles.main}>
       <div className={styles.profileContainer} onClick={gotoProfileSettings}>
-        {profilePic === "" ? (
-          <div className={styles.profilePicture}>
-            <UploadProfilePic />
-          </div>
-        ) : (
-          <DisplayImage
-            className={styles.profilePicture}
-            base64String={profilePic}
-          />
-        )}
+        <Image
+          className={styles.profilePicture}
+          src={!profilePic ? AvatarPlaceholder1 : profilePic}
+          alt={`${currentUser?.displayName}'s profile picture`}
+        />
         <strong>{currentUser?.displayName}</strong>
       </div>
       <section className={styles.buttons}>

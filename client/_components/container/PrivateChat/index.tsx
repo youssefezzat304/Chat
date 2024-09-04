@@ -1,4 +1,4 @@
-import { MessagesSystem } from "@/app/dashboard/MessagesSystem";
+import { MessagesSystem } from "@/app/(main)/dashboard/MessagesSystem";
 import { useChatStore } from "@/utils/stores";
 import MessageInput from "../../common/Input/MessageInput";
 import ChatHeaderIcons from "../../Header/ChatHeaderIcons";

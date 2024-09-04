@@ -6,11 +6,11 @@ import styles from "./index.module.css";
 
 const ChatHeaderIcons = () => {
   return (
-    <main className={styles.chatHeaderIcons}>
+    <div className={styles.chatHeaderIcons}>
       <ButtonIcon title="Search" icon={<BsSearch />} />
       <ButtonIcon title="Voice call" icon={<BsTelephone />} />
-      <ChatDropMenu className={styles.chatDropMenu}/>
-    </main>
+      <ChatDropMenu className={styles.chatDropMenu} />
+    </div>
   );
 };
 

@@ -1,0 +1,51 @@
+.main {
+  position: relative;
+  background-color: var(--primary-dark);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 6px;
+  padding-right: 6px;
+  padding-bottom: 6px;
+  overflow: hidden;
+}
+.main button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text-gray);
+  font-weight: 500;
+  background-color: transparent;
+  border: none;
+}
+.main::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  height: 74px;
+  width: 74px;
+  background-color: var(--white);
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: -40px;
+  box-shadow:
+    rgba(50, 50, 93, 0.2) 0px 0px 50px -8px inset,
+    rgba(0, 0, 0, 0.2) 0px 0px 0px -12px inset;
+}
+.registerMain {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.bg {
+  position: absolute;
+  z-index: -10;
+  min-height: 100vh;
+}

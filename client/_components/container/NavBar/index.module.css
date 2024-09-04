@@ -10,14 +10,14 @@
 .navBar::after {
   content: "";
   position: absolute;
-  z-index: -30;
+  z-index: 1;
   background-color: var(--primary-dark);
   top: 80px;
   left: 53.5px;
   height: 25px;
   width: 12.5px;
   border-top-right-radius: 12.5px;
-  box-shadow: 0 -12.5px 0 0 rgba(255, 255, 255, 0.888);
+  box-shadow: 0 -12.5px 0 0 rgb(237, 233, 239);
 }
 .placeholder {
   position: absolute;

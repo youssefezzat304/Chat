@@ -1,5 +1,4 @@
 import { useChatStore } from "@/utils/stores";
-import NoMessages from "../../common/Tabs/NoMessages";
 import PrivateChat from "../PrivateChat";
 import useMediaQuery from "@/hooks/useMediaQuery";
 
@@ -10,8 +9,17 @@ const Chat = () => {
   const chatWith = useChatStore((state) => state.chatWith);
   const { isMobile, isSmallTab } = useMediaQuery();
   const largeScreen = !isMobile && !isSmallTab;
+
+  const NoMessages = () => {
+    return (
+      <div className={styles.noMessages}>
+        <strong>No new messages.</strong>
+        <p>Start new conversation.</p>
+      </div>
+    );
+  };
   return (
-    <main className={styles.chatMain}>
+    <div className={styles.chatMain}>
       {!chatWith && largeScreen ? (
         <NoMessages />
       ) : !chatWith && !largeScreen ? (
@@ -19,7 +27,7 @@ const Chat = () => {
       ) : (
         <PrivateChat />
       )}
-    </main>
+    </div>
   );
 };
 

@@ -1,3 +1,4 @@
+"use client";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { Fragment, useCallback, useState } from "react";

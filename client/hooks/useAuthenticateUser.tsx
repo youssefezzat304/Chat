@@ -4,48 +4,47 @@ import { useQuery } from "@tanstack/react-query";
 import { useUserStore } from "../utils/stores";
 import { checkUser } from "../api/axios";
 import { useRouter } from "next/navigation";
+import { User } from "@/types/user.types";
 
 const useAuthenticateUser = () => {
   const router = useRouter();
-  const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
-  const setProfilePic = useUserStore((state) => state.setProfilePic);
-  const [initialUser, setInitialUser] = useState(null);
+  const [initialUser, setInitialUser] = useState<User | null>(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("currentUser");
     if (storedUser) {
       try {
-        const parsedUser = JSON.parse(storedUser);
+        const parsedUser = JSON.parse(storedUser) as User;
         setInitialUser(parsedUser);
+        setUser(parsedUser);
+        return;
       } catch (error) {
         console.error("Failed to parse user from localStorage", error);
         setInitialUser(null);
       }
     }
-  }, []);
+  }, [setUser]);
 
   const { data: currentUser, isLoading } = useQuery({
-    queryFn: checkUser,
+    queryFn: () => checkUser(),
     queryKey: ["currentUser"],
-    initialData: initialUser,
-    enabled: !initialUser || Object.keys(initialUser).length === 0,
+    enabled: !initialUser,
   });
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && !initialUser) {
       if (!currentUser) {
-        router.replace("/register");
-      }
-
-      if (currentUser) {
+        router.push("/register");
+      } else {
         setUser(currentUser);
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        console.log("Fetched and set Current User:", currentUser);
       }
     }
-  }, [currentUser, user, isLoading, setUser, router]);
+  }, [currentUser, isLoading, router, initialUser, setUser]);
 
-  return { isLoading };
+  return { isLoading, initialUser };
 };
 
 export default useAuthenticateUser;

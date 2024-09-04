@@ -4,14 +4,9 @@ import { User } from "@/types/user.types";
 import Friend from "../../common/Entities/Friend";
 
 import styles from "./index.module.css";
-import { useEffect } from "react";
 
 const Friends = () => {
   const currentUser = useUserStore((state) => state.user);
-
-  useEffect(() => {
-    console.log(currentUser?.friends);
-  }, [currentUser]);
 
   return (
     <main className={styles.friendListMain}>

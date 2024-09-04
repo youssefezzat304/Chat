@@ -1,8 +1,9 @@
+"use client";
 import { MembersInfo } from "@/_components";
 import React from "react";
 import { Panel } from "react-resizable-panels";
 
-import styles from "./index.module.css"
+import styles from "./index.module.css";
 
 const Members = () => {
   return (

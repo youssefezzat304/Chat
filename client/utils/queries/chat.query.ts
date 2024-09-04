@@ -1,3 +1,4 @@
+"use client";
 import { findChat, getAllChats } from "@/api/chat.api";
 import { useChatStore, useUserStore } from "../stores";
 import { useQuery } from "@tanstack/react-query";

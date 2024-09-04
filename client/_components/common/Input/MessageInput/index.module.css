@@ -2,11 +2,11 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding-left: 0.5rem;
   color: rgba(26, 26, 26, 0.6);
 }
 .inputBox input {
   outline: none;
+  padding-left: 4.7rem !important;
 }
 .sendIcon {
   cursor: pointer;

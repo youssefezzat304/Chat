@@ -46,7 +46,7 @@ export interface GroupChat {
 export interface MessageType {
   _id: string;
   chatId: string;
-  initiatedBy: User;
+  initiatedBy: string;
   receivedBy: User;
   receivedByType: "user" | "group";
   content: string;

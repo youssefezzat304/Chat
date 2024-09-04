@@ -1,0 +1,14 @@
+.emojis {
+  cursor: pointer;
+  position: absolute;
+  font-size: x-large;
+  left: 36px;
+}
+.emojiPickerContainer {
+  position: relative;
+  bottom: 20px;
+}
+.emojiPicker {
+  position: absolute;
+  bottom: 16px;
+}

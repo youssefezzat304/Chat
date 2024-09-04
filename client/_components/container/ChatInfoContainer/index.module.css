@@ -5,6 +5,7 @@
   animation: rightToLeft 0.2s ease-out forwards;
   background-color: var(--white);
   border-radius: 22px;
+  margin-left: 6px;
 }
 .body {
   overflow-y: auto;

@@ -1,17 +1,21 @@
-import DisplayImage from "../../Display/ImageDisplay";
 import { useChatStore, useUserStore } from "@/utils/stores";
 import { useFindChat } from "@/utils/queries/chat.query";
 import { SubjectProps } from "@/types/props.types";
-import styles from "./index.module.css";
 import useMobileStore from "@/utils/stores/mobile.store";
 import { timestamp } from "@/utils/functions/time";
+import Image from "next/image";
+import { AvatarPlaceholder1 } from "@/assets/avatarPlaceholder";
+
+import styles from "./index.module.css";
 
 const RecentChat = ({ subject, lastMessage }: SubjectProps) => {
+  useFindChat();
   const setChatWith = useChatStore((state) => state.setChatWith);
   const setMobileChats = useMobileStore((state) => state.setMobileChats);
   const currentUser = useUserStore((state) => state.user);
-  const { isLoading } = useFindChat();
-  const isSentByCurrentUser = lastMessage?.initiatedBy === currentUser?._id;
+  const { content, createdAt, initiatedBy } = lastMessage;
+  const { profilePicture, displayName } = subject;
+  const isSentByCurrentUser = initiatedBy === currentUser?._id;
 
   const handleSelectChatId = () => {
     setChatWith(subject);
@@ -20,23 +24,20 @@ const RecentChat = ({ subject, lastMessage }: SubjectProps) => {
   return (
     <main className={styles.subjectMain} onClick={handleSelectChatId}>
       <div className={styles.subjectInfo}>
-        <DisplayImage
+        <Image
           className={styles.friendPpContainer}
-          variant="rounded"
-          base64String={subject.profilePic}
-          displayName={subject.displayName?.toUpperCase()}
+          src={!profilePicture ? AvatarPlaceholder1 : profilePicture}
+          alt={displayName}
         />
         <div className={styles.messegeInfo}>
           <section className={styles.top}>
-            <label htmlFor="">{subject.displayName}</label>
-            <p className={styles.lastSeen}>
-              {timestamp(lastMessage?.createdAt)}
-            </p>
+            <label htmlFor="">{displayName}</label>
+            <p className={styles.lastSeen}>{timestamp(createdAt)}</p>
           </section>
           <section className={styles.bottom}>
             <p className={styles.lastMassege}>
               {isSentByCurrentUser ? <span>You: </span> : null}
-              {lastMessage?.content}
+              {content}
             </p>
             {/* <p className="notification-icon"></p> */}
           </section>

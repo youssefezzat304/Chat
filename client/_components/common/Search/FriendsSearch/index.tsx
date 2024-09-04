@@ -3,7 +3,7 @@ import BurgerMenuBtn from "../../Button/BurgerMenuBtn";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import useTabletStore from "@/utils/stores/tablet.store";
 import { useTabsStore } from "@/utils/stores";
-import CreateGroup from "@/_components/container/CreateGroup";
+import CreateGroup from "@/_components/common/Dialog/CreateGroup";
 
 import styles from "./index.module.css";
 

@@ -83,41 +83,39 @@ const ProfileSettings = () => {
   if (!user || isLoading) return <RoutesLoading />;
 
   return (
-    <main className={styles.main}>
-      <div className={styles.mainScreen}>
-        <NavBar />
-        <PanelGroup direction="horizontal" autoSaveId="main">
-          <Panel defaultSize={75} minSize={75}>
-            <div className={styles.mainProfileSec}>
-              <ProfileLeftSection
-                control={control}
-                saveChanges={saveChanges}
-                resetSettings={resetSettings}
-                errors={errors}
-              />
-              <ProfileFormSection
-                control={control}
-                handleSubmit={handleSubmit}
-                saveChanges={saveChanges}
-                errors={errors}
-                setValue={setValue}
-              />
-            </div>
-          </Panel>
-          {notificationsTab.isOpen || friendRequestsTab.isOpen ? (
-            alertsPanel
-          ) : (
-            <Panel
-              className={styles.profileSettingsSec}
-              defaultSize={30}
-              minSize={20}
-              maxSize={30}
-            ></Panel>
-          )}
-        </PanelGroup>
-      </div>
+    <>
+      <PanelGroup direction="horizontal" autoSaveId="main">
+        <Panel defaultSize={75} minSize={75}>
+          <div className={styles.mainProfileSec}>
+            <ProfileLeftSection
+              control={control}
+              saveChanges={saveChanges}
+              resetSettings={resetSettings}
+              errors={errors}
+            />
+            <ProfileFormSection
+              control={control}
+              handleSubmit={handleSubmit}
+              saveChanges={saveChanges}
+              errors={errors}
+              setValue={setValue}
+            />
+          </div>
+        </Panel>
+        {notificationsTab.isOpen || friendRequestsTab.isOpen ? (
+          alertsPanel
+        ) : (
+          <Panel
+            className={styles.profileSettingsSec}
+            defaultSize={30}
+            minSize={20}
+            maxSize={30}
+          ></Panel>
+        )}
+      </PanelGroup>
+
       <SaveChangesAlert open={open} setOpen={setOpen} />
-    </main>
+    </>
   );
 };
 

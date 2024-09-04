@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { useGetMessages } from "../../utils/queries/chat.query";
+import { useGetMessages } from "@/utils/queries/chat.query";
 import { CircularProgress, Divider } from "@mui/material";
-import { useChatStore } from "../../utils/stores";
-import { receiveMessage } from "../../api/messages.api";
-import { socket } from "../socket";
+import { useChatStore } from "@/utils/stores";
+import { receiveMessage } from "@/api/messages.api";
+import { socket } from "@/app/socket";
 import { ChatMessage } from "@/_components";
 import { groupMessagesByDay } from "@/utils/functions/time";
 
@@ -47,7 +47,7 @@ export const MessagesSystem = () => {
               {msgs.map((message, index) => {
                 const isLastInStack =
                   index === msgs.length - 1 ||
-                  msgs[index + 1].initiatedBy._id !== message.initiatedBy._id;
+                  msgs[index + 1].initiatedBy !== message.initiatedBy;
 
                 return (
                   <ChatMessage

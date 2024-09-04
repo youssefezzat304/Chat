@@ -72,7 +72,7 @@ export type ImageDisplayProps = ComponentProps<"img"> & {
 
 export type SubjectProps = ComponentProps<"div"> & {
   subject: User;
-  lastMessage?: MessageType;
+  lastMessage: MessageType;
 };
 
 export type IconProps = ComponentProps<"button"> & {

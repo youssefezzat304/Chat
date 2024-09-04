@@ -9,7 +9,7 @@ export interface User {
     city: string;
     postalCode: string;
   };
-  profilePic: string;
+  profilePicture: string;
   birthDate: string;
   phoneNumber: string;
   status: string;

@@ -18,25 +18,34 @@ const FriendRequestMessage = ({
     return <LinearProgress color="secondary" />;
   }
 
-  if (errors.recipientEmail || errors.requesterEmail) {
-    alertTitle = "Error";
-    alertMessage =
-      errors.requesterEmail?.message || errors.recipientEmail?.message;
-    alertType = "error";
-  } else if (errors.root) {
-    if (isFriendReqSuccessful === "warning") {
+  switch (true) {
+    case !!errors.recipientEmail || !!errors.requesterEmail:
+      alertTitle = "Error";
+      alertMessage =
+        errors.requesterEmail?.message || errors.recipientEmail?.message;
+      alertType = "error";
+      break;
+
+    case !!errors.root && isFriendReqSuccessful === "warning":
       alertTitle = "Warning";
       alertMessage = errors.root.message;
       alertType = "warning";
-    } else {
+      break;
+
+    case !!errors.root:
       alertTitle = "Error";
       alertMessage = errors.root.message;
       alertType = "error";
-    }
-  } else if (isFriendReqSuccessful === "success") {
-    alertTitle = "Success";
-    alertMessage = "Your friend request has been successfully sent!";
-    alertType = "success";
+      break;
+
+    case isFriendReqSuccessful === "success":
+      alertTitle = "Success";
+      alertMessage = "Your friend request has been successfully sent!";
+      alertType = "success";
+      break;
+
+    default:
+      break;
   }
 
   return (
