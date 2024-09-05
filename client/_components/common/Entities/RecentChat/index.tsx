@@ -1,5 +1,4 @@
 import { useChatStore, useUserStore } from "@/utils/stores";
-import { useFindChat } from "@/utils/queries/chat.query";
 import { SubjectProps } from "@/types/props.types";
 import useMobileStore from "@/utils/stores/mobile.store";
 import { timestamp } from "@/utils/functions/time";
@@ -7,15 +6,16 @@ import Image from "next/image";
 import { AvatarPlaceholder1 } from "@/assets/avatarPlaceholder";
 
 import styles from "./index.module.css";
+import { useFindChat } from "@/utils/queries/chat.query";
 
 const RecentChat = ({ subject, lastMessage }: SubjectProps) => {
-  useFindChat();
   const setChatWith = useChatStore((state) => state.setChatWith);
   const setMobileChats = useMobileStore((state) => state.setMobileChats);
   const currentUser = useUserStore((state) => state.user);
   const { content, createdAt, initiatedBy } = lastMessage;
   const { profilePicture, displayName } = subject;
   const isSentByCurrentUser = initiatedBy === currentUser?._id;
+  useFindChat();
 
   const handleSelectChatId = () => {
     setChatWith(subject);

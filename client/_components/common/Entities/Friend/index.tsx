@@ -7,7 +7,6 @@ import { AvatarPlaceholder1 } from "@/assets/avatarPlaceholder";
 import styles from "./index.module.css";
 
 const Friend = ({ friend }: { friend: User }) => {
-  useFindChat();
   const setChatWith = useChatStore((state) => state.setChatWith);
   const { profilePicture, displayName } = friend;
 

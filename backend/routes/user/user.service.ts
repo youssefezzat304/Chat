@@ -3,6 +3,7 @@ import { PrivateChat } from "../privateChat/privateChat.model";
 import { UserModel } from "../models";
 import { User } from "./user.model";
 import { UserSchemaInput } from "./user.schema";
+import { Types } from "mongoose";
 
 class UserService {
   private user = UserModel;
@@ -47,7 +48,7 @@ class UserService {
     userId,
     chat,
   }: {
-    userId: string;
+    userId: string | Types.ObjectId;
     chat: PrivateChat;
   }) {
     await UserModel.findByIdAndUpdate(

@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { MessageModel } from "../models";
+import { MessageModel, PrivateChatModel } from "../models";
 import { DocumentType } from "@typegoose/typegoose";
 import { Message } from "./message.model";
 
@@ -9,6 +9,12 @@ const getMessages = async (req: Request, res: Response) => {
   const { chatId } = req.params;
 
   try {
+    const chat = await PrivateChatModel.findById(chatId).exec();
+
+    if (!chat) {
+      return res.status(404).send({ message: "Chat not found" });
+    }
+
     const messages = (await MessageModel.find({ chatId })
       .populate({
         path: "initiatedBy",

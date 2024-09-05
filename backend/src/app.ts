@@ -11,7 +11,7 @@ import { erroMiddleware } from "../middlewares/errorHandler.middleware";
 import deserializeUser from "../middlewares/deserializeUser.middleware";
 import { config } from "dotenv";
 import { SocketHandler } from "../utils/interfaces/interface";
-import createMessageSocketHandler from "../routes/message/message.socket";
+import messageSocketHandler from "../routes/message/message.socket";
 
 config();
 
@@ -28,7 +28,7 @@ const io = new Server(server, {
   cors: corsOptions,
 });
 
-const messagesSocketHandler = createMessageSocketHandler(io);
+const messagesSocketHandler = messageSocketHandler(io);
 const socketHandlers = [messagesSocketHandler];
 
 const initialiseMiddleware = (): void => {

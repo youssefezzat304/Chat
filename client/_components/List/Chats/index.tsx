@@ -20,10 +20,27 @@ const Chats = () => {
   const { allChats, isLoading } = useGetChats();
 
   useEffect(() => {
-    if (recentChats.length === 0 && !isLoading && allChats) {
-      setRecentChats(allChats.data);
-    }
-  }, [recentChats.length, isLoading, allChats, setRecentChats]);
+    const loadChats = () => {
+      const storedChats = localStorage.getItem("recentChats");
+      if (storedChats) {
+        setRecentChats(JSON.parse(storedChats));
+      }
+    };
+
+    loadChats();
+
+    const handleStorageChange = (event: StorageEvent) => {
+      loadChats();
+      if (event.key === "recentChats") {
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [setRecentChats]);
 
   const filteredChats = useMemo(() => {
     return recentChats?.map((chat: PrivateChat) => {

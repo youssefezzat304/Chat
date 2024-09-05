@@ -44,7 +44,7 @@ const Login = ({ signUp }: any) => {
           message: response.data,
         });
       } else {
-        router.replace("/dashboard");
+        router.push("/dashboard");
       }
     } catch (error: any) {
       console.log("handleLogin in userContext.tsx >>>>>", error.response);

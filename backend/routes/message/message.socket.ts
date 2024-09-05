@@ -1,18 +1,24 @@
 import { PrivateChatModel, MessageModel, UserModel } from "../models";
-import { PrivateChatService } from "../privateChat/privateChat.service";
 import UserService from "../user/user.service";
 import { DocumentType } from "@typegoose/typegoose";
 import { PrivateChat } from "../privateChat/privateChat.model";
 import { Message } from "./message.model";
 import { Server, Socket } from "socket.io";
+import { createNewChat } from "../privateChat/privateChat.service";
+import {
+  createMessage,
+  findOrCreateChat,
+  getPopulatedMessage,
+  updateLastMessage,
+  updateUserChats,
+} from "./message.service";
 
-const privateChatService = new PrivateChatService();
 const userService = new UserService();
 
-const createMessageSocketHandler = (io: Server) => {
+const messageSocketHandler = (io: Server) => {
   const registerEvents = (socket: Socket) => {
     socket.on("send_message", async (data) => {
-      const { chatId, initiatedBy, receivedBy, content, receivedByType } = data;
+      const { chatId, initiatedBy, receivedBy, content } = data;
 
       if (!initiatedBy || !receivedBy) {
         socket.emit("error", "Invalid data");
@@ -20,40 +26,24 @@ const createMessageSocketHandler = (io: Server) => {
       }
 
       try {
-        let chat = (await PrivateChatModel.findById(
-          chatId,
-        )) as DocumentType<PrivateChat> | null;
-
-        if (!chat) {
-          chat = await privateChatService.createNewChat({
-            initiatedBy,
-            receivedBy,
-          });
-        }
-        const message = new MessageModel({
+        const chat = await findOrCreateChat(chatId, initiatedBy, receivedBy);
+        const message = await createMessage({
           chatId: chat._id,
           initiatedBy,
           receivedBy,
           content,
-          receivedByType: "user",
         });
 
         await Promise.all([
-          userService.addChatId({ userId: initiatedBy, chat }),
-          userService.addChatId({ userId: receivedBy, chat }),
+          updateUserChats({ userId: initiatedBy, chat }),
+          updateUserChats({ userId: receivedBy, chat }),
           chat.save(),
           message.save(),
         ]);
 
-        await PrivateChatModel.findByIdAndUpdate(
-          chat._id,
-          { $set: { lastMessage: message._id } },
-          { new: true },
-        );
-        const populatedMessage = (await MessageModel.findById(message._id)
-          .populate({ path: "initiatedBy", select: "profilePic displayName" })
-          .exec()) as DocumentType<Message>;
+        await updateLastMessage({ chatId: chat._id, messageId: message._id });
 
+        const populatedMessage = await getPopulatedMessage(message._id);
         io.to(chatId).emit("message_sent", populatedMessage);
       } catch (error) {
         socket.emit("error", "Error sending message");
@@ -86,9 +76,38 @@ const createMessageSocketHandler = (io: Server) => {
         console.error(error);
       }
     });
+
+    socket.on("leave_priv_chat", async (data) => {
+      const { chatId, userId } = data;
+
+      if (!chatId) {
+        socket.emit("error", "Invalid data");
+        return;
+      }
+
+      const chat = await PrivateChatModel.findById(chatId);
+      if (!chat) {
+        socket.emit("error", "404 chat not found");
+        return;
+      }
+
+      if (!chat.participants.includes(userId)) {
+        socket.emit("error", "Unauthorized access");
+        return;
+      }
+
+      try {
+        socket.leave(chatId);
+
+        socket.emit("left_room", chatId);
+      } catch (error) {
+        socket.emit("error", "Error leaving private chat room.");
+        console.error(error);
+      }
+    });
   };
 
   return { registerEvents };
 };
 
-export default createMessageSocketHandler;
+export default messageSocketHandler;

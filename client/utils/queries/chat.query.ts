@@ -2,24 +2,43 @@
 import { findChat, getAllChats } from "@/api/chat.api";
 import { useChatStore, useUserStore } from "../stores";
 import { useQuery } from "@tanstack/react-query";
-import { getMessages, joinPrivateChat } from "@/api/messages.api";
+import {
+  getMessages,
+  joinPrivateChat,
+  leavePrivateChat,
+} from "@/api/messages.api";
 import { useEffect } from "react";
 import { socket } from "@/app/socket";
+import { PrivateChat } from "@/types/chat.types";
 
 export const useGetChats = () => {
   const currentUser = useUserStore((state) => state.user);
   const setRecentChats = useChatStore((state) => state.setRecentChats);
 
-  if (!currentUser) throw Error("No current User");
-  const { data: allChats, isLoading } = useQuery({
+  if (!currentUser) throw new Error("No current User");
+
+  const cachedChats = localStorage.getItem("recentChats");
+  const initialChats: PrivateChat[] | null = cachedChats
+    ? JSON.parse(cachedChats)
+    : null;
+
+  const {
+    data: allChats,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<PrivateChat[] | undefined>({
     queryFn: () => getAllChats(currentUser._id),
     queryKey: ["allChats"],
+    enabled: !initialChats || initialChats.length === 0,
   });
+
   useEffect(() => {
-    if (allChats) {
-      setRecentChats(allChats.data);
+    if (allChats && !isLoading && !isError) {
+      setRecentChats(allChats);
+      localStorage.setItem("recentChats", JSON.stringify(allChats));
     }
-  }, [allChats, setRecentChats]);
+  }, [allChats, setRecentChats, isError, error, isLoading]);
 
   return { allChats, isLoading };
 };
@@ -67,15 +86,22 @@ export const useGetMessages = () => {
       setMessages(allMessages.data);
     }
   }, [allMessages, setMessages]);
+
   useEffect(() => {
-    if (!currentUser) return;
-    if (selectedChatId) {
-      joinPrivateChat(socket, {
+    if (!currentUser || !selectedChatId) return;
+
+    joinPrivateChat(socket, {
+      chatId: selectedChatId,
+      userId: currentUser._id,
+    });
+
+    return () => {
+      leavePrivateChat(socket, {
         chatId: selectedChatId,
         userId: currentUser._id,
       });
-    }
-  }, [selectedChatId]);
+    };
+  }, [selectedChatId, currentUser]);
 
   return { allMessages, isLoading };
 };

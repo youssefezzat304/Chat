@@ -22,7 +22,6 @@ const MessageInput = () => {
       reset();
       try {
         await sendMessage(socket, {
-          receivedByType: "user",
           chatId: chatId,
           initiatedBy: currentUser!._id,
           receivedBy: chatWith!._id,
