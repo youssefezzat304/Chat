@@ -3,6 +3,10 @@ import { PrivateChatModel, UserModel } from "../models";
 import { DocumentType } from "@typegoose/typegoose";
 import { User } from "../user/user.model";
 import { PrivateChat } from "./privateChat.model";
+import { populate } from "dotenv";
+import path from "path";
+import { model } from "mongoose";
+import checkAuthMiddleware from "../../middlewares/checkAuth.middleware";
 
 const chatController = Router();
 
@@ -18,7 +22,8 @@ const getRecentChats = async (req: Request, res: Response) => {
           { path: "participants", select: ["displayName", "profilePic"] },
           {
             path: "lastMessage",
-            select: ["content", "createdAt", "initiatedBy"],
+            model: "Message",
+            populate: [{ path: "initiatedBy", model: "User", select: ["_id"] }],
           },
         ],
       })
@@ -58,7 +63,15 @@ const findChat = async (req: Request, res: Response) => {
   }
 };
 
-chatController.get(process.env.RECENT_CHATS_ENDPOINT as string, getRecentChats);
-chatController.get(process.env.RECENT_FIND_CHAT_ENDPOINT as string, findChat);
+chatController.get(
+  process.env.RECENT_CHATS_ENDPOINT as string,
+  checkAuthMiddleware,
+  getRecentChats,
+);
+chatController.get(
+  process.env.RECENT_FIND_CHAT_ENDPOINT as string,
+  checkAuthMiddleware,
+  findChat,
+);
 
 export default chatController;

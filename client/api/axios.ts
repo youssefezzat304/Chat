@@ -14,43 +14,71 @@ export const axiosPrivate = axios.create({
   withCredentials: true,
 });
 
-export const checkUser = async (): Promise<User | null> => {
+export const setupInterceptors = (accessToken: string | null) => {
+  const requestIntercept = axiosPrivate.interceptors.request.use(
+    (config) => {
+      if (!config.headers.Authorization) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
+      return config;
+    },
+    (error) => Promise.reject(error),
+  );
+  const responseIntercept = axiosPrivate.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      const prevRequest = error?.config;
+      if (error?.response?.status === 403 && !prevRequest?.sent) {
+        prevRequest.sent = true;
+        prevRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+        return axiosPrivate(prevRequest);
+      }
+      return Promise.reject(error);
+    },
+  );
+  return { requestIntercept, responseIntercept };
+};
+
+export const cleanupInterceptors = (interceptors: {
+  requestIntercept: number;
+  responseIntercept: number;
+}) => {
+  axiosPrivate.interceptors.request.eject(interceptors.requestIntercept);
+  axiosPrivate.interceptors.response.eject(interceptors.responseIntercept);
+};
+
+export const getUserInfo = async (): Promise<User | null> => {
   try {
-    const token: string | null = await refreshToken();
-    if (!token) {
-      return null;
-    }
+    const token = await getAccessToken();
+    if (!token) return null;
 
-    const decodedUser = decode(token) as User | null;
-
-    if (!decodedUser) throw Error("Failed to decode token.");
-
-    return decodedUser;
+    const user = decode(token) as User;
+    return user;
   } catch (error) {
     console.error("Failed to fetch user:", error);
     return null;
   }
 };
 
-export const refreshToken = async () => {
+export const getAccessToken = async () => {
   try {
-    const res = await api.post("/sessions/refresh", null, {
+    const response = await api.post("/sessions/refresh", null, {
       withCredentials: true,
     });
-    return res.data.accessToken;
+    const accessToken = response.data.accessToken;
+
+    return accessToken;
   } catch (error) {
-    console.error(error);
+    console.error("Failed to refresh token:", error);
     return null;
   }
 };
 
 export const updateInfo = async (
-  data: any
+  data: any,
 ): Promise<AxiosResponse<User> | null> => {
   try {
-    const response = api.patch("/users/update-info", data, {
-      withCredentials: true,
-    });
+    const response = api.patch("/users/update-info", data);
     return response;
   } catch (error) {
     console.error(error);
@@ -64,7 +92,9 @@ export const sendProfilePic = async (profilePic: any, requester: any) => {
   formData.append("requester", requester);
   try {
     const response = await api.post("/upload/profile-picture", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
     return response.data;
   } catch (error: unknown) {
@@ -77,44 +107,12 @@ export const deleteProfilePic = async (userId: string | undefined) => {
     userId: userId,
   };
   try {
-    const response = (await api.patch("/upload/delete-profile-picture", data, {
-      withCredentials: true,
-    })) as AxiosResponse<User>;
+    const response = (await api.patch(
+      "/upload/delete-profile-picture",
+      data,
+    )) as AxiosResponse<User>;
     return response.data;
   } catch (error: unknown) {
     console.error(error);
   }
-};
-
-export const setupInterceptors = (accessToken: string) => {
-  const requestIntercept = axiosPrivate.interceptors.request.use(
-    (config) => {
-      if (!config.headers.Authorization) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
-      }
-      return config;
-    },
-    (error) => Promise.reject(error)
-  );
-  const responseIntercept = axiosPrivate.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-      const prevRequest = error?.config;
-      if (error?.response?.status === 403 && !prevRequest?.sent) {
-        prevRequest.sent = true;
-        prevRequest.headers["Authorization"] = `Bearer ${accessToken}`;
-        return axiosPrivate(prevRequest);
-      }
-      return Promise.reject(error);
-    }
-  );
-  return { requestIntercept, responseIntercept };
-};
-
-export const cleanupInterceptors = (interceptors: {
-  requestIntercept: number;
-  responseIntercept: number;
-}) => {
-  axiosPrivate.interceptors.request.eject(interceptors.requestIntercept);
-  axiosPrivate.interceptors.response.eject(interceptors.responseIntercept);
 };

@@ -1,21 +1,16 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { MessageType, PrivateChat } from "../types/chat.types";
 import { Socket } from "socket.io-client";
 import { useChatStore } from "../utils/stores";
-
-const orginURL = process.env.NEXT_PUBLIC_API_MESSAGES;
-
-const api = axios.create({
-  baseURL: orginURL,
-});
+import { axiosPrivate } from "./axios";
 
 export const getMessages = async (
   chatId: string,
 ): Promise<AxiosResponse<MessageType[]> | undefined> => {
   try {
-    const data = (await api.get(`/get-messages/${chatId}`, {
-      withCredentials: true,
-    })) as AxiosResponse<MessageType[]>;
+    const data = (await axiosPrivate.get(
+      `/get-messages/${chatId}`,
+    )) as AxiosResponse<MessageType[]>;
     return data;
   } catch (error) {
     console.log(error);
@@ -51,7 +46,7 @@ export const sendMessage = (
 };
 
 export const receiveMessage = (socket: Socket) => {
-  socket.on("message_sent", (message: MessageType) => {
+  const handleMessage = (message: MessageType) => {
     useChatStore.getState().addMessage(message);
 
     const storedChats = localStorage.getItem("recentChats");
@@ -72,7 +67,9 @@ export const receiveMessage = (socket: Socket) => {
     });
 
     localStorage.setItem("recentChats", JSON.stringify(updatedChats));
-  });
+  };
+
+  socket.on("message_sent", handleMessage);
 };
 
 export const joinPrivateChat = (

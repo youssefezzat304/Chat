@@ -1,7 +1,6 @@
-import React from "react";
-import { SVGFC } from "./types";
+import { ComponentProps } from "react";
 
-const BlackBg: SVGFC = (props) => {
+const BlackBg = (props: ComponentProps<"svg">) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

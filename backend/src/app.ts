@@ -10,8 +10,9 @@ import cookieParser from "cookie-parser";
 import { erroMiddleware } from "../middlewares/errorHandler.middleware";
 import deserializeUser from "../middlewares/deserializeUser.middleware";
 import { config } from "dotenv";
-import { SocketHandler } from "../utils/interfaces/interface";
+import { SocketHandler } from "../types/interface";
 import messageSocketHandler from "../routes/message/message.socket";
+import checkAuthMiddleware from "../middlewares/checkAuth.middleware";
 
 config();
 
@@ -21,9 +22,9 @@ const corsOptions = {
   methods: "GET,POST,PUT,DELETE,PATCH",
 };
 
-const expressApp: Application = express();
+const app: Application = express();
 const port = Number(process.env.PORT) || 3000;
-const server = http.createServer(expressApp);
+const server = http.createServer(app);
 const io = new Server(server, {
   cors: corsOptions,
 });
@@ -32,13 +33,13 @@ const messagesSocketHandler = messageSocketHandler(io);
 const socketHandlers = [messagesSocketHandler];
 
 const initialiseMiddleware = (): void => {
-  expressApp.use(cors(corsOptions));
-  expressApp.use(express.json());
-  expressApp.use(cookieParser());
-  expressApp.use(helmet());
-  expressApp.use(compression());
-  expressApp.use(morgan("dev"));
-  expressApp.use(deserializeUser);
+  app.use(cors(corsOptions));
+  app.use(express.json());
+  app.use(cookieParser());
+  app.use(helmet());
+  app.use(compression());
+  app.use(morgan("dev"));
+  app.use(deserializeUser);
 };
 
 const initialiseDatabaseConnection = (): void => {
@@ -74,12 +75,12 @@ const initializeSocketConnection = (
 
 const initialiseControllers = (controllers: Router[]): void => {
   controllers.forEach((controller: Router) => {
-    expressApp.use("/api", controller);
+    app.use("/api", controller);
   });
 };
 
 const initialiseErrorHandler = (): void => {
-  expressApp.use(erroMiddleware);
+  app.use(erroMiddleware);
 };
 
 const listen = (): void => {
@@ -97,7 +98,7 @@ const initializeApp = (controllers: Router[]): void => {
 };
 
 export {
-  expressApp,
+  app,
   server,
   io,
   initialiseMiddleware,

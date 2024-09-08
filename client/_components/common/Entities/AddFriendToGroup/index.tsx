@@ -11,7 +11,9 @@ const AddFriendToGroup = ({ friend }: { friend: User }) => {
         <Image
           className={styles.profilePic}
           alt="Profile Picture"
-          src={!friend.profilePic ? AvatarPlaceholder1 : friend.profilePic}
+          src={
+            !friend.profilePicture ? AvatarPlaceholder1 : friend.profilePicture
+          }
         />
         <div className={styles.friendName}>
           <label htmlFor="">{friend.displayName}</label>

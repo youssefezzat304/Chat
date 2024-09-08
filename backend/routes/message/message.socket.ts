@@ -1,10 +1,6 @@
 import { PrivateChatModel, MessageModel, UserModel } from "../models";
 import UserService from "../user/user.service";
-import { DocumentType } from "@typegoose/typegoose";
-import { PrivateChat } from "../privateChat/privateChat.model";
-import { Message } from "./message.model";
 import { Server, Socket } from "socket.io";
-import { createNewChat } from "../privateChat/privateChat.service";
 import {
   createMessage,
   findOrCreateChat,

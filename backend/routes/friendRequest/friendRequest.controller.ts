@@ -6,6 +6,7 @@ import { FriendRequestModel, UserModel } from "../models";
 import { User } from "../user/user.model";
 import { FriendRequestServices } from "./fiendRequest.service";
 import { FriendRequest } from "./friendRequest.model";
+import checkAuthMiddleware from "../../middlewares/checkAuth.middleware";
 
 const FriendRequestController = Router();
 const services = new FriendRequestServices();
@@ -158,14 +159,17 @@ const friendReject = async (
 FriendRequestController.post(
   "/friend-request/add/:recipientEmail",
   // validateResourceMidlleware(createFriendRequestSchema),
+  checkAuthMiddleware,
   friendRequest,
 );
 FriendRequestController.patch(
   process.env.ACCEPT_FRIEND_ENDPOINT as string,
+  checkAuthMiddleware,
   friendAccept,
 );
 FriendRequestController.patch(
   process.env.REJECT_FRIEND_ENDPOINT as string,
+  checkAuthMiddleware,
   friendReject,
 );
 

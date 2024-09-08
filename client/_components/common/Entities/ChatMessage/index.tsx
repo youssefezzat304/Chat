@@ -26,9 +26,9 @@ const ChatMessage = memo(({ message, isLastInStack }: ChatMessageProps) => {
       {!isSentByCurrentUser && isLastInStack && (
         <Image
           src={
-            !message.initiatedBy.profilePic
+            !message.initiatedBy.profilePicture
               ? AvatarPlaceholder1
-              : message.initiatedBy.profilePic
+              : message.initiatedBy.profilePicture
           }
           alt="Profile Picture"
           className={styles.messageProfilePic}

@@ -4,6 +4,7 @@ import { verifyJwt } from "../../utils/jwt";
 import { UserModel } from "../models";
 import { User } from "../user/user.model";
 import { DocumentType } from "@typegoose/typegoose";
+import { constants } from "../../utils/constants";
 
 const authController = Router();
 const auth = new AuthService();
@@ -38,6 +39,11 @@ const refreshAccessTokenHandler = async (req: Request, res: Response) => {
   if (!user) return res.status(401).send("Could not refresh access token");
 
   const accessToken = auth.signAccessToken(user);
+
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    maxAge: constants.REFRESH_TOKEN_TIMEOUT,
+  });
 
   return res.json({ accessToken });
 };

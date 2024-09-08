@@ -11,7 +11,7 @@ const useLogOut = () => {
   const setUser = useUserStore((state) => state.setUser);
 
   const handleLogOut = async () => {
-    localStorage.removeItem("currentUser");
+    localStorage.clear();
     queryClient.removeQueries({ queryKey: ["currentUser"], exact: true });
     setAccessToken(null);
     setUser(null);

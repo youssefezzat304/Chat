@@ -23,3 +23,6 @@ export interface User {
     outgoing: Array<User>;
   };
 }
+export interface DecodedToken {
+  exp: number;
+}

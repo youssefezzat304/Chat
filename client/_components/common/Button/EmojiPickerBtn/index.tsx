@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, memo } from "react";
 import ButtonIcon from "../../Icon/ButtonIcon";
 import { LiaLaughBeamSolid } from "react-icons/lia";
 import Picker from "@emoji-mart/react";
@@ -15,21 +15,21 @@ const EmojiPickerBtn = ({ onEmojiSelect }: { onEmojiSelect: any }) => {
     setShowPicker((prevShowPicker) => !prevShowPicker);
   }, []);
 
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = useCallback((event: MouseEvent) => {
     if (
       pickerRef.current &&
       !pickerRef.current.contains(event.target as Node)
     ) {
       setShowPicker(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [togglePicker]);
+  }, [togglePicker, handleClickOutside]);
 
   return (
     <div ref={pickerRef} className={styles.emojiPickerContainer}>
@@ -53,4 +53,4 @@ const EmojiPickerBtn = ({ onEmojiSelect }: { onEmojiSelect: any }) => {
   );
 };
 
-export default EmojiPickerBtn;
+export default memo(EmojiPickerBtn);

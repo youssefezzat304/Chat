@@ -14,7 +14,7 @@ const RecentChat = ({ subject, lastMessage }: SubjectProps) => {
   const currentUser = useUserStore((state) => state.user);
   const { content, createdAt, initiatedBy } = lastMessage;
   const { profilePicture, displayName } = subject;
-  const isSentByCurrentUser = initiatedBy === currentUser?._id;
+  const isSentByCurrentUser = initiatedBy._id === currentUser?._id;
   useFindChat();
 
   const handleSelectChatId = () => {

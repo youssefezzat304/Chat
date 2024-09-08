@@ -3,33 +3,50 @@ import { NavBar, RoutesLoading } from "@/_components";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import useAuthenticateUser from "@/hooks/useAuthenticateUser";
 import { useUserStore } from "@/utils/stores";
+import { useEffect, useRef, useState } from "react";
+import { io, Socket } from "socket.io-client";
 
 import styles from "./layout.module.css";
-import { useEffect, useState } from "react";
-import { io, Socket } from "socket.io-client";
 
 export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const socket = io("http://localhost:3000", {
-    withCredentials: true,
-  });
+  const socketRef = useRef<Socket | null>(null);
   const user = useUserStore((state) => state.user);
   const { isLoading } = useAuthenticateUser();
   const { isTablet } = useMediaQuery();
 
   useEffect(() => {
-    socket.on("connect", () => {
-      console.log("connected");
-    });
+    if (!socketRef.current) {
+      const newSocket = io("http://localhost:3000", {
+        withCredentials: true,
+      });
+
+      socketRef.current = newSocket;
+
+      newSocket.on("connect", () => {
+        console.log("connected");
+      });
+
+      return () => {
+        newSocket.disconnect();
+        socketRef.current = null;
+      };
+    }
 
     return () => {
-      socket.disconnect();
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        socketRef.current = null;
+      }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (!user || isLoading) {
+    return <RoutesLoading />;
+  }
 
   if (!user || isLoading) {
     return <RoutesLoading />;

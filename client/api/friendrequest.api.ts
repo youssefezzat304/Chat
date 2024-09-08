@@ -1,26 +1,14 @@
 import { FriendRequestType } from "@/types/friendSystem.types";
-import axios from "axios";
-
-const orginURL = process.env.NEXT_PUBLIC_API_FRIEND_REQUEST;
-
-const api = axios.create({
-  baseURL: orginURL,
-});
+import { axiosPrivate } from "./axios";
 
 export const sendFriendRequest = async (requestData: {
   requesterEmail: string;
   recipientEmail: string;
 }) => {
   try {
-    const response = await api.post(
+    const response = await axiosPrivate.post(
       `/add/${requestData.recipientEmail}`,
       requestData,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
     );
     return response;
   } catch (error) {
@@ -39,9 +27,10 @@ export const handleFriendRequest = async ({
     recipientId: recipientId,
   };
   try {
-    const response = await api.patch(`/${status}/${recipientId}`, reqData, {
-      headers: { withCredentials: true },
-    });
+    const response = await axiosPrivate.patch(
+      `/${status}/${recipientId}`,
+      reqData,
+    );
     return response.data;
   } catch (error) {
     console.log(error);

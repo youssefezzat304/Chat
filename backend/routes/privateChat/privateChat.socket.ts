@@ -1,8 +1,8 @@
-import { Socket } from "socket.io";
+// import { Socket } from "socket.io";
 
-const privateChatSocketHandler = () => {
-  const registerEvents = (socket: Socket) => {};
-  return { registerEvents };
-};
+// const privateChatSocketHandler = () => {
+//   const registerEvents = (socket: Socket) => {};
+//   return { registerEvents };
+// };
 
-export default privateChatSocketHandler;
+// export default privateChatSocketHandler;

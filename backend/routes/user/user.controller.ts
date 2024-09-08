@@ -10,7 +10,8 @@ import { SessionModel, UserModel } from "../models";
 import { DocumentType } from "@typegoose/typegoose";
 import { User } from "./user.model";
 import { Session } from "../auth/session.model";
-import path from "path";
+import { constants } from "../../utils/constants";
+import checkAuthMiddleware from "../../middlewares/checkAuth.middleware";
 
 const userController = Router();
 const userService = new UserService();
@@ -36,11 +37,16 @@ const register = async (
     if (userInfo) res.locals.user = userInfo;
 
     res.cookie("refreshToken", "Bearer " + refreshToken, {
-      maxAge: 20 * 24 * 60 * 60 * 1000,
       httpOnly: true,
+      maxAge: constants.REFRESH_TOKEN_TIMEOUT,
     });
 
-    return res.send({ userInfo, accessToken });
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      maxAge: constants.ACCESS_TOKEN_TIMEOUT,
+    });
+
+    return res.send({ userInfo });
   } catch (error: any) {
     return res.status(500).send(error);
   }
@@ -77,8 +83,12 @@ const logIn = async (
   if (userInfo) res.locals.user = userInfo;
 
   res.cookie("refreshToken", "Bearer " + refreshToken, {
-    maxAge: 20 * 24 * 60 * 60 * 1000,
+    maxAge: constants.REFRESH_TOKEN_TIMEOUT,
     httpOnly: true,
+  });
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    maxAge: constants.ACCESS_TOKEN_TIMEOUT,
   });
 
   return res.send({ userInfo, accessToken });
@@ -154,10 +164,15 @@ userController.post(
 );
 userController.patch(
   process.env.UPDATE_USER_ENDPOINT as string,
+  checkAuthMiddleware,
   validateResourceMidlleware(UserSchema),
   updateInfo,
 );
-userController.get(process.env.CURRENT_USER_ENDPOINT as string, getCurrentUser);
+userController.get(
+  process.env.CURRENT_USER_ENDPOINT as string,
+  checkAuthMiddleware,
+  getCurrentUser,
+);
 userController.post(process.env.LOGIN_ENDPOINT as string, logIn);
 userController.get(process.env.LOGOUT_ENDPOINT as string, logOut);
 

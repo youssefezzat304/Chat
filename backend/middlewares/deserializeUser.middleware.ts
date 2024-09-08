@@ -4,7 +4,7 @@ import { verifyJwt } from "../utils/jwt";
 const deserializeUser = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const accessToken = (req.headers.authorization || "").split(" ")[1];
 

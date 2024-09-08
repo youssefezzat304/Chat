@@ -3,6 +3,7 @@ import path from "path";
 import { Request, Response, Router } from "express";
 import { uploadProfilePictureMiddleware } from "../../middlewares/upload.middleware";
 import { UserModel } from "../models";
+import checkAuthMiddleware from "../../middlewares/checkAuth.middleware";
 
 const uploadController = Router();
 
@@ -68,10 +69,12 @@ const profilePictureDelete = async (req: Request, res: Response) => {
 uploadController.post(
   process.env.UPLOAD_PROFILE_PIC_ENDPOINT as string,
   uploadProfilePictureMiddleware.single("profilePic"),
+  checkAuthMiddleware,
   profilePictureUpload,
 );
 uploadController.patch(
   process.env.DELETE_PROFILE_PIC_ENDPOINT as string,
+  checkAuthMiddleware,
   profilePictureDelete,
 );
 

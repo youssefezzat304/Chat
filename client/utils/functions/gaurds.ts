@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { ChatInfo, MessageInterface } from "../../types/chat.types";
+import { PrivateChat, MessageType } from "../../types/chat.types";
 import { User } from "../../types/user.types";
 
 export const isUser = (obj: any): obj is User => {
@@ -36,7 +36,7 @@ export const isFriendRequest = (
     typeof obj._id === "string"
   );
 };
-export const isMessage = (obj: any): obj is MessageInterface => {
+export const isMessage = (obj: any): obj is MessageType => {
   return (
     obj &&
     typeof obj === "object" &&
@@ -48,7 +48,7 @@ export const isMessage = (obj: any): obj is MessageInterface => {
     typeof obj.updatedAt === "string"
   );
 };
-export const isChatInfo = (obj: any): obj is ChatInfo => {
+export const isPrivateChat = (obj: any): obj is PrivateChat => {
   return (
     obj &&
     typeof obj === "object" &&
@@ -63,9 +63,9 @@ export const isChatInfo = (obj: any): obj is ChatInfo => {
 };
 export function isChatArray(
   response: AxiosResponse<any>,
-): response is AxiosResponse<ChatInfo[]> {
+): response is AxiosResponse<PrivateChat[]> {
   return (
     Array.isArray(response.data) &&
-    response.data.every((item) => isChatInfo(item))
+    response.data.every((item) => isPrivateChat(item))
   );
 }

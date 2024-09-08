@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import { MessageModel, PrivateChatModel } from "../models";
 import { DocumentType } from "@typegoose/typegoose";
 import { Message } from "./message.model";
+import checkAuthMiddleware from "../../middlewares/checkAuth.middleware";
 
 const messageController = Router();
 
@@ -28,6 +29,10 @@ const getMessages = async (req: Request, res: Response) => {
   }
 };
 
-messageController.get(process.env.GET_MESSAGES_ENDPOINT as string, getMessages);
+messageController.get(
+  process.env.GET_MESSAGES_ENDPOINT as string,
+  checkAuthMiddleware,
+  getMessages,
+);
 
 export default messageController;

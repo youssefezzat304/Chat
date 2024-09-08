@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useUserStore } from "../utils/stores";
-import { checkUser } from "../api/axios";
+import { getUserInfo } from "../api/axios";
 import { useRouter } from "next/navigation";
 import { User } from "@/types/user.types";
 
@@ -27,7 +27,7 @@ const useAuthenticateUser = () => {
   }, [setUser]);
 
   const { data: currentUser, isLoading } = useQuery({
-    queryFn: () => checkUser(),
+    queryFn: () => getUserInfo(),
     queryKey: ["currentUser"],
     enabled: !initialUser,
   });
@@ -39,7 +39,6 @@ const useAuthenticateUser = () => {
       } else {
         setUser(currentUser);
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
-        console.log("Fetched and set Current User:", currentUser);
       }
     }
   }, [currentUser, isLoading, router, initialUser, setUser]);
