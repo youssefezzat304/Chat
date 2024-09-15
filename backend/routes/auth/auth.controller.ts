@@ -45,12 +45,34 @@ const refreshAccessTokenHandler = async (req: Request, res: Response) => {
     maxAge: constants.REFRESH_TOKEN_TIMEOUT,
   });
 
-  return res.json({ accessToken });
+  return res.status(200).send({ user });
+};
+
+const validateTokenHandler = async (req: Request, res: Response) => {
+  const refreshToken = (req.cookies.refreshToken || "").split(" ")[1] as string;
+
+  const decoded = verifyJwt<{ session: string }>(
+    refreshToken,
+    "refreshTokenPublicKey",
+  );
+
+  if (!decoded) return res.status(401).send("Could not refresh access token.");
+
+  const session = await auth.findSessionById(decoded.session);
+
+  if (!session || !session.valid)
+    return res.status(401).send("Could not refresh access token");
+
+  return res.status(200).send("Token is valid");
 };
 
 authController.post(
   process.env.REFRESH_TOKEN_ENDPOINT as string,
   refreshAccessTokenHandler,
+);
+authController.get(
+  process.env.VALIDATE_TOKEN_ENDPOINT as string,
+  validateTokenHandler,
 );
 
 export default authController;

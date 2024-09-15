@@ -8,7 +8,13 @@ import { Session } from "./session.model";
 
 class AuthService {
   public signAccessToken(user: DocumentType<User>) {
-    const payload = omit(user.toJSON(), [...privateFeilds, "profilePic"]);
+    const payload = omit(user.toJSON(), [
+      ...privateFeilds,
+      "profilePic",
+      "friendRequests",
+      "friends",
+      "chats",
+    ]);
     const accessToken = signJwt(payload, "accessTokenPrivateKey", {
       expiresIn: "15m",
     });
@@ -34,7 +40,7 @@ class AuthService {
       "refreshTokenPrivateKey",
       {
         expiresIn: "1y",
-      }
+      },
     );
     session.token = refreshToken;
     await session.save();
@@ -51,7 +57,7 @@ class AuthService {
         "refreshTokenPrivateKey",
         {
           expiresIn: "1y",
-        }
+        },
       );
 
       await session.updateOne({ token: refreshToken });

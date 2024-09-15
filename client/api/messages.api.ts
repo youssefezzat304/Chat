@@ -9,7 +9,7 @@ export const getMessages = async (
 ): Promise<AxiosResponse<MessageType[]> | undefined> => {
   try {
     const data = (await axiosPrivate.get(
-      `/get-messages/${chatId}`,
+      `/messages/get-messages/${chatId}`,
     )) as AxiosResponse<MessageType[]>;
     return data;
   } catch (error) {

@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from "axios";
 import { User } from "../types/user.types";
-import { decode } from "jsonwebtoken";
 
 const orginURL = process.env.NEXT_PUBLIC_API_HOST;
 
@@ -14,62 +13,16 @@ export const axiosPrivate = axios.create({
   withCredentials: true,
 });
 
-export const setupInterceptors = (accessToken: string | null) => {
-  const requestIntercept = axiosPrivate.interceptors.request.use(
-    (config) => {
-      if (!config.headers.Authorization) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
-      }
-      return config;
-    },
-    (error) => Promise.reject(error),
-  );
-  const responseIntercept = axiosPrivate.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-      const prevRequest = error?.config;
-      if (error?.response?.status === 403 && !prevRequest?.sent) {
-        prevRequest.sent = true;
-        prevRequest.headers["Authorization"] = `Bearer ${accessToken}`;
-        return axiosPrivate(prevRequest);
-      }
-      return Promise.reject(error);
-    },
-  );
-  return { requestIntercept, responseIntercept };
-};
-
-export const cleanupInterceptors = (interceptors: {
-  requestIntercept: number;
-  responseIntercept: number;
-}) => {
-  axiosPrivate.interceptors.request.eject(interceptors.requestIntercept);
-  axiosPrivate.interceptors.response.eject(interceptors.responseIntercept);
-};
-
 export const getUserInfo = async (): Promise<User | null> => {
   try {
-    const token = await getAccessToken();
-    if (!token) return null;
+    const response = await api.post("/auth/refresh", null, {
+      withCredentials: true,
+    });
+    const user = response.data.user;
 
-    const user = decode(token) as User;
     return user;
   } catch (error) {
     console.error("Failed to fetch user:", error);
-    return null;
-  }
-};
-
-export const getAccessToken = async () => {
-  try {
-    const response = await api.post("/sessions/refresh", null, {
-      withCredentials: true,
-    });
-    const accessToken = response.data.accessToken;
-
-    return accessToken;
-  } catch (error) {
-    console.error("Failed to refresh token:", error);
     return null;
   }
 };
@@ -114,5 +67,20 @@ export const deleteProfilePic = async (userId: string | undefined) => {
     return response.data;
   } catch (error: unknown) {
     console.error(error);
+  }
+};
+
+export const isRefreshTokenValid = async () => {
+  try {
+    const response = await axiosPrivate.get("/auth/validate-token");
+
+    if (response.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("Error checking refresh token:", error);
+    return false;
   }
 };

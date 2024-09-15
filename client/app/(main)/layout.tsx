@@ -47,10 +47,6 @@ export default function DashboardLayout({
   if (!user || isLoading) {
     return <RoutesLoading />;
   }
-
-  if (!user || isLoading) {
-    return <RoutesLoading />;
-  }
   return (
     <main className={styles.main}>
       {!isTablet && <NavBar />}

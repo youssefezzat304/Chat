@@ -9,13 +9,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { BiMessageSquareError } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
 import styles from "./index.module.css";
+import { api } from "@/api/axios";
 
 const Login = ({ signUp }: any) => {
   const router = useRouter();
-  const axiosPrivate = useAxiosPrivate();
+
   const {
     register,
     handleSubmit,
@@ -32,20 +32,20 @@ const Login = ({ signUp }: any) => {
       password: data.password,
     };
     try {
-      const response = await axiosPrivate.post("/users/login", userData, {
+      const response = await api.post("/users/login", userData, {
         withCredentials: true,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-        },
       });
       if (response.data === "Invalid Email or password.") {
         setError("email", {
           message: response.data,
         });
-      } else {
-        router.push("/dashboard");
+        return;
       }
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify(response.data.userInfo),
+      );
+      router.push("/dashboard");
     } catch (error: any) {
       console.log("handleLogin in userContext.tsx >>>>>", error.response);
     }

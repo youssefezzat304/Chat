@@ -18,7 +18,6 @@ const useAuthenticateUser = () => {
         const parsedUser = JSON.parse(storedUser) as User;
         setInitialUser(parsedUser);
         setUser(parsedUser);
-        return;
       } catch (error) {
         console.error("Failed to parse user from localStorage", error);
         setInitialUser(null);
@@ -33,7 +32,7 @@ const useAuthenticateUser = () => {
   });
 
   useEffect(() => {
-    if (!isLoading && !initialUser) {
+    if (!isLoading) {
       if (!currentUser) {
         router.push("/register");
       } else {

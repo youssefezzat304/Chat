@@ -7,7 +7,7 @@ export const sendFriendRequest = async (requestData: {
 }) => {
   try {
     const response = await axiosPrivate.post(
-      `/add/${requestData.recipientEmail}`,
+      `/friend-request/add/${requestData.recipientEmail}`,
       requestData,
     );
     return response;
@@ -28,7 +28,7 @@ export const handleFriendRequest = async ({
   };
   try {
     const response = await axiosPrivate.patch(
-      `/${status}/${recipientId}`,
+      `/friend-request/${status}/${recipientId}`,
       reqData,
     );
     return response.data;

@@ -1,11 +1,10 @@
 import { useAuthStore, useUserStore } from "@/utils/stores";
 import { useQueryClient } from "@tanstack/react-query";
-import useAxiosPrivate from "./useAxiosPrivate";
 import { useRouter } from "next/navigation";
+import { axiosPrivate } from "@/api/axios";
 
 const useLogOut = () => {
   const router = useRouter();
-  const axiosPrivate = useAxiosPrivate();
   const queryClient = useQueryClient();
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const setUser = useUserStore((state) => state.setUser);

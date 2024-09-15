@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { PrivateChat } from "../types/chat.types";
 import { axiosPrivate } from "./axios";
 
@@ -7,7 +7,7 @@ export const getAllChats = async (
 ): Promise<PrivateChat[] | undefined> => {
   try {
     const chats = (await axiosPrivate.get(
-      `/get-recent/${userId}`,
+      `/chats/get-recent/${userId}`,
     )) as AxiosResponse<PrivateChat[]>;
     return chats.data;
   } catch (error) {
@@ -24,7 +24,7 @@ export const findChat = async ({
 }): Promise<AxiosResponse<PrivateChat> | undefined> => {
   try {
     const chats = (await axiosPrivate.get(
-      `/find-chat/${userId}/${chatterId}`,
+      `/chats/find-chat/${userId}/${chatterId}`,
     )) as AxiosResponse<PrivateChat>;
     return chats;
   } catch (error) {

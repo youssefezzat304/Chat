@@ -91,7 +91,7 @@ const logIn = async (
     maxAge: constants.ACCESS_TOKEN_TIMEOUT,
   });
 
-  return res.send({ userInfo, accessToken });
+  return res.status(200).send({ userInfo });
 };
 
 const getCurrentUser = async (

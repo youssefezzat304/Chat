@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Poppins } from "next/font/google";
 import { ThemeContextWrapper } from "@/contexts/ThemeContext";
 import "@/styles/globals.css";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -17,6 +18,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useAxiosPrivate();
   return (
     <html lang="en" className={`${poppins.variable}`}>
       <QueryClientProvider client={queryClient}>

@@ -1,31 +1,22 @@
-import {
-  axiosPrivate,
-  cleanupInterceptors,
-  setupInterceptors,
-} from "../api/axios";
+import { axiosPrivate } from "../api/axios";
 import { useEffect } from "react";
-import { useAuthStore } from "../utils/stores";
+import { useRouter } from "next/navigation";
 
 const useAxiosPrivate = () => {
-  const accessToken = useAuthStore((state) => state.accessToken);
+  const router = useRouter();
 
   useEffect(() => {
-    let requestIntercept: number | null = null;
-    let responseIntercept: number | null = null;
-    if (accessToken) {
-      try {
-        const interceptors = setupInterceptors(accessToken);
-        requestIntercept = interceptors.requestIntercept;
-        responseIntercept = interceptors.responseIntercept;
-      } catch (error) {
-        console.log("Axios Private Error:", error);
-      } finally {
-        if (requestIntercept !== null && responseIntercept !== null) {
-          cleanupInterceptors({ requestIntercept, responseIntercept });
+    axiosPrivate.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          localStorage.clear();
+          router.push("/register");
         }
-      }
-    }
-  }, [accessToken]);
+        return Promise.reject(error);
+      },
+    );
+  }, [router]);
 
   return axiosPrivate;
 };
