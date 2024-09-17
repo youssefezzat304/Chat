@@ -1,5 +1,4 @@
-import { PrivateChatModel, MessageModel, UserModel } from "../models";
-import UserService from "../user/user.service";
+import { PrivateChatModel } from "../models";
 import { Server, Socket } from "socket.io";
 import {
   createMessage,
@@ -8,8 +7,6 @@ import {
   updateLastMessage,
   updateUserChats,
 } from "./message.service";
-
-const userService = new UserService();
 
 const messageSocketHandler = (io: Server) => {
   const registerEvents = (socket: Socket) => {
@@ -40,6 +37,7 @@ const messageSocketHandler = (io: Server) => {
         await updateLastMessage({ chatId: chat._id, messageId: message._id });
 
         const populatedMessage = await getPopulatedMessage(message._id);
+
         io.to(chatId).emit("message_sent", populatedMessage);
       } catch (error) {
         socket.emit("error", "Error sending message");

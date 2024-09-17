@@ -7,6 +7,7 @@ import { useGetChats } from "@/utils/queries/chat.query";
 import { useChatStore, useUserStore } from "@/utils/stores";
 import { PrivateChat } from "@/types/chat.types";
 import { CircularProgress } from "@mui/material";
+import { db } from "@/utils/indexedDB";
 
 import styles from "./index.module.css";
 
@@ -17,30 +18,7 @@ const Chats = () => {
   }));
 
   const currentUser = useUserStore((state) => state.user);
-  const { allChats, isLoading } = useGetChats();
-
-  useEffect(() => {
-    const loadChats = () => {
-      const storedChats = localStorage.getItem("recentChats");
-      if (storedChats) {
-        setRecentChats(JSON.parse(storedChats));
-      }
-    };
-
-    loadChats();
-
-    const handleStorageChange = (event: StorageEvent) => {
-      loadChats();
-      if (event.key === "recentChats") {
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, [setRecentChats]);
+  const { isLoading } = useGetChats();
 
   const filteredChats = useMemo(() => {
     return recentChats?.map((chat: PrivateChat) => {

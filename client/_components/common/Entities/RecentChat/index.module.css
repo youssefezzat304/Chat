@@ -20,11 +20,21 @@
 .subjectMain:hover {
   background-color: var(--secondary-soft);
   cursor: pointer;
+  .lastMessageTime {
+    box-shadow: var(--secondary-soft) -10px 0px 6px 0px;
+    background-color: var(--secondary-soft);
+    transition: 0.1s;
+  }
 }
 .subjectMain:active {
   background-color: var(--primary-hard);
   cursor: pointer;
   transform: scale(0.98);
+  .lastMessageTime {
+    box-shadow: var(--primary-hard) -10px 0px 6px 0px;
+    background-color: var(--primary-hard);
+    transition: 0.1s;
+  }
 }
 .friendPpContainer {
   width: 3rem;
@@ -78,9 +88,13 @@
 .lastMassege span {
   color: var(--primary);
 }
-.lastSeen {
+.lastMessageTime {
   position: absolute;
+  background-color: #f9fafc;
   right: 1px;
+  padding: 5px;
   font-size: 0.7rem;
   color: var(--text-gray);
+  box-shadow: #f9fafc -10px 0px 6px 0px;
+  transition: 0.1s;
 }

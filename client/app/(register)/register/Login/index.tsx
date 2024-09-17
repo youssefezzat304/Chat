@@ -9,9 +9,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { BiMessageSquareError } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import { api } from "@/api/axios";
 
 import styles from "./index.module.css";
-import { api } from "@/api/axios";
 
 const Login = ({ signUp }: any) => {
   const router = useRouter();
@@ -89,14 +89,14 @@ const Login = ({ signUp }: any) => {
           value="SignUp"
           onClick={signUp}
         />
-        <div className={styles.loginWith}>
+        {/* <div className={styles.loginWith}>
           <button title="Google" type="button">
             Google
           </button>
           <button title="Facebook" type="button">
             Facebook
           </button>
-        </div>
+        </div> */}
       </form>
       {errors.email || errors.password ? (
         <div className={styles.errorContainer}>
@@ -109,9 +109,7 @@ const Login = ({ signUp }: any) => {
             className={styles.errorClose}
           />
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
     </div>
   );
 };

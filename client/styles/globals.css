@@ -63,3 +63,37 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
+.notFound {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.backHome {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--primary-dark);
+  width: 100px;
+  height: 3.2rem;
+  justify-content: center;
+  color: var(--white);
+  padding: 0.6rem 1rem;
+  font-size: large;
+  font-weight: 700;
+  border-radius: 60px;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 2px 2px -3px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  transition: 0.1s;
+  text-decoration: none;
+}
+.backHome:hover {
+  background-color: var(--white);
+  color: black;
+  cursor: pointer;
+}
+.backHome:active {
+  transform: scale(0.96);
+}

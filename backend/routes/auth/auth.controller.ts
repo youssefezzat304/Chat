@@ -33,7 +33,6 @@ const refreshAccessTokenHandler = async (req: Request, res: Response) => {
       ],
     })
     .populate("friends")
-    .populate("chats")
     .exec()) as DocumentType<User>;
 
   if (!user) return res.status(401).send("Could not refresh access token");

@@ -7,40 +7,62 @@ import {
   joinPrivateChat,
   leavePrivateChat,
 } from "@/api/messages.api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { socket } from "@/app/socket";
 import { PrivateChat } from "@/types/chat.types";
+import { db } from "../indexedDB";
 
 export const useGetChats = () => {
   const currentUser = useUserStore((state) => state.user);
   const setRecentChats = useChatStore((state) => state.setRecentChats);
+  const [cachedChats, setCachedChats] = useState<PrivateChat[] | null>(null);
+
+  useEffect(() => {
+    const fetchCachedChats = async () => {
+      try {
+        const chats = await db.recentChatsDB.toArray();
+        if (chats && chats.length > 0) {
+          setCachedChats(chats);
+          setRecentChats(chats);
+        }
+      } catch (error) {
+        console.error("Failed to fetch chats from IndexedDB:", error);
+      }
+    };
+
+    fetchCachedChats();
+  }, [setRecentChats]);
 
   if (!currentUser) throw new Error("No current User");
 
-  const cachedChats = localStorage.getItem("recentChats");
-  const initialChats: PrivateChat[] | null = cachedChats
-    ? JSON.parse(cachedChats)
-    : null;
-
+  const queryOptions = {
+    queryFn: () => getAllChats(currentUser._id),
+    queryKey: ["allChats"],
+    enabled: !cachedChats || cachedChats.length === 0,
+  };
   const {
     data: allChats,
     isLoading,
     isError,
     error,
-  } = useQuery<PrivateChat[] | undefined>({
-    queryFn: () => getAllChats(currentUser._id),
-    queryKey: ["allChats"],
-    enabled: !initialChats || initialChats.length === 0,
-  });
+  } = useQuery<PrivateChat[] | undefined>(queryOptions);
 
   useEffect(() => {
-    if (allChats && !isLoading && !isError) {
-      setRecentChats(allChats);
-      localStorage.setItem("recentChats", JSON.stringify(allChats));
-    }
+    const handleChats = async (fetchedChats: PrivateChat[] | undefined) => {
+      if (fetchedChats) {
+        setRecentChats(fetchedChats);
+        try {
+          await db.recentChatsDB.bulkPut(fetchedChats);
+        } catch (error) {
+          console.error("Failed to store chats in IndexedDB:", error);
+        }
+      }
+    };
+
+    handleChats(allChats);
   }, [allChats, setRecentChats, isError, error, isLoading]);
 
-  return { allChats, isLoading };
+  return { isLoading };
 };
 
 export const useFindChat = () => {

@@ -105,7 +105,6 @@ const getCurrentUser = async (
     const user = (await UserModel.findById(userId)
       .populate("friendRequests.incoming")
       .populate("friends")
-      .populate("chats")
       .exec()) as DocumentType<User> | null;
 
     if (!user) {

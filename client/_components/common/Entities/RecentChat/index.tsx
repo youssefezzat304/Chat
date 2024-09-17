@@ -31,8 +31,8 @@ const RecentChat = ({ subject, lastMessage }: SubjectProps) => {
         />
         <div className={styles.messegeInfo}>
           <section className={styles.top}>
-            <label htmlFor="">{displayName}</label>
-            <p className={styles.lastSeen}>{timestamp(createdAt)}</p>
+            <label>{displayName}</label>
+            <p className={styles.lastMessageTime}>{timestamp(createdAt)}</p>
           </section>
           <section className={styles.bottom}>
             <p className={styles.lastMassege}>
